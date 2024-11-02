@@ -7,6 +7,7 @@ export interface ProductsYumbo {
   BETPLAY: number
   PAGATODO: number
   RECARGAS: number
+  PROMO1: number
   GANE5: number
   PATA_MILLONARIA: number
   LOTERIA_VIRTUAL: number
@@ -46,6 +47,7 @@ export interface ProductsYumbo {
   MT_RECAUDOS: number
   MT_RECARGAS: number
   META_PROMO2: number
+  META_PROMO1: number
 }
 
 export interface ProductsJamundi {
