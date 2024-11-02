@@ -16,8 +16,8 @@ export const ObtenerMes = () => {
 export function sortData (data: MetasProducto[], isAscending: boolean): MetasProducto[] {
   return [...data].sort((a, b) => {
     // Siempre coloca el elemento con id 'especial' en primer lugar
-    if (a.id === 18 || a.id === 17) return -1
-    if (b.id === 18 || b.id === 17) return 1
+    if (a.id === 17 || a.id === 18) return -1
+    if (b.id === 17 || b.id === 18) return 1
 
     // Para todos los demás elementos, ordena por porcentaje
     return isAscending ? parseFloat(a.porcentaje) - parseFloat(b.porcentaje) : parseFloat(b.porcentaje) - parseFloat(a.porcentaje)
