@@ -278,13 +278,14 @@ function parsearInfoArrayServired(data: ProductsJamundi) {
     porcentaje: calcularPorcentaje(data.RECARGAS, data.PROMEDIO_DIARIO_RECARGAS),
     porcentaje2: calcularPorcentajeSinLimite(data.RECARGAS, data.PROMEDIO_DIARIO_RECARGAS)
   }
-  const PROMO1 = {
+
+  const PROMO2 = {
     id: 16,
-    producto: 'Promo 1',
-    ventaActual: data.PROMO1,
-    aspiracionDia: data.META_PROMO1,
-    porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),
-    porcentaje2: calcularPorcentajeSinLimite(data.PROMO1, data.META_PROMO1)
+    producto: 'Prima Navideña',
+    ventaActual: data.PROMO2,
+    aspiracionDia: data.META_PROMO2,
+    porcentaje: calcularPorcentaje(data.PROMO2, data.META_PROMO2),
+    porcentaje2: calcularPorcentajeSinLimite(data.PROMO2, data.META_PROMO2)
   }
 
   let ventaActualAzarCal = 0; 
@@ -303,13 +304,13 @@ function parsearInfoArrayServired(data: ProductsJamundi) {
     porcentaje2: calcularPorcentajeSinLimite(ventaActualAzarCal, aspiracionDiaAzarCal)
   }
 
-  const PROMO2 = {
+  const PROMO1 = {
     id: 18,
-    producto: 'Prima Navideña',
-    ventaActual: data.PROMO2,
-    aspiracionDia: data.META_PROMO2,
-    porcentaje: calcularPorcentaje(data.PROMO2, data.META_PROMO2),
-    porcentaje2: calcularPorcentajeSinLimite(data.PROMO2, data.META_PROMO2)
+    producto: 'Promo 1',
+    ventaActual: data.PROMO1,
+    aspiracionDia: data.META_PROMO1,
+    porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),
+    porcentaje2: calcularPorcentajeSinLimite(data.PROMO1, data.META_PROMO1)
   }
 
   return[CHANCE, BALOTO, PATA_MILLONARIA, GANE5, PAGATODO_JAMUNDI, CHOLADITO, DOBLECHANCE, CHANCE_MILLONARIO, ASTRO, LOTERIA_VIRTUAL, LOTERIA_FISICA, BETPLAY, GIROS, RECAUDOS, RECARGAS, PROMO1, PROMO2, JUEGOS_AZAR]
