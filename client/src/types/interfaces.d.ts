@@ -7,3 +7,12 @@ export interface Historial {
   CATEGORIA: string
   VERSION: string
 }
+
+export interface PdvInfo {
+  CATEGORIA: string
+  VERSION: string
+  DIRECCION: string
+  NOMBRE: string
+  SUPERVISOR: string
+  ZONA: string
+}

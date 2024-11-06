@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { InfoPdvComponent } from './InfoPdvComponent'
 import { NavBar } from './NavBar'
 import { type FC } from 'react'
-import { PDVINFO } from '../types/Pdv'
+import { PDVINFO } from '../types/'
 
 interface ProtectedRouteProps {
   redirectTo?: string

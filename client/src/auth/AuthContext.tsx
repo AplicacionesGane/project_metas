@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useContext, useState, useMemo } from 'react';
 import { useAuthActions } from '../hooks/useAuthActions';
 import { type User } from '../types/User';
+import { useSucursalData } from '../hooks/useSucursalData';
+import { PdvInfo } from '../types/interfaces';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
@@ -8,6 +10,7 @@ export interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   login: (token: string) => Promise<void>;
   logout: () => void;
+  pdv: PdvInfo | null;
 }
 
 // Creamos el contexto de autenticación con un valor inicial nulo
@@ -17,9 +20,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const { login, logout } = useAuthActions(setUser);
+  const { pdv } = useSucursalData(user?.codigo!);
 
   // Usamos useMemo para evitar recrear el valor del contexto en cada renderizado
-  const value = useMemo(() => ({ user, setUser, login, logout }), [user, login, logout]);
+  const value = useMemo(() => ({ user, setUser, login, logout, pdv }), [user, login, logout]);
 
   return (
     <AuthContext.Provider value={value}>

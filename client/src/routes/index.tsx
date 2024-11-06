@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Root from './Root';
 import NotFound from '../pages/NotFound';
+import AspDiaPage from '../pages/ApsDia';
 
 export const RouterMain = createBrowserRouter([
   {
@@ -11,7 +12,7 @@ export const RouterMain = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1>test</h1>
+        element: <AspDiaPage />,
       },
       // {
       //   path: '/empleados',

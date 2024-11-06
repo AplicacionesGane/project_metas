@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginForm'
 import ResumenPage from './pages/Resumen'
 import AspMesPage from './pages/AspMes'
 import AspDiaPage from './pages/ApsDia'
-import { PDVINFO } from './types/Pdv'
+import { PDVINFO } from './types/'
 import axios from 'axios'
 
 axios.defaults.baseURL = import.meta.env.VITE_URL_API
