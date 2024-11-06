@@ -7,6 +7,7 @@ import AspMesPage from '../pages/AspMes';
 import ResumenPage from '../pages/Resumen';
 import AspMenAntPage from '../pages/ApsMesAnt';
 import SugeridosPage from '../pages/Sugeridos';
+import HistCatPage from '../pages/HistCate';
 
 export const RouterMain = createBrowserRouter([
   {
@@ -34,22 +35,10 @@ export const RouterMain = createBrowserRouter([
         path: '/sugeridos',
         element: <SugeridosPage />,
       },
-      // {
-      //   path: '/audit-marcacion',
-      //   element: <AuditMarcacion />,
-      // },
-      // {
-      //   path: '/opciones',
-      //   element: <Opciones />,
-      //   children: [
-      //     { index: true, element: <div className='p-2 text-gray-600 flex items-center justify-center h-full pb-20'><span className='text-2xl'> ↩  Seleccione Una Opción</span></div> },
-      //     { path: 'areas', element: <Areas /> },
-      //     { path: 'cargos', element: <Cargos /> },
-      //     { path: 'grupoturno', element: <GrupoTurno /> },
-      //     { path: 'turnos', element: <Turnos /> },
-      //     { path: 'grupo-turno', element: <GrupovsTurno /> }
-      //   ]
-      // }
+      {
+        path: '/historial',
+        element: <HistCatPage />,
+      },
     ]
   }
 ]);
