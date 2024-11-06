@@ -1,12 +1,14 @@
 import { BarraProgressProduct } from '../components/ui/ProgresoProducto'
 import { useFecthMetasData } from '../hooks/useFetchData'
 import { sortData } from '../utils/funtions'
-import { MetasProps } from '../types/Metas'
 import { useMemo, useState } from 'react'
 import { HeaderComponent } from '../components/ui/headerComponent'
+import { useAuth } from '../auth/AuthContext'
 
-function AspMesPage ({ codigo, zona }: MetasProps) {
-  const { data, isLoading } = useFecthMetasData('/cumpMesAct', zona, codigo)
+function AspMesPage () {
+  const { pdv, user } = useAuth()
+
+  const { data, isLoading } = useFecthMetasData('/cumpMesAct', pdv?.ZONA!, user?.codigo!)
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {

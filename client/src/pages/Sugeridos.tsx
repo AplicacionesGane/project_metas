@@ -3,14 +3,18 @@ import { useSugeridos2 } from '../hooks/useSugeridos2'
 
 import { ProgressSugerido } from '../components/ProgressSugerido'
 import { ConsultarBoletasGanadas } from '../components/BoletaGanada'
-import { User } from '../types/User'
+import { useAuth } from '../auth/AuthContext'
 
-function SugeridosPage ({ zone, user }:{zone: string, user: User}) {
+function SugeridosPage () {
+  const { user, pdv } = useAuth()
+
+  if (!user) return null
+  if (!pdv) return null
+
+  const zone = pdv.ZONA
+
   const { data } = useSugeridos({ zone, user })
   const { data2 } = useSugeridos2({ zone, user })
-
-  console.log(data)
-  console.log(data2)
 
   return (
     <section className='flex flex-col mx-2'>

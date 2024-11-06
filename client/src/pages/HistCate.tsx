@@ -2,8 +2,14 @@ import { HistComponent, TitleComponent } from '../components/HistoCatComp'
 import { Historial } from '../types/interfaces'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useAuth } from '../auth/AuthContext'
 
-function HistCatPage ({ codigo }: { codigo: number }) {
+function HistCatPage () {
+  const { user } = useAuth()
+
+  if (!user) return null
+  const codigo = user.codigo
+
   const [historial, setHistorial] = useState<Historial[]>([])
 
   useEffect(() => {
