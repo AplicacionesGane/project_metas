@@ -5,6 +5,7 @@ import NotFound from '../pages/NotFound';
 import AspDiaPage from '../pages/ApsDia';
 import AspMesPage from '../pages/AspMes';
 import ResumenPage from '../pages/Resumen';
+import AspMenAntPage from '../pages/ApsMesAnt';
 
 export const RouterMain = createBrowserRouter([
   {
@@ -24,10 +25,10 @@ export const RouterMain = createBrowserRouter([
         path: '/aspiracionMesActual',
         element: <AspMesPage />,
       },
-      // {
-      //   path: '/empleado/:id',
-      //   element: <InfoPersona />,
-      // },
+      {
+        path: '/aspiracionMesAnterior',
+        element: <AspMenAntPage />,
+      },
       // {
       //   path: '/marcacion',
       //   element: <Marcacion />,

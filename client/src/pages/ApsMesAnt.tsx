@@ -1,11 +1,17 @@
+import { useAuth } from '../auth/AuthContext'
 import { BarraProgressProduct } from '../components/ui/ProgresoProducto'
 import { HeaderComponent } from '../components/ui/headerComponent'
 import { useFecthMetasData } from '../hooks/useFetchData'
 import { sortData } from '../utils/funtions'
-import { MetasProps } from '../types/Metas'
 import { useMemo, useState } from 'react'
 
-function AspMenAntPage ({ codigo, zona }: MetasProps) {
+function AspMenAntPage () {
+  const { user, pdv } = useAuth()
+
+  const zona = pdv?.ZONA!
+  const codigo = user?.codigo!
+
+
   const { data, isLoading } = useFecthMetasData('/cumpMesAnt', zona, codigo)
   const [isAscending, setIsAscending] = useState(false)
 
