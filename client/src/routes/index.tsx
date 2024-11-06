@@ -6,6 +6,7 @@ import AspDiaPage from '../pages/ApsDia';
 import AspMesPage from '../pages/AspMes';
 import ResumenPage from '../pages/Resumen';
 import AspMenAntPage from '../pages/ApsMesAnt';
+import SugeridosPage from '../pages/Sugeridos';
 
 export const RouterMain = createBrowserRouter([
   {
@@ -29,10 +30,10 @@ export const RouterMain = createBrowserRouter([
         path: '/aspiracionMesAnterior',
         element: <AspMenAntPage />,
       },
-      // {
-      //   path: '/marcacion',
-      //   element: <Marcacion />,
-      // },
+      {
+        path: '/sugeridos',
+        element: <SugeridosPage />,
+      },
       // {
       //   path: '/audit-marcacion',
       //   element: <AuditMarcacion />,
