@@ -3,6 +3,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import Root from './Root';
 import NotFound from '../pages/NotFound';
 import AspDiaPage from '../pages/ApsDia';
+import AspMesPage from '../pages/AspMes';
+import ResumenPage from '../pages/Resumen';
 
 export const RouterMain = createBrowserRouter([
   {
@@ -12,12 +14,16 @@ export const RouterMain = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <ResumenPage />,
+      },
+      {
+        path: '/aspiracionDia',
         element: <AspDiaPage />,
       },
-      // {
-      //   path: '/empleados',
-      //   element: <PersonasView />,
-      // },
+      {
+        path: '/aspiracionMesActual',
+        element: <AspMesPage />,
+      },
       // {
       //   path: '/empleado/:id',
       //   element: <InfoPersona />,
