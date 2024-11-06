@@ -3,6 +3,8 @@ import { NavBar } from '../components/NavBar';
 import { useAuth } from '../auth/AuthContext';
 import LoginPage from '../pages/LoginForm';
 
+import { InfoPdvComponent } from '../components/InfoPdvComponent';
+
 export default function Root() {
   const { user } = useAuth()
 
@@ -14,7 +16,7 @@ export default function Root() {
         <NavBar />
       </nav>
       <main className='w-9/12  overflow-y-auto'>
-        {/* <InfoPdvComponent pdv={pdvInfo } /> */}
+        <InfoPdvComponent />
         <Outlet />
       </main>
     </>
