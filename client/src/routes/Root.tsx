@@ -1,7 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
+import { useAuth } from '../auth/AuthContext';
+import LoginPage from '../pages/LoginForm';
 
 export default function Root() {
+  const { user } = useAuth()
+
+  console.log(user);
+
+  if (user){
+    return <LoginPage />
+  }
 
   return (
     <>

@@ -7,7 +7,7 @@ import React from 'react'
 const InitialUser: User = { codigo: 0, estado: 'B', nombres: '', password: '', username: '' }
 
 export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User>>) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const login = async (token: string): Promise<void> => {
     if (typeof token === 'string') {
@@ -16,11 +16,11 @@ export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User
       try {
         const res = await getProfile({ token })
         setUser(res)
-        navigate('/')
+        // navigate('/')
       } catch (err) {
         console.error(err)
         localStorage.removeItem('tokenMetas')
-        navigate('/login')
+        // navigate('/login')
       }
     }
   }
@@ -28,7 +28,7 @@ export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User
   const logout = (): void => {
     setUser(InitialUser)
     localStorage.removeItem('tokenMetas')
-    navigate('/login')
+    // navigate('/login')
   }
 
   return { login, logout }

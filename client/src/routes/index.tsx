@@ -9,10 +9,10 @@ export const RouterMain = createBrowserRouter([
     element: <Root />,
     errorElement: <NotFound />,
     children: [
-      // {
-      //   index: true,
-      //   element: <Home />,
-      // },
+      {
+        index: true,
+        element: <h1>Test</h1>
+      },
       // {
       //   path: '/empleados',
       //   element: <PersonasView />,
