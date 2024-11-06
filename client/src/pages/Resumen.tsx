@@ -17,7 +17,7 @@ function ResumenPage () {
   useEffect(() => {
     if (user?.codigo !== 0) {
       // Fetch data immediately
-      axios.post('/metasDia', { user: user?.codigo })
+      axios.post('/metasDia', { codigo: user?.codigo })
         .then(res => setData(res.data))
         .catch(err => console.error(err))
 
