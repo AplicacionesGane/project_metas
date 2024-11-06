@@ -15,7 +15,7 @@ function ResumenPage () {
   useEffect(() => { axios.get(`/utilidades/${user?.username.slice(2)}`).then(res => setUtil(res.data)) }, [])
 
   useEffect(() => {
-    if (user?.codigo !== 0 && user?.codigo !== null) {
+    if (user?.codigo !== 0) {
       // Fetch data immediately
       axios.post('/metasDia', { user: user?.codigo })
         .then(res => setData(res.data))
@@ -52,7 +52,7 @@ function ResumenPage () {
       </section>
 
       <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
-        <RenderCategoria cat={pdv?.CATEGORIA || 'N/A'} ver={pdv?.CATEGORIA || 'N/A'} />
+        <RenderCategoria cat={pdv?.CATEGORIA!} ver={pdv?.CATEGORIA || 'N/A'} />
       </figure>
 
       {

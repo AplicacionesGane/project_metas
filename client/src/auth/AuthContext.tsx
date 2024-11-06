@@ -1,8 +1,9 @@
-import React, { createContext, ReactNode, useContext, useState, useMemo } from 'react';
+import React, { createContext, ReactNode, useContext, useState, useMemo, useEffect } from 'react';
 import { useAuthActions } from '../hooks/useAuthActions';
 import { type User } from '../types/User';
 import { useSucursalData } from '../hooks/useSucursalData';
 import { PdvInfo } from '../types/interfaces';
+import { getProfile } from '../services/LoginServices';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
@@ -21,6 +22,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const { login, logout } = useAuthActions(setUser);
   const { pdv } = useSucursalData(user?.codigo!);
+
+  // Revisamos si existe token
+  const token = localStorage.getItem('tokenMetas');
+  useEffect(() => {
+    if (token) {
+      getProfile({ token })
+        .then(user => setUser(user))
+        .catch(() => {
+          localStorage.removeItem('tokenMetas');
+          setUser(null);
+        });
+    }
+  }, [token]);
 
   // Usamos useMemo para evitar recrear el valor del contexto en cada renderizado
   const value = useMemo(() => ({ user, setUser, login, logout, pdv }), [user, login, logout]);
