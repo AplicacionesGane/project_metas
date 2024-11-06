@@ -52,7 +52,7 @@ function ResumenPage () {
       </section>
 
       <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
-        <RenderCategoria cat={pdv?.CATEGORIA!} ver={pdv?.CATEGORIA || 'N/A'} />
+        <RenderCategoria cat={pdv?.CATEGORIA!} ver={pdv?.VERSION || 'N/A'} />
       </figure>
 
       {
