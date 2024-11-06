@@ -5,6 +5,9 @@ import './index.css'
 
 import { RouterMain } from './routes/index.tsx'
 import { ThemeProvider } from './context/ThemeContext.tsx'
+import axios from 'axios'
+
+axios.defaults.baseURL = import.meta.env.VITE_URL_API
 
 createRoot(document.getElementById('root')!).render(
   <AuthProvider>

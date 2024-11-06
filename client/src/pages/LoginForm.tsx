@@ -4,7 +4,7 @@ import { useAuth } from '../auth/AuthContext'
 import { useState, FormEvent } from 'react'
 import { Toaster, toast } from 'sonner'
 
-function LoginPage () {
+function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 

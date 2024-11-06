@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from 'axios'
+import axios from 'axios'
 import { type User } from '../types/User'
 
 interface LoginResponse {
@@ -8,7 +8,7 @@ interface LoginResponse {
 
 export const getLogin = async ({ username, password }: { username: string, password: string }): Promise<LoginResponse> => {
   try {
-    const response: AxiosResponse<LoginResponse> = await axios.post('/login', { username, password })
+    const response = await axios.post<LoginResponse>('/login', { username, password })
     return response.data
   } catch (error) {
     console.error(error)

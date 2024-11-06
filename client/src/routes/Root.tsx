@@ -6,11 +6,7 @@ import LoginPage from '../pages/LoginForm';
 export default function Root() {
   const { user } = useAuth()
 
-  console.log(user);
-
-  if (user.codigo === 0 || user.nombres === '') {
-    return <LoginPage />
-  }
+  if (!user) return <LoginPage />
 
   return (
     <>
