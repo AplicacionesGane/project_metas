@@ -30,7 +30,7 @@ export function InfoPdvComponent() {
 
   return (
     <section className='grid grid-cols-2 w-full lg:text-sm xl:text-base 2xl:text-xl justify-around py-2 px-1 gap-2 dark:text-white'>
-      {pdv && <DataInfSucursal pdv={pdv} />}
+      <DataInfSucursal nombre={pdv?.NOMBRE || 'Desconocido'} supervisor={pdv?.SUPERVISOR || 'N/a'} />
       {
         pdv?.VERSION !== '0'
           ? (
