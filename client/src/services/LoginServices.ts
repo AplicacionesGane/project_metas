@@ -18,7 +18,7 @@ export const getLogin = async ({ username, password }: { username: string, passw
 
 export const getProfile = async ({ token }: { token: string }): Promise<User> => {
   try {
-    const response: AxiosResponse<User> = await axios.get('/profile', { headers: { Authorization: `Bearer ${token}` } })
+    const response = await axios.get<User>('/profile', { headers: { Authorization: `Bearer ${token}` } })
     return response.data
   } catch (error) {
     console.error(error)

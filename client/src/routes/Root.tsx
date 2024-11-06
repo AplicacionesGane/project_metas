@@ -8,7 +8,7 @@ export default function Root() {
 
   console.log(user);
 
-  if (user){
+  if (user.codigo === 0 || user.nombres === '') {
     return <LoginPage />
   }
 

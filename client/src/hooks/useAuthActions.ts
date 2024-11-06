@@ -1,12 +1,9 @@
 // useAuthActions.ts
 import { getProfile } from '../services/LoginServices'
-import { useNavigate } from 'react-router-dom'
 import { User } from '../types/User'
 import React from 'react'
 
-const InitialUser: User = { codigo: 0, estado: 'B', nombres: '', password: '', username: '' }
-
-export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User>>) => {
+export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User | null>>) => {
   // const navigate = useNavigate()
 
   const login = async (token: string): Promise<void> => {
@@ -14,8 +11,8 @@ export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User
       localStorage.setItem('tokenMetas', token)
 
       try {
-        const res = await getProfile({ token })
-        setUser(res)
+        const user = await getProfile({ token })
+        setUser(user)
         // navigate('/')
       } catch (err) {
         console.error(err)
@@ -26,7 +23,7 @@ export const useAuthActions = (setUser: React.Dispatch<React.SetStateAction<User
   }
 
   const logout = (): void => {
-    setUser(InitialUser)
+    setUser(null)
     localStorage.removeItem('tokenMetas')
     // navigate('/login')
   }
