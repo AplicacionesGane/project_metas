@@ -40,7 +40,9 @@ export async function Login(req: Request, res: Response) {
       return res.status(401).json({ message: 'Usuario inactivo' })
     }
 
-    const token = jwt.sign(user.dataValues, JWT_SECRET, { expiresIn: '2h' })
+    const { password: _, ...userWithoutPassword } = user.dataValues
+
+    const token = jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h' })
 
     return res.status(200).json({ auth: true, token })
 
