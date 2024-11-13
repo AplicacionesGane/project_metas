@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function ResumenPage () {
-  const { pdv, user } = useAuth()
-  const [data, setData] = useState({ venta_actual: 0, aspiracion: 0, cumplimiento: 0 })
+  const { user, pdv } = useAuth()
+  const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
   const [util, setUtil] = useState<{ cc_asesor: string, comision: number } | null>(null)
 
   useEffect(() => { axios.get(`/utilidades/${user?.username.slice(2)}`).then(res => setUtil(res.data)) }, [])
 
   useEffect(() => {
-    if (user?.codigo !== 0) {
+    if (user?.codigo !== 0 || pdv?.ZONA !== undefined) {
       // Fetch data immediately
       axios.post('/metasDia', { codigo: user?.codigo, zona: pdv?.ZONA })
         .then(res => setData(res.data))
@@ -31,7 +31,7 @@ function ResumenPage () {
       // Clear interval on component unmount
       return () => clearInterval(intervalId)
     }
-  }, [user?.codigo])
+  }, [user?.codigo, pdv?.ZONA])
 
   return (
     <section className='w-full px-1 grid grid-cols-3 text-center font-semibold rounded-lg gap-2 text-gray-700 dark:text-white'>
@@ -43,7 +43,7 @@ function ResumenPage () {
 
         <ProgressCircleComponent color={determineProgressColor(data.cumplimiento)} porcentaje={data.cumplimiento} />
 
-        <VentasDiaResumen venta={data.venta_actual} aspiracion={data.aspiracion} />
+        <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 
         <div className='w-full flex items-center rounded-lg justify-center py-2 dark:bg-slate-200'>
           <GenerateQR codigo={user?.codigo || 0} nombres={user?.nombres || 'undefined'} username={user?.username || 'undefined'} />
