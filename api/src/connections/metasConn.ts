@@ -11,7 +11,6 @@ const MetasConn = new Sequelize(METAS_DB_DATABASE, METAS_DB_USER, METAS_DB_PASSW
   host: METAS_DB_HOST,
   port: parseInt(METAS_DB_PORT),
   dialect: 'mysql',
-  logging: false,
   timezone: '-05:00',
 })
 
