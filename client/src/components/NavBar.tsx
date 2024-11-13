@@ -20,7 +20,7 @@ export function NavBar () {
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
       <figure>
-        <img src='/gane.webp' alt='logo gane' className='w-36 2xl:w-44' />
+        <img src='/logogane.webp' alt='logo gane' className='w-36 2xl:w-44' />
       </figure>
 
       <li className='flex flex-col gap-4 2xl:gap-6 3xl:gap-8 font-semibold dark:text-white'>
