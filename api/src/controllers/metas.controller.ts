@@ -5,53 +5,25 @@ import { MetasMesActProd } from '../models/ventaMesActProd.model'
 import { MetasProducts } from '../models/metasproducts.model'
 import { vtaMesAntCump } from '../models/vtaMesAntPro.model'
 
+import { getVentaActualProductos, getAspiracionDiaActual } from '../services/metadiaresumen'
 import { calcularPorcentaje } from '../utils/funtionsReutilizables'
 import { Utilidades } from '../models/utilidades.model'
-import { Request, Response } from "express"
+import { Request, Response } from 'express'
 import { escape } from 'querystring'
-import { fn } from "sequelize"
+import { fn } from 'sequelize'
 
 export const metasDelDia = async (req: Request, res: Response) => {
-  const { codigo } = req.body
+  const { codigo, zona } = req.body
 
-  if (!codigo) return res.status(400).json({ message: 'Faltan codigo' })
-
-  // !!: Revisar codigo ya que es posible una sql injection en la variable codigo se debe intentar escapar y/o validar sanitizar ...
-  // TODO: por el momento se usara escape de querystring sin emabrgo toca mejorar este aspecto en el futuro
+  if (!codigo && !zona) return res.status(400).json({ message: 'Se requiere número de sucursal y zona' })
 
   try {
-    await MetasProducts.sync()
-    const ventaProductos = await MetasProducts.findOne({
-      attributes: ['CHANCE', 'PAGAMAS', 'PAGATODO', 'GANE5', 'PATA_MILLONARIA', 'DOBLECHANCE', 'CHANCE_MILLONARIO', 'PROMO1'],
-      where: { SUCURSAL: escape(codigo), FECHA: fn('CURDATE') }
-    })
+    const ventaActual = await getVentaActualProductos(codigo, zona)
+    const aspiracionDia = await getAspiracionDiaActual(codigo, zona)
 
-    if (!ventaProductos) return res.status(404).json({ message: 'No se encontraron metas para el codigo y fecha proporcionados' })
+    const porcentajeCumplimiento = calcularPorcentaje(ventaActual, aspiracionDia)
 
-    // TODO: mejorar esta logica se podria crear una funcion reutilizable para sumar los productos
-    // ?? Suman productos hace referencia a la venta actual del dia
-    const ventaActualSumProductos = (
-      ventaProductos.dataValues.CHANCE + ventaProductos.dataValues.PAGAMAS +
-      ventaProductos.dataValues.PAGATODO + ventaProductos.dataValues.GANE5 +
-      ventaProductos.dataValues.PATA_MILLONARIA + ventaProductos.dataValues.DOBLECHANCE +
-      ventaProductos.dataValues.CHANCE_MILLONARIO + ventaProductos.dataValues.PROMO1
-    )
-
-    const promediosDiarios = await MetasProducts.findOne({
-      attributes: ['PROMEDIO_DIARIO_CHANCE', 'PROMEDIO_DIARIO_PAGAMAS', 'PROMEDIO_DIARIO_PAGATODO', 'PROMEDIO_DIARIO_GANE5', 'PROMEDIO_DIARIO_PATAMI', 'PROMEDIO_DIARIO_DOBLECHANCE', 'PROMEDIO_DIARIO_CHMILL', 'META_PROMO1'],
-      where: { SUCURSAL: escape(codigo), FECHA: fn('CURDATE') }
-    })
-
-    const aspiracionDia = (
-      promediosDiarios?.dataValues.PROMEDIO_DIARIO_CHANCE + promediosDiarios?.dataValues.PROMEDIO_DIARIO_PAGAMAS +
-      promediosDiarios?.dataValues.PROMEDIO_DIARIO_PAGATODO + promediosDiarios?.dataValues.PROMEDIO_DIARIO_GANE5 +
-      promediosDiarios?.dataValues.PROMEDIO_DIARIO_PATAMI + promediosDiarios?.dataValues.PROMEDIO_DIARIO_DOBLECHANCE +
-      promediosDiarios?.dataValues.PROMEDIO_DIARIO_CHMILL + promediosDiarios?.dataValues.META_PROMO1
-    )
-
-    const porcentajeCumplimiento = calcularPorcentaje(ventaActualSumProductos, aspiracionDia)
-
-    return res.status(200).json({ venta_actual: ventaActualSumProductos, aspiracion: aspiracionDia, cumplimiento: porcentajeCumplimiento })
+    return res.status(200).json({ ventaActual, aspiracionDia, cumplimiento: porcentajeCumplimiento })
   } catch (error) {
     return res.status(500).json({ message: 'Error al obtener las metas', error })
   }
@@ -68,6 +40,8 @@ export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
       attributes: ReturnCompanyAtributesMetProducts(zona), // select * {} 
       where: { SUCURSAL: escape(codigo as string), FECHA: fn('CURDATE') }
     })
+
+    if (!metas) return res.status(404).json({ error: 'No se encontraron metas para el código y zona proporcionados' })
 
     const result = ReturnArrayMetProducts(zona, metas?.dataValues)
 
@@ -106,7 +80,7 @@ export const vtaMesAntPro = async (req: Request, res: Response) => {
 
   // TODO: en la bd el mes 1 es enero, pero en js el mes 0 es enero, por lo que se debe hacer un ajuste para traer el mes anterior
   let getMesAnt = new Date().getMonth()
-  if(getMesAnt === 0) getMesAnt = 12
+  if (getMesAnt === 0) getMesAnt = 12
 
   try {
     await vtaMesAntCump.sync()
@@ -126,7 +100,7 @@ export const vtaMesAntPro = async (req: Request, res: Response) => {
   }
 }
 
-export const getUtilidades = async (req:Request, res:Response) => {
+export const getUtilidades = async (req: Request, res: Response) => {
   const { cedula } = req.params as { cedula: string }
 
   if (!cedula) {
