@@ -17,13 +17,13 @@ function ResumenPage () {
   useEffect(() => {
     if (user?.codigo !== 0) {
       // Fetch data immediately
-      axios.post('/metasDia', { codigo: user?.codigo })
+      axios.post('/metasDia', { codigo: user?.codigo, zona: pdv?.ZONA })
         .then(res => setData(res.data))
         .catch(err => console.error(err))
 
       // Then fetch data every 5 minutes
       const intervalId = setInterval(() => {
-        axios.post('/metasDia', { user: user?.codigo })
+        axios.post('/metasDia', { user: user?.codigo, zona: pdv?.ZONA })
           .then(res => setData(res.data))
           .catch(err => console.error(err))
       }, 5 * 60 * 1000) // 5 minutes in milliseconds
