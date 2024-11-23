@@ -1,7 +1,7 @@
 import { DataInfSucursal } from './ui/DataInfPdvComp'
 import { useAuth } from '../auth/AuthContext'
 
-export function InfoPdvComponent() {
+function InfoPdvComponent() {
   const { pdv } = useAuth()
   
   return (
@@ -26,3 +26,5 @@ export function InfoPdvComponent() {
     </section>
   )
 }
+
+export default InfoPdvComponent

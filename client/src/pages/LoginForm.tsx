@@ -1,17 +1,21 @@
-import { UserIcon, LockIcon } from '../components/icons'
+import { RiUserLine, RiLockLine } from '@remixicon/react'
+import { Button } from '../components/tremor/Button'
+import { Input } from '../components/tremor/Input'
 import { getLogin } from '../services/LoginServices'
 import { useAuth } from '../auth/AuthContext'
-import { useState, FormEvent } from 'react'
 import { Toaster, toast } from 'sonner'
+import { FormEvent } from 'react'
 
 function LoginPage() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const { login } = useAuth()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+
+    const form = e.target as HTMLFormElement
+
+    const username = form.username.value
+    const password = form.password.value
 
     getLogin({ username, password })
       .then(res => {
@@ -34,33 +38,37 @@ function LoginPage() {
           <img src='/logogane.webp' alt='Logo Gane' width={180} />
         </figure>
 
-        <article className='w-full flex flex-col gap-2'>
+        <article className='w-full flex flex-col'>
           <label className='font-semibold'>Usuario</label>
-          <div className='flex items-center w-full justify-around gap-4'>
-            <UserIcon />
-            <input
-              onChange={e => setUsername(e.target.value)} name='username' type='text' placeholder='CV1118*****'
-              className='w-full p-2 rounded-md border-none outline-none' required autoComplete='username'
+          <div className='flex items-center'>
+            <RiUserLine />
+            <Input
+              className='w-full p-2 rounded-md border-none outline-none' 
+              placeholder='CV1118*****'
+              autoComplete='username'
+              name='username' 
+              type='text' 
+              required 
             />
           </div>
         </article>
 
-        <article className='w-full flex flex-col gap-2 mb-4'>
+        <article className='w-full flex flex-col'>
           <label className='font-semibold'>Contraseña</label>
-          <div className='flex items-center w-full justify-around gap-4'>
-            <LockIcon />
-            <input
-              onChange={e => setPassword(e.target.value)} name='password' type='password' placeholder='**********'
+          <div className='flex items-center'>
+            <RiLockLine />
+            <Input
               className='w-full p-2 rounded-md border-none outline-none' required
+              placeholder='**********'
+              name='password' 
+              type='password' 
             />
           </div>
         </article>
 
-        <button
-          className='p-2 bg-blue-700 rounded-lg text-white font-semibold shadow-xl hover:bg-green-500 transition duration-300 ease-in-out cursor-pointer'
-        >
+        <Button type='submit' >
           Iniciar Sesión
-        </button>
+        </Button>
       </form>
 
       <Toaster richColors position='top-right' duration={5000} visibleToasts={3} />
