@@ -1,11 +1,12 @@
 import { MetasProducto } from '../types/Metas'
 
 export const determineProgressColor = (porcentaje: number) => {
-  if (porcentaje <= 49.99) return 'red'
-  if (porcentaje <= 94.99) return 'yellow'
-  if (porcentaje <= 99.99) return 'sky'
-  if (porcentaje >= 99.99) return 'green'
-  return 'gray'
+
+  if (porcentaje === undefined) return 'bg-gray-100'
+  if (porcentaje < 40) return 'bg-red-100'
+  if (porcentaje >= 40 && porcentaje < 70) return 'bg-yellow-100'
+  if (porcentaje >= 70 && porcentaje < 99) return 'bg-blue-100'
+  if (porcentaje > 99) return 'bg-green-100'
 }
 
 export const ObtenerMes = () => {

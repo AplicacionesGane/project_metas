@@ -1,5 +1,5 @@
 import { determineProgressColor } from '../../utils/funtions'
-import { ProgressCircle } from '../tremor/ProgressCircle'
+import { ProgressBar } from '../tremor/ProgressBar'
 import { Card } from '../tremor/Card'
 
 
@@ -16,10 +16,22 @@ export function BarraProgressProduct ({ pruducto, ventaActual, aspiracionDia, pe
   const ventaActualFormateada = ventaActual.toLocaleString('es-CO')
   const aspiracionDiaFormateada = aspiracionDia.toLocaleString('es-CO')
 
-  const progressColor = determineProgressColor(percentage)
+  let colorVarian: "default" | "neutral" | "warning" | "error" | "cyan" | "success" | undefined;
+
+  if (percentage < 40) {
+    colorVarian = 'error'
+  } else if (percentage >= 40 && percentage < 70) {
+    colorVarian = 'warning'
+  } else if (percentage >= 70 && percentage < 99) {
+    colorVarian = 'default'
+  } else if (percentage > 99) {
+    colorVarian = 'success'
+  }
+
+  
 
   return (
-    <Card className={`mx-auto bg-${progressColor}-100 text-sm flex flex-col gap-2 dark:text-white shadow-md`}>
+    <Card className={determineProgressColor(percentage)}>
 
       <h2 className='flex justify-between'>
         <span className='font-bold'>{pruducto}</span>
@@ -40,7 +52,7 @@ export function BarraProgressProduct ({ pruducto, ventaActual, aspiracionDia, pe
       </article>
 
       <section className='flex justify-center items-center gap-4'>
-        <ProgressCircle value={percentage} color={progressColor} className='' showAnimation />
+        <ProgressBar value={percentage} variant={colorVarian} className='' showAnimation />
         <span>{percentage}%</span>
       </section>
 

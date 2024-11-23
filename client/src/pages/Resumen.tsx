@@ -40,7 +40,7 @@ function ResumenPage () {
 
       <section className='col-span-1 flex flex-col gap-2'>
 
-        <ProgressCircleComponent porcentaje={100} />
+        <ProgressCircleComponent porcentaje={data.cumplimiento} />
 
         <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 
