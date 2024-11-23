@@ -1,7 +1,6 @@
 import { ProgressCircleComponent } from '../components/ui/ProgressCircle'
 import { VentasDiaResumen } from '../components/ui/VentaDiaResumen'
 import { RenderCategoria } from '../components/ui/RenderCategoria'
-import { determineProgressColor } from '../utils/funtions'
 import { GenerateQR } from '../components/ui/GeneraQrCod'
 import { useAuth } from '../auth/AuthContext'
 import { useEffect, useState } from 'react'
@@ -41,7 +40,7 @@ function ResumenPage () {
 
       <section className='col-span-1 flex flex-col gap-2'>
 
-        <ProgressCircleComponent color={determineProgressColor(data.cumplimiento)} porcentaje={data.cumplimiento} />
+        <ProgressCircleComponent porcentaje={100} />
 
         <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 

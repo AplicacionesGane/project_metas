@@ -1,5 +1,7 @@
 import { determineProgressColor } from '../../utils/funtions'
-import { Card, ProgressBar } from '@tremor/react'
+import { ProgressCircle } from '../tremor/ProgressCircle'
+import { Card } from '../tremor/Card'
+
 
 interface BarraProgressProductProps {
   pruducto: string
@@ -38,7 +40,7 @@ export function BarraProgressProduct ({ pruducto, ventaActual, aspiracionDia, pe
       </article>
 
       <section className='flex justify-center items-center gap-4'>
-        <ProgressBar value={percentage} color={progressColor} className='' showAnimation />
+        <ProgressCircle value={percentage} color={progressColor} className='' showAnimation />
         <span>{percentage}%</span>
       </section>
 
