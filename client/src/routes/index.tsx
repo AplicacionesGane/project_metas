@@ -15,6 +15,7 @@ export const RouterMain = createBrowserRouter([
     element: <Root />,
     errorElement: <NotFound />,
     children: [
+      /*
       {
         index: true,
         element: <ResumenPage />,
@@ -39,6 +40,7 @@ export const RouterMain = createBrowserRouter([
         path: '/historial',
         element: <HistCatPage />,
       },
+      */
     ]
   }
 ]);

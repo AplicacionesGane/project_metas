@@ -10,8 +10,12 @@ export default function Root() {
 
   if (!user) return <LoginPage />
 
+  return (<div>test</div>)
+
+  /*
   return (
     <>
+    
       <nav className='w-3/12 bg-slate-200 dark:bg-slate-900'>
         <NavBar />
       </nav>
@@ -22,4 +26,5 @@ export default function Root() {
     </>
 
   )
+    */
 }
