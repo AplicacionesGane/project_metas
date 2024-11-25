@@ -1,6 +1,8 @@
-import { calcularPorcentaje, determineProgressColor } from '../utils/progress'
+import { calcularPorcentaje } from '../utils/progress'
+import { colorBackground, getColorVariant } from '../utils/funtions'
+import { ProgressBar } from '../components/tremor/ProgressBar'
+import { Card } from './tremor/Card'
 import { Product, Sugeridos } from '../types/Metas'
-import { Card, ProgressBar } from '@tremor/react'
 
 const productMetaMap = {
   CHANCE: 500,
@@ -24,10 +26,11 @@ function DeterminarMeta (product: Product, meta: number): number {
 
 export function ProgressSugerido ({ data }: { data: Sugeridos}) {
   const porcentaje = calcularPorcentaje(data?.VTA_SUGERIDO, data?.META_SUG1)
-  const color = determineProgressColor(parseFloat(porcentaje))
+  const color = colorBackground(parseFloat(porcentaje))
+  const variant = getColorVariant(parseFloat(porcentaje))
 
   return (
-    <Card className={`mx-auto mt-2 w-full flex flex-col gap-4 bg-${color}-200`}>
+    <Card className={`mx-auto mt-2 w-full flex flex-col gap-4 ${color}`}>
       <article className='flex gap-4 items-center justify-center'>
         <h2 className='font-semibold text-lg'>PRODUCTO SUGERIDO {data.SUGERIDO1 || 'Aun No Se Ha Definido'}</h2>
         <span>-</span>
@@ -43,7 +46,7 @@ export function ProgressSugerido ({ data }: { data: Sugeridos}) {
         <p className='text-center  dark:text-dark-tremor-content flex items-center justify-start gap-4'>
           <p> <span>Progeso Actual: </span> &bull; {porcentaje || 0} %</p>
         </p>
-        <ProgressBar value={parseFloat(porcentaje)} color={color} className='mt-3' />
+        <ProgressBar value={parseFloat(porcentaje)} variant={variant} className='mt-3' />
       </article>
 
       <article>

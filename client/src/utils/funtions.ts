@@ -1,12 +1,27 @@
 import { MetasProducto } from '../types/Metas'
 
-export const determineProgressColor = (porcentaje: number) => {
-  if (porcentaje <= 49.99) return 'red'
-  if (porcentaje <= 94.99) return 'yellow'
-  if (porcentaje <= 99.99) return 'sky'
-  if (porcentaje >= 99.99) return 'green'
-  return 'gray'
+export const colorBackground = (porcentaje: number) => {
+  if (porcentaje === undefined) return 'bg-gray-50'
+  if (porcentaje < 40) return 'bg-red-50'
+  if (porcentaje >= 40 && porcentaje < 90) return 'bg-yellow-50'
+  if (porcentaje >= 90 && porcentaje < 99) return 'bg-blue-50'
+  if (porcentaje > 99) return 'bg-green-50'
 }
+
+export const getColorVariant = (percentage: number): "default" | "neutral" | "warning" | "error" | "cyan" | "success" | undefined => {
+  if (percentage < 40) {
+    return 'error'
+  } else if (percentage >= 40 && percentage < 90) {
+    return 'warning'
+  } else if (percentage >= 90 && percentage < 99) {
+    return 'default'
+  } else if (percentage >= 99) {
+    return 'success'
+  }
+  return undefined
+}
+
+export const formatPrice = (number: number) => `$ ${Intl.NumberFormat("es-CO").format(number).toString()}`
 
 export const ObtenerMes = () => {
   const fecha = new Date()

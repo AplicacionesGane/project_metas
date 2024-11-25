@@ -1,13 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { Loading } from '../components/Loading'
 
 import Root from './Root';
+import { lazy, Suspense } from 'react';
 import NotFound from '../pages/NotFound';
-import AspDiaPage from '../pages/ApsDia';
-import AspMesPage from '../pages/AspMes';
-import ResumenPage from '../pages/Resumen';
-import AspMenAntPage from '../pages/ApsMesAnt';
-import SugeridosPage from '../pages/Sugeridos';
-import HistCatPage from '../pages/HistCate';
+
+const AspDiaPage = lazy(() => import('../pages/ApsDia'));
+const AspMesPage = lazy(() => import('../pages/AspMes'));
+const ResumenPage = lazy(() => import('../pages/Resumen'));
+const HistCatPage = lazy(() => import('../pages/HistCate'));
+const SugeridosPage = lazy(() => import('../pages/Sugeridos'));
+const AspMenAntPage = lazy(() => import('../pages/ApsMesAnt'));
 
 export const RouterMain = createBrowserRouter([
   {
@@ -17,27 +20,50 @@ export const RouterMain = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ResumenPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ResumenPage />
+          </Suspense>)
       },
       {
         path: '/aspiracionDia',
-        element: <AspDiaPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AspDiaPage />
+          </Suspense>
+        )
       },
       {
         path: '/aspiracionMesActual',
-        element: <AspMesPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AspMesPage />
+          </Suspense>
+        )
       },
       {
         path: '/aspiracionMesAnterior',
-        element: <AspMenAntPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AspMenAntPage />
+          </Suspense>
+        )
       },
       {
         path: '/sugeridos',
-        element: <SugeridosPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SugeridosPage />
+          </Suspense>
+        )
       },
       {
         path: '/historial',
-        element: <HistCatPage />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <HistCatPage />
+          </Suspense>
+        )
       },
     ]
   }

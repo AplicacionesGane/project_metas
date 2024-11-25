@@ -2,7 +2,7 @@ import { CalendarAntIcon, CalendarIcon, Dashboard, DocsIcon, SunIcon, CategoriaI
 import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
-import { Switch } from '@tremor/react'
+import { Switch } from '../components/tremor/Switch'
 
 const navLinks = [
   { id: 1, path: '/', icon: Dashboard, label: 'Resumen De Aspiración' },
@@ -13,7 +13,7 @@ const navLinks = [
   { id: 6, path: '/sugeridos', icon: DocsIcon, label: 'Sugeridos' }
 ]
 
-export function NavBar () {
+function NavBar () {
   const { darkMode, toggleTheme } = useTheme()
   const { logout } = useAuth()
 
@@ -30,7 +30,7 @@ export function NavBar () {
       <li className='flex flex-col items-center gap-4'>
         <section className={`flex items-center gap-2 px-4 py-2 ${darkMode ? 'bg-slate-200' : 'bg-slate-600 '} rounded-md`}>
           {darkMode ? <p className='text-white font-semibold dark:text-black'>Cambiar Modo Claro</p> : <p className='text-white font-semibold dark:text-black'>Cambiar Modo Oscuro</p>}
-          <Switch id='switch' name='switch' checked={darkMode} onChange={toggleTheme} className='pt-2' />
+          <Switch checked={darkMode} onCheckedChange={toggleTheme} />
         </section>
 
         <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all' onClick={logout}>
@@ -42,3 +42,5 @@ export function NavBar () {
     </ul>
   )
 }
+
+export default NavBar

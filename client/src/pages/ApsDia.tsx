@@ -1,11 +1,11 @@
-import { BarraProgressProduct } from '../components/ui/ProgresoProducto'
+import { BarraProgressProduct } from '../components/ProgresoProducto'
 import { HeaderComponent } from '../components/ui/headerComponent'
 import { useFecthMetasData } from '../hooks/useFetchData'
 import { sortData } from '../utils/funtions'
 import { useAuth } from '../auth/AuthContext'
 import { useMemo, useState } from 'react'
 
-function AspDiaPage () {
+function AspDiaPage() {
   const { pdv, user } = useAuth()
 
   const { data, isLoading } = useFecthMetasData('/cumpDiaProd', pdv?.ZONA!, user?.codigo!)
@@ -20,12 +20,12 @@ function AspDiaPage () {
       <HeaderComponent setIsAscending={setIsAscending} isLoading={isLoading} isAscending={isAscending} text='Día Actual' />
       <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {
-            sortedData.map(meta => (
-              <BarraProgressProduct
-                key={meta.id} pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
-                percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
-              />
-            ))
+          sortedData.map(meta => (
+            <BarraProgressProduct
+              key={meta.id} pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
+              percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
+            />
+          ))
         }
       </article>
     </section>
