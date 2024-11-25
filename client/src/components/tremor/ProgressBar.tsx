@@ -70,7 +70,7 @@ const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     return (
       <div
         ref={forwardedRef}
-        className={cx('flex w-full items-center', className)}
+        className={cx('flex w-full items-center shadow', className)}
         role='progressbar'
         aria-label='Progress bar'
         aria-valuenow={value}

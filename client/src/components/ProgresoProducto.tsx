@@ -1,4 +1,4 @@
-import { formatPrice, getColorVariant } from '../utils/funtions'
+import { formatPrice, getColorVariant, colorBackground } from '../utils/funtions'
 import { ProgressBar } from './tremor/ProgressBar'
 import { Card } from './tremor/Card'
 import { Badge } from './tremor/Bagde'
@@ -15,25 +15,26 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
   const venta = formatPrice(ventaActual)
   const aspiracion = formatPrice(aspiracionDia)
   const colorVariant = getColorVariant(percentage)
-  
+  const background = colorBackground(percentage)
+
   return (
-    <Card className={`space-y-2`}>
+    <Card className={`${background} space-y-2`}>
 
       <h2 className='flex justify-between'>
-        <span className='text-lg font-bold'>{pruducto}</span>
+        <span className='text-lg font-bold underline'>{pruducto}</span>
         <span>Aspiración</span>
       </h2>
 
       <article className='flex justify-between'>
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold' variant='default'>{ventaActual}</Badge> </p>
-            : <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold' variant='default'>{venta}</Badge> </p>
+            ? <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold shadow' variant='default'>{ventaActual}</Badge> </p>
+            : <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold shadow' variant='default'>{venta}</Badge> </p>
         }
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'><Badge className='font-semibold' variant='success'>{aspiracionDia}</Badge> </p>
-            : <p className='pr-1 text-base'><Badge className='font-semibold' variant='success'>{aspiracion}</Badge></p>
+            ? <p className='pr-1 text-base'><Badge className='font-semibold shadow' variant='success'>{aspiracionDia}</Badge> </p>
+            : <p className='pr-1 text-base'><Badge className='font-semibold shadow' variant='success'>{aspiracion}</Badge></p>
         }
       </article>
 
