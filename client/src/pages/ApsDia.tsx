@@ -1,4 +1,4 @@
-import { BarraProgressProduct } from '../components/ui/ProgresoProducto'
+import { BarraProgressProduct } from '../components/ProgresoProducto'
 import { HeaderComponent } from '../components/ui/headerComponent'
 import { useFecthMetasData } from '../hooks/useFetchData'
 import { sortData } from '../utils/funtions'
