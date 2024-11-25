@@ -1,13 +1,13 @@
-FROM node:slim
+FROM node:lts
 
 # Create app directory
 WORKDIR /app
 
 # Copy All files and Install app dependencies and build
 COPY . .
-RUN yarn && yarn build
+RUN npm install && node --run build
 
 # Expose port and start application
 EXPOSE 4020
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
