@@ -26,8 +26,8 @@ pipeline {
       stage('install dependencies') {
         steps {
           script {
-            sh 'cd ./client && yarn'
-            sh 'cd ./client && yarn build'
+            sh 'cd ./client && npm install'
+            sh 'cd ./client && node --run build'
           }
         }
       }
