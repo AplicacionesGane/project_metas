@@ -1,19 +1,19 @@
 import { MetasProducto } from '../types/Metas'
 
 export const colorBackground = (porcentaje: number) => {
-  if (porcentaje === undefined) return 'bg-gray-100'
-  if (porcentaje < 40) return 'bg-red-100'
-  if (porcentaje >= 40 && porcentaje < 90) return 'bg-yellow-100'
-  if (porcentaje >= 90 && porcentaje < 99) return 'bg-blue-100'
-  if (porcentaje > 99) return 'bg-green-100'
+  if (porcentaje === undefined) return 'bg-gray-50'
+  if (porcentaje < 40) return 'bg-red-50'
+  if (porcentaje >= 40 && porcentaje < 90) return 'bg-yellow-50'
+  if (porcentaje >= 90 && porcentaje < 99) return 'bg-blue-50'
+  if (porcentaje > 99) return 'bg-green-50'
 }
 
 export const getColorVariant = (percentage: number): "default" | "neutral" | "warning" | "error" | "cyan" | "success" | undefined => {
   if (percentage < 40) {
     return 'error'
-  } else if (percentage >= 40 && percentage < 70) {
+  } else if (percentage >= 40 && percentage < 90) {
     return 'warning'
-  } else if (percentage >= 70 && percentage < 99) {
+  } else if (percentage >= 90 && percentage < 99) {
     return 'default'
   } else if (percentage >= 99) {
     return 'success'

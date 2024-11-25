@@ -13,28 +13,28 @@ const progressBarVariants = tv({
   variants: {
     variant: {
       default: {
-        background: 'bg-blue-200 dark:bg-blue-500/30',
-        bar: 'bg-blue-500 dark:bg-blue-500',
+        background: 'bg-blue-100 dark:bg-blue-400/30',
+        bar: 'bg-blue-500 dark:bg-blue-400',
       },
       neutral: {
-        background: 'bg-gray-200 dark:bg-gray-500/40',
-        bar: 'bg-gray-500 dark:bg-gray-500',
+        background: 'bg-gray-100 dark:bg-gray-400/40',
+        bar: 'bg-gray-400 dark:bg-gray-400',
       },
       warning: {
-        background: 'bg-yellow-200 dark:bg-yellow-500/30',
-        bar: 'bg-yellow-500 dark:bg-yellow-500',
+        background: 'bg-yellow-100 dark:bg-yellow-400/30',
+        bar: 'bg-yellow-400 dark:bg-yellow-400',
       },
       cyan: {
-        background: 'stroke-cyan-100 dark:stroke-cyan-500/30',
-        circle: 'stroke-cyan-500 dark:stroke-cyan-500',
+        background: 'stroke-cyan-100 dark:stroke-cyan-400/30',
+        circle: 'stroke-cyan-400 dark:stroke-cyan-400',
       },
       error: {
-        background: 'bg-red-200 dark:bg-red-500/30',
-        bar: 'bg-red-500 dark:bg-red-500',
+        background: 'bg-red-100 dark:bg-red-400/30',
+        bar: 'bg-red-500 dark:bg-red-400',
       },
       success: {
-        background: 'bg-emerald-200 dark:bg-emerald-500/30',
-        bar: 'bg-emerald-500 dark:bg-emerald-500',
+        background: 'bg-emerald-100 dark:bg-emerald-400/30',
+        bar: 'bg-emerald-400 dark:bg-emerald-400',
       },
     },
   },
