@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const ENTORNO = process.env.ENV as string;
+const TOKEN_NAME = process.env.TOKEN_NAME as string;
 
 export async function getUsers(req: Request, res: Response) {
   try {
@@ -48,7 +49,7 @@ export async function Login(req: Request, res: Response) {
         return res.status(500).json({ message: 'Error al generar el token', err })
       }
 
-      return res.cookie('tokenMetasGane', token, {
+      return res.cookie(TOKEN_NAME, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
@@ -76,7 +77,7 @@ export async function getProfile(req: Request, res: Response) {
 
 export async function Logout(req: Request, res: Response) {
   try {
-    return res.cookie('tokenMetasGane', '', {
+    return res.cookie(TOKEN_NAME, '', {
       httpOnly: true,
       expires: new Date(0),
       sameSite: 'lax',

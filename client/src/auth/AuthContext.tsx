@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useSucursalData } from '../hooks/useSucursalData';
 import { getProfile } from '../services/LoginServices';
 import { PdvInfo } from '../types/interfaces';
@@ -12,6 +12,7 @@ export interface AuthContextType {
   pdv: PdvInfo | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   user: User | null;
+  checkAuth: () => void
 }
 
 // Creamos el contexto de autenticación con un valor inicial nulo
@@ -37,8 +38,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     axios.get('/logout')
   }
 
+  const checkAuth = async () => {
+    try {
+      const dataUser = await getProfile();
+      setUser(dataUser);
+    } catch (error) {
+      console.error('No se pudo verificar la autenticación', error);
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+
   return (
-    <AuthContext.Provider value={{ login, logout, pdv, setUser, user }}>
+    <AuthContext.Provider value={{ login, logout, pdv, setUser, user, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

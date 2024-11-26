@@ -9,9 +9,10 @@ declare module 'express-serve-static-core' {
 }
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
+const TOKEN_NAME = process.env.TOKEN_NAME as string;
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction) {
-  const token = req.cookies.tokenMetasGane as string;
+  const token = req.cookies[TOKEN_NAME] as string;
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
