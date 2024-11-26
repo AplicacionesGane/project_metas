@@ -1,5 +1,3 @@
-import { UserPayload } from '../types/interfaces';
-import { HistLogin } from '../models/hist-login'
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import jwt from 'jsonwebtoken';
@@ -43,15 +41,20 @@ export async function Login(req: Request, res: Response) {
 
     const { password: _, ...userWithoutPassword } = user.dataValues
 
-    jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h'}, (err, token) => {
+    jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: 'Error al generar el token', err })
       }
-      
-      return res.cookie('tokenMetasGane', token, { sameSite: 'lax', secure: ENTORNO !== 'dev' ? true : false })
+
+      return res.cookie('tokenMetasGane', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 2,
+        sameSite: 'lax',
+        secure: ENTORNO !== 'dev' ? true : false
+      })
         .status(200)
-        .json({ message: 'Usuario autenticado correctamente'})
+        .json({ message: 'Usuario autenticado correctamente' })
     })
   } catch (error) {
     console.log(error);
@@ -59,34 +62,13 @@ export async function Login(req: Request, res: Response) {
   }
 }
 
-export async function UserByToken(req: Request, res: Response) {
-  const bearerHeader = req.headers.authorization;
-
-  if (!bearerHeader) {
-    return res.status(401).json({ message: 'No Token Provided' });
-  }
-
-  const bearer = bearerHeader.split(' ');
-  const token = bearer[1];
-
+export async function getProfile(req: Request, res: Response) {
   try {
-    const result = jwt.verify(token, JWT_SECRET);
+    console.log(req);
 
-    if (!result) return res.status(401).json({ message: 'Invalid Token' });
-
-    const data = result as UserPayload;
-    await HistLogin.sync();
-
-    try {
-      await HistLogin.create({ username: data.username, sucursal: data.codigo });
-    } catch (error) {
-      console.log('Ya Se genero un registro del logueo');
-    }
-
-    // Continuar y retornar el resultado del token
-    return res.status(200).json(result);
+    return res.status(200).json('test')
   } catch (error) {
     console.log(error);
-    return res.status(401).json({ error });
+    res.status(500).json({ message: 'Error al obtener el perfil', error })
   }
 }

@@ -16,9 +16,9 @@ export const getLogin = async (username: string, password: string)=> {
   }
 }
 
-export const getProfile = async (token: string) => {
+export const getProfile = async () => {
   try {
-    const response = await axios.get<User>('/profile', { headers: { Authorization: `Bearer ${token}` } })
+    const response = await axios.get('/profile')
     return response.data
   } catch (error) {
     console.error(error)

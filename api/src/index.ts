@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import morgan from 'morgan'
 import cors from 'cors'
@@ -15,6 +16,14 @@ const app = express();
 const ORIGIN = process.env.ORIGIN_URL || 'http://localhost:3000'
 
 const v1 = '/api/v1'
+
+// Usa cookie-parser middleware
+app.use(cookieParser());
+
+// Otras configuraciones de middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use(express.json())
 app.use(morgan('dev'))

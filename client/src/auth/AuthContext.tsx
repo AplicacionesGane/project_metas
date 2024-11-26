@@ -2,6 +2,7 @@ import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { useSucursalData } from '../hooks/useSucursalData';
 import { PdvInfo } from '../types/interfaces';
 import { type User } from '../types/User';
+import { getProfile } from '../services/LoginServices';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
@@ -21,15 +22,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { pdv } = useSucursalData(user?.codigo!);
 
   const login = async () => {
-    const cookies = document.cookie; // Obtiene todas las cookies disponibles para la página actual
-    if (cookies) {
-      const token = cookies.split('; ').find(row => row.startsWith('tokenMetasGane='));
-      if (token) {
-        const value = token.split('=')[1];
-        console.log('Token encontrado:', value);
-      } else {
-        console.log('Token no encontrado');
-      }
+    try {
+      const response = await getProfile();
+      console.log(response);
+    } catch (error) {
+      console.error(error)
     }
   }
 
