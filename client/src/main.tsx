@@ -12,5 +12,4 @@ createRoot(document.getElementById('root')!).render(
   <AuthProvider>
     <RouterProvider router={RouterMain} />
   </AuthProvider>
-
 )
