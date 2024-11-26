@@ -3,6 +3,7 @@ import { Switch } from '../components/tremor/Switch'
 import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
+import LogoEmpresa from './LogoEmpresa'
 
 const navLinks = [
   {
@@ -49,9 +50,7 @@ function NavBar() {
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
-      <figure>
-        <img src='/logogane.webp' alt='logo gane' className='w-36 2xl:w-44' />
-      </figure>
+      <LogoEmpresa />
 
       <li className='flex flex-col gap-4 2xl:gap-6 3xl:gap-8 font-semibold dark:text-white'>
         {navLinks.map(link => <NavLinkItem key={link.id} path={link.path} icon={link.icon} label={link.label} />)}

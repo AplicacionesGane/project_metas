@@ -1,13 +1,8 @@
 import { memo, useMemo } from 'react'
 
-interface RenderCategoriaProps {
-  cat: string
-  ver: string
-}
-
 type Categoria = 'DIAMANTE' | 'ZAFIRO' | 'ORO' | 'PLATA' | 'BRONCE'
 
-function RenderCategoria ({ cat: categoria, ver: version }: RenderCategoriaProps) {
+function RenderCategoria ({ cat: categoria, ver: version }: { cat: string, ver: string }) {
   const imageMap = useMemo(() => ({
     DIAMANTE: `/diamante${version}.webp`,
     ZAFIRO: '/zafiro.webp',

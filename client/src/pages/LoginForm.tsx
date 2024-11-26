@@ -5,6 +5,7 @@ import { getLogin } from '../services/LoginServices'
 import { useAuth } from '../auth/AuthContext'
 import { Toaster, toast } from 'sonner'
 import { FormEvent } from 'react'
+import LogoEmpresa from '../components/LogoEmpresa'
 
 function LoginPage() {
   const { login } = useAuth()
@@ -34,9 +35,7 @@ function LoginPage() {
       <div className='absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]'><div className='absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d5c5ff,transparent)]' /></div>
 
       <form className='w-96 mb-2 p-12 rounded-lg bg-transparent/10 flex flex-col gap-4 shadow-xl' onSubmit={handleSubmit}>
-        <figure className='flex justify-center'>
-          <img src='/logogane.webp' alt='Logo Gane' width={180} />
-        </figure>
+        <LogoEmpresa />
 
         <article className='w-full flex flex-col'>
           <label className='font-semibold'>Usuario</label>
