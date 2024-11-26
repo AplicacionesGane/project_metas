@@ -12,12 +12,16 @@ import { RouteHoras } from './routes/horas.routes';
 
 const PORT = process.env.PORT || 3030
 const app = express();
+const ORIGIN = process.env.ORIGIN_URL || 'http://localhost:3000'
 
 const v1 = '/api/v1'
 
 app.use(express.json())
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors({
+  origin: ORIGIN,
+  credentials: true
+}))
 
 app.use(v1, UserRouter)
 app.use(v1, infopdvRouter)

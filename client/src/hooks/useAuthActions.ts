@@ -10,7 +10,7 @@ export const useAuthActions = (setUser: Dispatch<React.SetStateAction<User | nul
       localStorage.setItem('tokenMetas', token)
 
       try {
-        const user = await getProfile({ token })
+        const user = await getProfile(token)
         setUser(user)
       } catch (err) {
         console.error(err)

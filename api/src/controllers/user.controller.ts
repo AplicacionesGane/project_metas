@@ -1,10 +1,11 @@
-import { UserPayload } from "../types/interfaces";
+import { UserPayload } from '../types/interfaces';
 import { HistLogin } from '../models/hist-login'
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
+const ENTORNO = process.env.ENV as string;
 
 export async function getUsers(req: Request, res: Response) {
   try {
@@ -21,7 +22,7 @@ export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
 
   if (!username || !password) {
-    return res.status(400).json({ message: 'Faltan datos' })
+    return res.status(400).json({ message: 'Usuario y contraseña son campos requeridos' })
   }
 
   try {
@@ -42,10 +43,16 @@ export async function Login(req: Request, res: Response) {
 
     const { password: _, ...userWithoutPassword } = user.dataValues
 
-    const token = jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h' })
-
-    return res.status(200).json({ auth: true, token })
-
+    jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h'}, (err, token) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Error al generar el token', err })
+      }
+      
+      return res.cookie('tokenMetasGane', token, { sameSite: 'lax', secure: ENTORNO !== 'dev' ? true : false })
+        .status(200)
+        .json({ message: 'Usuario autenticado correctamente'})
+    })
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Error al obtener el usuario', error })

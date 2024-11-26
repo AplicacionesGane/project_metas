@@ -1,17 +1,17 @@
 import React, { createContext, ReactNode, useContext, useState, useMemo, useEffect } from 'react';
-import { useAuthActions } from '../hooks/useAuthActions';
-import { type User } from '../types/User';
 import { useSucursalData } from '../hooks/useSucursalData';
-import { PdvInfo } from '../types/interfaces';
+import { useAuthActions } from '../hooks/useAuthActions';
 import { getProfile } from '../services/LoginServices';
+import { PdvInfo } from '../types/interfaces';
+import { type User } from '../types/User';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
-  user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   login: (token: string) => Promise<void>;
-  logout: () => void;
   pdv: PdvInfo | null;
+  logout: () => void;
+  user: User | null;
 }
 
 // Creamos el contexto de autenticación con un valor inicial nulo
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const token = localStorage.getItem('tokenMetas');
   useEffect(() => {
     if (token) {
-      getProfile({ token })
+      getProfile(token)
         .then(user => setUser(user))
         .catch(() => {
           localStorage.removeItem('tokenMetas');

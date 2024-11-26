@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { type User } from '../types/User'
+import axios from 'axios'
 
 interface LoginResponse {
   auth: boolean
@@ -16,7 +16,7 @@ export const getLogin = async ({ username, password }: { username: string, passw
   }
 }
 
-export const getProfile = async ({ token }: { token: string }): Promise<User> => {
+export const getProfile = async (token: string) => {
   try {
     const response = await axios.get<User>('/profile', { headers: { Authorization: `Bearer ${token}` } })
     return response.data
