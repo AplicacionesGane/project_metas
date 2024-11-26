@@ -1,3 +1,4 @@
+import { User as UserPayload } from '../types/interfaces';
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import jwt from 'jsonwebtoken';
@@ -64,9 +65,9 @@ export async function Login(req: Request, res: Response) {
 
 export async function getProfile(req: Request, res: Response) {
   try {
-    console.log(req);
+    const { codigo, nombres, username } = req.user as UserPayload 
 
-    return res.status(200).json('test')
+    return res.status(200).json({ codigo, nombres, username })
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil', error })

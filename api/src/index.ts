@@ -23,7 +23,7 @@ app.use(cookieParser());
 // Otras configuraciones de middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.disable('x-powered-by');
 
 app.use(express.json())
 app.use(morgan('dev'))
