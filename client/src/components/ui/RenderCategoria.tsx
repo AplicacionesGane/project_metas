@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 interface RenderCategoriaProps {
   cat: string
@@ -7,7 +7,7 @@ interface RenderCategoriaProps {
 
 type Categoria = 'DIAMANTE' | 'ZAFIRO' | 'ORO' | 'PLATA' | 'BRONCE'
 
-export function RenderCategoria ({ cat: categoria, ver: version }: RenderCategoriaProps) {
+function RenderCategoria ({ cat: categoria, ver: version }: RenderCategoriaProps) {
   const imageMap = useMemo(() => ({
     DIAMANTE: `/diamante${version}.webp`,
     ZAFIRO: '/zafiro.webp',
@@ -27,3 +27,5 @@ export function RenderCategoria ({ cat: categoria, ver: version }: RenderCategor
 
   return <RenderImagen cat={categoria as Categoria} />
 }
+
+export default memo(RenderCategoria)

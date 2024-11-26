@@ -16,7 +16,7 @@ const productMetaMap = {
   GANE5: 1000
 }
 
-function DeterminarMeta (product: Product, meta: number): number {
+function DeterminarMeta(product: Product, meta: number): number {
   const divisor = productMetaMap[product]
   if (divisor) {
     return Math.ceil(meta / divisor)
@@ -24,7 +24,7 @@ function DeterminarMeta (product: Product, meta: number): number {
   return Math.ceil(meta)
 }
 
-export function ProgressSugerido ({ data }: { data: Sugeridos}) {
+export function ProgressSugerido({ data }: { data: Sugeridos }) {
   const porcentaje = calcularPorcentaje(data?.VTA_SUGERIDO, data?.META_SUG1)
   const color = colorBackground(parseFloat(porcentaje))
   const variant = getColorVariant(parseFloat(porcentaje))
@@ -43,19 +43,17 @@ export function ProgressSugerido ({ data }: { data: Sugeridos}) {
       </article>
 
       <article className='flex flex-col items-center'>
-        <p className='text-center  dark:text-dark-tremor-content flex items-center justify-start gap-4'>
-          <p> <span>Progeso Actual: </span> &bull; {porcentaje || 0} %</p>
-        </p>
+        <p> <span>Progeso Actual: </span> &bull; {porcentaje || 0} %</p>
         <ProgressBar value={parseFloat(porcentaje)} variant={variant} className='mt-3' />
       </article>
 
       <article>
         {
-           parseFloat(porcentaje) >= 100
-             ? (
-               <p className='pt-2 text-center'>Buen Trabajo 😁 - Meta Completada ✅  </p>
-               )
-             : null
+          parseFloat(porcentaje) >= 100
+            ? (
+              <p className='pt-2 text-center'>Buen Trabajo 😁 - Meta Completada ✅  </p>
+            )
+            : null
         }
       </article>
     </Card>
