@@ -1,16 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Loading } from '../components/Loading'
-
-import Root from './Root';
-import { lazy, Suspense } from 'react';
 import NotFound from '../pages/NotFound';
 
-const AspDiaPage = lazy(() => import('../pages/ApsDia'));
-const AspMesPage = lazy(() => import('../pages/AspMes'));
-const ResumenPage = lazy(() => import('../pages/Resumen'));
-const HistCatPage = lazy(() => import('../pages/HistCate'));
+import { lazy, Suspense } from 'react';
+import Root from './Root';
+
 const SugeridosPage = lazy(() => import('../pages/Sugeridos'));
 const AspMenAntPage = lazy(() => import('../pages/ApsMesAnt'));
+const HistCatPage = lazy(() => import('../pages/HistCate'));
+const ResumenPage = lazy(() => import('../pages/Resumen'));
+const AspMesPage = lazy(() => import('../pages/AspMes'));
+const AspDiaPage = lazy(() => import('../pages/ApsDia'));
 
 export const RouterMain = createBrowserRouter([
   {

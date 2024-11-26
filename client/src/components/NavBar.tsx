@@ -1,8 +1,8 @@
 import { CalendarAntIcon, CalendarIcon, Dashboard, DocsIcon, SunIcon, CategoriaIcon } from './icons'
+import { Switch } from '../components/tremor/Switch'
 import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
-import { Switch } from '../components/tremor/Switch'
 
 const navLinks = [
   { id: 1, path: '/', icon: Dashboard, label: 'Resumen De Aspiración' },
