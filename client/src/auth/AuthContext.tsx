@@ -1,8 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { useSucursalData } from '../hooks/useSucursalData';
+import { getProfile } from '../services/LoginServices';
 import { PdvInfo } from '../types/interfaces';
 import { type User } from '../types/User';
-import { getProfile } from '../services/LoginServices';
+import axios from 'axios';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
@@ -23,18 +24,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async () => {
     try {
-      const response = await getProfile();
-      console.log(response);
+      const dataUser = await getProfile();
+      setUser(dataUser)
     } catch (error) {
       console.error(error)
+      throw new Error('Usuario no autorizado')
     }
   }
 
   const logout = (): void => {
     setUser(null)
-    localStorage.removeItem('tokenMetas')
+    axios.get('/logout')
   }
-
 
   return (
     <AuthContext.Provider value={{ login, logout, pdv, setUser, user }}>

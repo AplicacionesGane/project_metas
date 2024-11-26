@@ -73,3 +73,19 @@ export async function getProfile(req: Request, res: Response) {
     res.status(500).json({ message: 'Error al obtener el perfil', error })
   }
 }
+
+export async function Logout(req: Request, res: Response) {
+  try {
+    return res.cookie('tokenMetasGane', '', {
+      httpOnly: true,
+      expires: new Date(0),
+      sameSite: 'lax',
+      secure: ENTORNO !== 'dev' ? true : false
+    })
+      .status(200)
+      .json({ message: 'Sesión cerrada correctamente' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Error al cerrar la sesión', error });
+  }
+}

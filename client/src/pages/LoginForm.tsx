@@ -20,7 +20,7 @@ function LoginPage() {
 
     getLogin(username, password)
       .then(res => {
-        console.log(res)
+        console.log(res);
         login()
       })
       .catch(err => {

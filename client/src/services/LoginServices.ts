@@ -18,7 +18,12 @@ export const getLogin = async (username: string, password: string)=> {
 
 export const getProfile = async () => {
   try {
-    const response = await axios.get('/profile')
+    const response = await axios.get<User>('/profile')
+
+    if (response.status !== 200) {
+      throw new Error('Error al obtener el perfil')
+    }
+
     return response.data
   } catch (error) {
     console.error(error)
