@@ -1,14 +1,14 @@
 import { type User } from '../types/User'
 import axios from 'axios'
 
-interface LoginResponse {
-  auth: boolean
-  token: string
-}
-
-export const getLogin = async ({ username, password }: { username: string, password: string }): Promise<LoginResponse> => {
+export const getLogin = async (username: string, password: string)=> {
   try {
-    const response = await axios.post<LoginResponse>('/login', { username, password })
+    const response = await axios.post('/login', { username, password })
+
+    if (response.status !== 200) {
+      throw new Error('Error en la autenticación')
+    }
+
     return response.data
   } catch (error) {
     console.error(error)

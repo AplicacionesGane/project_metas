@@ -1,16 +1,14 @@
-import React, { createContext, ReactNode, useContext, useState, useMemo, useEffect } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { useSucursalData } from '../hooks/useSucursalData';
-import { useAuthActions } from '../hooks/useAuthActions';
-import { getProfile } from '../services/LoginServices';
 import { PdvInfo } from '../types/interfaces';
 import { type User } from '../types/User';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  login: (token: string) => Promise<void>;
-  pdv: PdvInfo | null;
+  login: () => void;
   logout: () => void;
+  pdv: PdvInfo | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   user: User | null;
 }
 
@@ -20,27 +18,29 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const { login, logout } = useAuthActions(setUser);
   const { pdv } = useSucursalData(user?.codigo!);
 
-  // Revisamos si existe token
-  const token = localStorage.getItem('tokenMetas');
-  useEffect(() => {
-    if (token) {
-      getProfile(token)
-        .then(user => setUser(user))
-        .catch(() => {
-          localStorage.removeItem('tokenMetas');
-          setUser(null);
-        });
+  const login = async () => {
+    const cookies = document.cookie; // Obtiene todas las cookies disponibles para la página actual
+    if (cookies) {
+      const token = cookies.split('; ').find(row => row.startsWith('tokenMetasGane='));
+      if (token) {
+        const value = token.split('=')[1];
+        console.log('Token encontrado:', value);
+      } else {
+        console.log('Token no encontrado');
+      }
     }
-  }, [token]);
+  }
 
-  // Usamos useMemo para evitar recrear el valor del contexto en cada renderizado
-  const value = useMemo(() => ({ user, setUser, login, logout, pdv }), [user, login, logout]);
+  const logout = (): void => {
+    setUser(null)
+    localStorage.removeItem('tokenMetas')
+  }
+
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ login, logout, pdv, setUser, user }}>
       {children}
     </AuthContext.Provider>
   );

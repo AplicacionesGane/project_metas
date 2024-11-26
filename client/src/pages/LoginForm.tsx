@@ -1,11 +1,11 @@
 import { RiUserLine, RiLockLine } from '@remixicon/react'
 import { Button } from '../components/tremor/Button'
-import { Input } from '../components/tremor/Input'
 import { getLogin } from '../services/LoginServices'
+import LogoEmpresa from '../components/LogoEmpresa'
+import { Input } from '../components/tremor/Input'
 import { useAuth } from '../auth/AuthContext'
 import { Toaster, toast } from 'sonner'
 import { FormEvent } from 'react'
-import LogoEmpresa from '../components/LogoEmpresa'
 
 function LoginPage() {
   const { login } = useAuth()
@@ -18,11 +18,10 @@ function LoginPage() {
     const username = form.username.value
     const password = form.password.value
 
-    getLogin({ username, password })
+    getLogin(username, password)
       .then(res => {
-        if (res.auth === true) {
-          login(res.token)
-        }
+        console.log(res)
+        login()
       })
       .catch(err => {
         const message = err.response.data.message
@@ -42,12 +41,12 @@ function LoginPage() {
           <div className='flex items-center'>
             <RiUserLine />
             <Input
-              className='w-full p-2 rounded-md border-none outline-none' 
+              className='w-full p-2 rounded-md border-none outline-none'
               placeholder='CV1118*****'
               autoComplete='username'
-              name='username' 
-              type='text' 
-              required 
+              name='username'
+              type='text'
+              required
             />
           </div>
         </article>
@@ -59,8 +58,8 @@ function LoginPage() {
             <Input
               className='w-full p-2 rounded-md border-none outline-none' required
               placeholder='**********'
-              name='password' 
-              type='password' 
+              name='password'
+              type='password'
             />
           </div>
         </article>
