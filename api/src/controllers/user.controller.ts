@@ -1,3 +1,4 @@
+import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
@@ -26,24 +27,43 @@ export async function Login(req: Request, res: Response) {
   }
 
   try {
-    await User.sync()
-    const user = await User.findOne({ where: { username } })
+    const connection = await connectionOracle()
 
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' })
+    if (connection instanceof Error) {
+      return res.status(500).json({ message: 'Error al conectar a la base de datos', error: connection })
     }
 
-    if (user.dataValues.password !== password) {
+    const { rows } = await connection.execute<string[]>(
+      "SELECT get_authentication_msr(:password, :username) AS AUTH FROM dual",
+      [password, username]
+    )
+
+    if (rows === undefined) {
+      return res.status(500).json({ message: 'Error al obtener el usuario' })
+    }
+
+    const strResult = rows[0][0].split(',')
+
+    console.log(strResult);
+
+    if (strResult[0] === 'No data found') {
+      return res.status(401).json({ message: 'Usuario no encontrado o no existe' })
+    }
+
+    if (strResult[0] === 'FALSE' && strResult[2] === 'A') {
       return res.status(401).json({ message: 'Contraseña incorrecta' })
     }
 
-    if (user.dataValues.estado !== 'A') {
-      return res.status(401).json({ message: 'Usuario inactivo' })
+    if (strResult[0] === 'TRUE' && strResult[2] === 'B') {
+      return res.status(401).json({ message: 'Usuario se encuentra bloqueado' })
     }
 
-    const { password: _, ...userWithoutPassword } = user.dataValues
+    const user = {
+      sucursal: strResult[1],
+      username: username as string,
+    }
 
-    jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
+    jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: 'Error al generar el token', err })
@@ -66,7 +86,7 @@ export async function Login(req: Request, res: Response) {
 
 export async function getProfile(req: Request, res: Response) {
   try {
-    const { codigo, nombres, username } = req.user as UserPayload 
+    const { codigo, nombres, username } = req.user as UserPayload
 
     return res.status(200).json({ codigo, nombres, username })
   } catch (error) {
