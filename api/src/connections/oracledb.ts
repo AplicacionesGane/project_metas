@@ -1,9 +1,10 @@
-import oracledb, { Connection, Pool } from 'oracledb';
 
+import oracledb, { Connection, Pool } from 'oracledb';
 const USER_DB = process.env.DB_ORACLE_USER as string;
 const PASSWORD_DB = process.env.DB_ORACLE_PASS as string;
 const NAME_DB = process.env.DB_ORACLE_NAME as string;
 const DIR_DB = process.env.DB_ORACLE_DIR as string;
+
 const DIR_TNS = process.env.DB_ORACLE_DIR_TNS as string;
 
 oracledb.initOracleClient({ libDir: DIR_DB });
