@@ -20,7 +20,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getProfile()
-      .then(res => setDataGeneral(res.data))
+      .then(res => {
+        setAuth(true);
+        setDataGeneral(res.data);
+      })
       .catch((error) => { error.response.status === 401 && logout() });
   }, [auth]);
 

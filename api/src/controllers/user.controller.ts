@@ -42,7 +42,7 @@ export async function Login(req: Request, res: Response) {
     }
 
     // TODO: asignamos el token al usuario con una duración de 2 horas
-    jwt.sign(user, JWT_SECRET, { expiresIn: '1m' }, (err, token) => {
+    jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
       // TODO: asignación del token a la cookie

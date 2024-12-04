@@ -14,7 +14,7 @@ function ResumenPage() {
   const codigo = dataGeneral?.codigo!
   const zona = dataGeneral?.sucursal.ZONA!
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (codigo && zona) {
       // Fetch data immediately
       axios.post('/metasDia', { codigo, zona })
@@ -32,30 +32,29 @@ function ResumenPage() {
       return () => clearInterval(intervalId)
     }
   }, [])
-
+*/
   return (
     <section className='w-full px-1 grid grid-cols-3 text-center font-semibold rounded-lg gap-2 text-gray-700 dark:text-white'>
+
       <h3 className='col-span-3 py-2 rounded-lg bg-slate-300 dark:bg-slate-900 dark:border dark:border-gray-500 xl:text-lg 2xl:text-2xl 2xl:py-4'>
         <span>Bienvenid@</span> <span className='text-blue-700 dark:text-yellow-400 pl-2 xl:text-lg 2xl:text-2xl'>{dataGeneral?.user.NOMBRES}</span>
       </h3>
-
+      {/*
       <section className='col-span-1 flex flex-col gap-2'>
 
         <ProgressCircleComponent porcentaje={data.cumplimiento} />
 
         <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 
-        {/* <div className='w-full flex items-center rounded-lg justify-center py-2 dark:bg-slate-200'>
+         <div className='w-full flex items-center rounded-lg justify-center py-2 dark:bg-slate-200'>
           <GenerateQR codigo={user?.sucursal || 0} nombres={user?. || 'undefined'} username={user?.username || 'undefined'} />
-        </div> */}
+        </div> 
 
       </section>
 
-      {/* <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
+       <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
         <RenderCategoria cat={pdv?.CATEGORIA!} ver={pdv?.VERSION || 'N/A'} />
-      </figure> */}
-
-      {/*
+      </figure> 
         util !== null
           ? (
             <section className='bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
