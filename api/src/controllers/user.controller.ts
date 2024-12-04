@@ -1,3 +1,4 @@
+import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
 import { Request, Response } from 'express';
 import { User } from '../models/user.model';
@@ -26,37 +27,41 @@ export async function Login(req: Request, res: Response) {
   }
 
   try {
-    await User.sync()
-    const user = await User.findOne({ where: { username } })
+    const connection = await connectionOracle();
 
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' })
+    if (connection instanceof Error) return res.status(500).json({ message: 'Error al conectar a la base de datos', error: connection });
+
+    const { rows } = await connection.execute<string[]>(
+      "SELECT get_authentication_msr(:password, :username) AS AUTH FROM dual",
+      [password, username]
+    );
+
+    if (rows === undefined) return res.status(500).json({ message: 'Error al obtener el usuario en la base de datos' });
+
+    // TODO: dividimos el resultado en un array de 3 elementos para validar el resultado
+    const strResult = rows[0][0].split(',')
+
+    if (strResult[0] === 'No data found') return res.status(401).json({ message: 'Usuario no encontrado o no existe' });
+    if (strResult[0] === 'FALSE' && strResult[2] === 'A') return res.status(401).json({ message: 'Contraseña incorrecta' });
+    if (strResult[0] === 'TRUE' && strResult[2] === 'B') return res.status(401).json({ message: 'Usuario se encuentra bloqueado' });
+
+    // TODO: creamos el payload del token que es el usuario
+    const user = {
+      sucursal: strResult[1],
+      username: username as string,
     }
 
-    if (user.dataValues.password !== password) {
-      return res.status(401).json({ message: 'Contraseña incorrecta' })
-    }
+    // TODO: asignamos el token al usuario con una duración de 2 horas
+    jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
+      if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
-    if (user.dataValues.estado !== 'A') {
-      return res.status(401).json({ message: 'Usuario inactivo' })
-    }
-
-    const { password: _, ...userWithoutPassword } = user.dataValues
-
-    jwt.sign(userWithoutPassword, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ message: 'Error al generar el token', err })
-      }
-
+      // TODO: asignación del token a la cookie
       return res.cookie(TOKEN_NAME, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: ENTORNO !== 'dev' ? true : false
-      })
-        .status(200)
-        .json({ message: 'Usuario autenticado correctamente' })
+      }).status(200).json({ message: 'Usuario autenticado correctamente' })
     })
   } catch (error) {
     console.log(error);
@@ -66,7 +71,7 @@ export async function Login(req: Request, res: Response) {
 
 export async function getProfile(req: Request, res: Response) {
   try {
-    const { codigo, nombres, username } = req.user as UserPayload 
+    const { codigo, nombres, username } = req.user as UserPayload
 
     return res.status(200).json({ codigo, nombres, username })
   } catch (error) {
