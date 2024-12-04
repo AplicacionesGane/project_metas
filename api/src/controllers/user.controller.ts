@@ -27,40 +27,31 @@ export async function Login(req: Request, res: Response) {
   }
 
   try {
-    const connection = await connectionOracle()
+    const connection = await connectionOracle();
 
-    if (connection instanceof Error) {
-      return res.status(500).json({ message: 'Error al conectar a la base de datos', error: connection })
-    }
+    if (connection instanceof Error) return res.status(500).json({ message: 'Error al conectar a la base de datos', error: connection });
 
     const { rows } = await connection.execute<string[]>(
       "SELECT get_authentication_msr(:password, :username) AS AUTH FROM dual",
       [password, username]
-    )
+    );
 
-    if (rows === undefined) {
-      return res.status(500).json({ message: 'Error al obtener el usuario en la base de datos' })
-    }
+    if (rows === undefined) return res.status(500).json({ message: 'Error al obtener el usuario en la base de datos' });
 
+    // TODO: dividimos el resultado en un array de 3 elementos para validar el resultado
     const strResult = rows[0][0].split(',')
 
-    if (strResult[0] === 'No data found') {
-      return res.status(401).json({ message: 'Usuario no encontrado o no existe' })
-    }
+    if (strResult[0] === 'No data found') return res.status(401).json({ message: 'Usuario no encontrado o no existe' });
+    if (strResult[0] === 'FALSE' && strResult[2] === 'A') return res.status(401).json({ message: 'Contraseña incorrecta' });
+    if (strResult[0] === 'TRUE' && strResult[2] === 'B') return res.status(401).json({ message: 'Usuario se encuentra bloqueado' });
 
-    if (strResult[0] === 'FALSE' && strResult[2] === 'A') {
-      return res.status(401).json({ message: 'Contraseña incorrecta' })
-    }
-
-    if (strResult[0] === 'TRUE' && strResult[2] === 'B') {
-      return res.status(401).json({ message: 'Usuario se encuentra bloqueado' })
-    }
-
+    // TODO: creamos el payload del token que es el usuario
     const user = {
       sucursal: strResult[1],
       username: username as string,
     }
 
+    // TODO: asignamos el token al usuario con una duración de 2 horas
     jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
