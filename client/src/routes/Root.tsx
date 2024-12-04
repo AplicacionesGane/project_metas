@@ -1,11 +1,11 @@
-import { useAuth } from '../auth/AuthContext';
+import { ThemeProvider } from '../context/ThemeContext';
 import { Loading } from '../components/Loading';
+import { useAuth } from '../auth/AuthContext';
 import { Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { ThemeProvider } from '../context/ThemeContext';
 
-const LoginPage = lazy(() => import('../pages/LoginForm'))
 const ComPdvInfo = lazy(() => import('../components/InfoPdvComponent'))
+const LoginPage = lazy(() => import('../pages/LoginForm'))
 const NavBar = lazy(() => import('../components/NavBar'))
 
 export default function Root() {
