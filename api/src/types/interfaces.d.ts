@@ -114,8 +114,6 @@ export interface IProduct {
 }
 
 interface User extends JwtPayload {
-  codigo: number;
+  sucursal: number;
   username: string;
-  estado: string;
-  nombres: string;
 }

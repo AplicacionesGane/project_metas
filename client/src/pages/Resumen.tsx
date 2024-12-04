@@ -14,9 +14,9 @@ function ResumenPage () {
   useEffect(() => { axios.get(`/utilidades/${user?.username.slice(2)}`).then(res => setUtil(res.data)) }, [])
 
   useEffect(() => {
-    if (user?.codigo !== 0 || pdv?.ZONA !== undefined) {
+    if (user?.sucursal !== 0 || pdv?.ZONA !== undefined) {
       // Fetch data immediately
-      axios.post('/metasDia', { codigo: user?.codigo, zona: pdv?.ZONA })
+      axios.post('/metasDia', { codigo: user?.sucursal, zona: pdv?.ZONA })
         .then(res => setData(res.data))
         .catch(err => console.error(err))
 
@@ -30,7 +30,7 @@ function ResumenPage () {
       // Clear interval on component unmount
       return () => clearInterval(intervalId)
     }
-  }, [user?.codigo, pdv?.ZONA])
+  }, [user?.sucursal, pdv?.ZONA])
 
   return (
     <section className='w-full px-1 grid grid-cols-3 text-center font-semibold rounded-lg gap-2 text-gray-700 dark:text-white'>
@@ -45,7 +45,7 @@ function ResumenPage () {
         <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 
         <div className='w-full flex items-center rounded-lg justify-center py-2 dark:bg-slate-200'>
-          <GenerateQR codigo={user?.codigo || 0} nombres={user?.nombres || 'undefined'} username={user?.username || 'undefined'} />
+          <GenerateQR codigo={user?.sucursal || 0} nombres={user?. || 'undefined'} username={user?.username || 'undefined'} />
         </div>
 
       </section>

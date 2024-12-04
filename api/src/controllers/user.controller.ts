@@ -71,9 +71,9 @@ export async function Login(req: Request, res: Response) {
 
 export async function getProfile(req: Request, res: Response) {
   try {
-    const { codigo, nombres, username } = req.user as UserPayload
+    const { sucursal, username } = req.user as UserPayload
 
-    return res.status(200).json({ codigo, nombres, username })
+    return res.status(200).json({ sucursal, username })
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil', error })

@@ -1,5 +1,4 @@
 export interface User {
-  codigo: number,
-  username: string,
-  nombres: string
+  sucursal: number,
+  username: string
 }

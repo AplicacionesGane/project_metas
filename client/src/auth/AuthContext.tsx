@@ -21,7 +21,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const { pdv } = useSucursalData(user?.codigo!);
+  const { pdv } = useSucursalData(user?.sucursal!);
 
   const login = async () => {
     try {
