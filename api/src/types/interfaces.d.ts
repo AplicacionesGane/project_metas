@@ -1,3 +1,5 @@
+import { JwtPayload } from 'jsonwebtoken'
+
 export interface ProductsYumbo {
   ASTRO: number
   CHANCE: number
@@ -111,12 +113,9 @@ export interface IProduct {
   porcentaje2: number
 }
 
-export interface UserPayload {
+interface User extends JwtPayload {
   codigo: number;
   username: string;
-  password: string;
   estado: string;
   nombres: string;
-  iat: number;
-  exp: number;
 }
