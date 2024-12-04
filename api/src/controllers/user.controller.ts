@@ -39,12 +39,10 @@ export async function Login(req: Request, res: Response) {
     )
 
     if (rows === undefined) {
-      return res.status(500).json({ message: 'Error al obtener el usuario' })
+      return res.status(500).json({ message: 'Error al obtener el usuario en la base de datos' })
     }
 
     const strResult = rows[0][0].split(',')
-
-    console.log(strResult);
 
     if (strResult[0] === 'No data found') {
       return res.status(401).json({ message: 'Usuario no encontrado o no existe' })
@@ -64,19 +62,15 @@ export async function Login(req: Request, res: Response) {
     }
 
     jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ message: 'Error al generar el token', err })
-      }
+      if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
+      // TODO: asignación del token a la cookie
       return res.cookie(TOKEN_NAME, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: ENTORNO !== 'dev' ? true : false
-      })
-        .status(200)
-        .json({ message: 'Usuario autenticado correctamente' })
+      }).status(200).json({ message: 'Usuario autenticado correctamente' })
     })
   } catch (error) {
     console.log(error);
