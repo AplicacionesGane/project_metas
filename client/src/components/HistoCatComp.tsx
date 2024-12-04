@@ -1,4 +1,4 @@
-import { RenderCategoria } from './ui/RenderCategoria'
+import RenderCategoria from './ui/RenderCategoria'
 import { Historial } from '../types/interfaces'
 
 export function HistComponent ({ data }:{data: Historial[]}) {

@@ -1,6 +1,6 @@
 import { ProgressCircleComponent } from '../components/ui/ProgressCircle'
 import { VentasDiaResumen } from '../components/ui/VentaDiaResumen'
-import { RenderCategoria } from '../components/ui/RenderCategoria'
+import RenderCategoria from '../components/ui/RenderCategoria'
 import { GenerateQR } from '../components/ui/GeneraQrCod'
 import { useAuth } from '../auth/AuthContext'
 import { useEffect, useState } from 'react'
