@@ -24,7 +24,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
         if(err.name === 'TokenExpiredError') {
           return res.status(401).json({ message: 'Token expired' });
         }
-        return res.status(403).json({ message: 'Invalid token' });
+        return res.status(401).json({ message: 'Invalid token' });
       }
 
       const user = decoded as User;

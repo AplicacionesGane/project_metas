@@ -8,7 +8,7 @@ import { Toaster, toast } from 'sonner'
 import { FormEvent } from 'react'
 
 function LoginPage() {
-  const { login } = useAuth()
+  const { setAuth } = useAuth()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -20,8 +20,10 @@ function LoginPage() {
 
     getLogin(username, password)
       .then(res => {
-        console.log(res);
-        login()
+        if(res.status === 200) {
+          setAuth(true)
+          toast.success('Inicio de sesión exitoso', { description: 'Bienvenido' })
+        }
       })
       .catch(err => {
         const message = err.response.data.message

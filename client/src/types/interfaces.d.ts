@@ -8,11 +8,21 @@ export interface Historial {
   VERSION: string
 }
 
-export interface PdvInfo {
-  CATEGORIA: string
-  VERSION: string
-  DIRECCION: string
-  NOMBRE: string
-  SUPERVISOR: string
+interface SucursalInfo {
   ZONA: string
+  NOMBRE: string
+  DIRECCION: string
+  SUPERVISOR: string
+}
+
+interface UserI {
+  DOCUMENTO: string
+  NOMBRES: string
+  NOMBRECARGO: string
+}
+
+interface InfoGeneralI {
+  user: UserI
+  sucursal: SucursalInfo
+  codigo: string
 }

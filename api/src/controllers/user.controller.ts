@@ -74,13 +74,19 @@ export async function getProfile(req: Request, res: Response) {
       where: { DOCUMENTO: cedula } 
     })
     const SucursalInfo = await Sucursal.findOne({
-      attributes: ['NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      attributes: ['ZONA', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
       where: { CODIGO: sucursal } 
     })
 
     if (!Vendedor || !SucursalInfo) return res.status(404).json({ message: 'Usuario no encontrado ó Sucursal no encontrada' })
 
-    return res.status(200).json({ user: Vendedor, sucursal: SucursalInfo })
+    const InfoGeneral = {
+      user: Vendedor,
+      sucursal: SucursalInfo,
+      codigo: sucursal,
+    }
+
+    return res.status(200).json(InfoGeneral)
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil', error })
