@@ -5,10 +5,9 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthContext'
 
 function HistCatPage () {
-  const { user } = useAuth()
+  const { dataGeneral } = useAuth()
 
-  if (!user) return null
-  const codigo = user.codigo
+  const codigo = dataGeneral?.codigo!
 
   const [historial, setHistorial] = useState<Historial[]>([])
 

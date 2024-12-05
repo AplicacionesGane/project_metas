@@ -18,8 +18,8 @@ export const metasDelDia = async (req: Request, res: Response) => {
   if (!codigo && !zona) return res.status(400).json({ message: 'Se requiere número de sucursal y zona' })
 
   try {
-    const ventaActual = await getVentaActualProductos(codigo, zona)
-    const aspiracionDia = await getAspiracionDiaActual(codigo, zona)
+    const ventaActual = await getVentaActualProductos(parseInt(codigo), parseInt(zona))
+    const aspiracionDia = await getAspiracionDiaActual(parseInt(codigo), parseInt(zona))
 
     const porcentajeCumplimiento = calcularPorcentaje(ventaActual, aspiracionDia)
 

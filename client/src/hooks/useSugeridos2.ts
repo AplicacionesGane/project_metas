@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { getSugeridos2 } from '../services/getSugeridos'
-import { User } from '../types/User'
 import { Sugeridos } from '../types/Metas'
 
-export const useSugeridos2 = ({ zone, user }: {zone:string, user: User}) => {
-  const { username, codigo } = user
+export const useSugeridos2 = (codigo: number, user: string, zona: number) => {
   const [data2, setData2] = useState<Sugeridos | null>(null)
   const [error2, setError2] = useState(null)
 
   useEffect(() => {
-    getSugeridos2({ codigo, username, zone })
+    getSugeridos2(codigo, user, zona)
       .then((response) => {
         setData2(response)
       })

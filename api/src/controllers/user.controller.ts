@@ -1,23 +1,13 @@
 import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
+import { Sucursal } from '../models/sucursalespw';
+import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
-import { User } from '../models/user.model';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const ENTORNO = process.env.ENV as string;
 const TOKEN_NAME = process.env.TOKEN_NAME as string;
-
-export async function getUsers(req: Request, res: Response) {
-  try {
-    await User.sync()
-    const users = await User.findAll()
-    return res.status(200).json(users)
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: 'Error al obtener los usuarios', error })
-  }
-}
 
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
@@ -69,11 +59,34 @@ export async function Login(req: Request, res: Response) {
   }
 }
 
+/**
+ * TODO: este controlador obtiene de la verificación del token, el username ('CV124124***') y la sucursal
+ * TODO: y con esTo realiza las peticiones a la base de datos de powerbi ( Sucursales, Vendedores ) 
+ * TODO: la idea de esto es unificarlo en un solo object para que el fron end pueda consumirlo en una sola petición
+ **/
 export async function getProfile(req: Request, res: Response) {
   try {
-    const { codigo, nombres, username } = req.user as UserPayload
+    const { sucursal, username } = req.user as UserPayload
+    const cedula = username.split('CV')[1]
 
-    return res.status(200).json({ codigo, nombres, username })
+    const Vendedor = await User.findOne({ 
+      attributes: ['DOCUMENTO', 'NOMBRES', 'NOMBRECARGO'],
+      where: { DOCUMENTO: cedula } 
+    })
+    const SucursalInfo = await Sucursal.findOne({
+      attributes: ['ZONA', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      where: { CODIGO: sucursal } 
+    })
+
+    if (!Vendedor || !SucursalInfo) return res.status(404).json({ message: 'Usuario no encontrado ó Sucursal no encontrada' })
+
+    const InfoGeneral = {
+      user: Vendedor,
+      sucursal: SucursalInfo,
+      codigo: sucursal,
+    }
+
+    return res.status(200).json(InfoGeneral)
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil', error })

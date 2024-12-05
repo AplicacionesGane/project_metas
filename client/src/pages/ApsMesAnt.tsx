@@ -6,13 +6,13 @@ import { sortData } from '../utils/funtions'
 import { useMemo, useState } from 'react'
 
 function AspMenAntPage () {
-  const { user, pdv } = useAuth()
+  const { dataGeneral} = useAuth()
 
-  const zona = pdv?.ZONA!
-  const codigo = user?.codigo!
+  const codigo = dataGeneral?.codigo!
+  const zona = dataGeneral?.sucursal.ZONA!
 
 
-  const { data, isLoading } = useFecthMetasData('/cumpMesAnt', zona, codigo)
+  const { data, isLoading } = useFecthMetasData('/cumpMesAnt', zona, parseInt(codigo))
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {

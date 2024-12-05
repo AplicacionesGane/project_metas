@@ -6,9 +6,13 @@ import { HeaderComponent } from '../components/ui/headerComponent'
 import { useAuth } from '../auth/AuthContext'
 
 function AspMesPage () {
-  const { pdv, user } = useAuth()
+  const { dataGeneral} = useAuth()
 
-  const { data, isLoading } = useFecthMetasData('/cumpMesAct', pdv?.ZONA!, user?.codigo!)
+  const codigo = dataGeneral?.codigo!
+  const zona = dataGeneral?.sucursal.ZONA!
+
+
+  const { data, isLoading } = useFecthMetasData('/cumpMesAct', zona, parseInt(codigo))
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {
