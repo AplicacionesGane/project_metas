@@ -8,7 +8,10 @@ import { useAuth } from '../auth/AuthContext'
 function AspMesPage () {
   const { pdv, user } = useAuth()
 
-  const { data, isLoading } = useFecthMetasData('/cumpMesAct', pdv?.ZONA!, user?.codigo!)
+  const zona = pdv?.ZONA!
+  const codigo = user?.codigo!
+
+  const { data, isLoading } = useFecthMetasData('/cumpMesAct', zona, codigo)
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {
