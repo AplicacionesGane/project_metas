@@ -14,6 +14,7 @@ function ResumenPage() {
   const zona = dataGeneral?.sucursal.ZONA!
   const cedula = dataGeneral?.user.DOCUMENTO!
   const user = dataGeneral?.user.NOMBRES!
+  const nameCategoria = `${dataGeneral?.infCategoria.CATEGORIZACION!.toLocaleLowerCase()}.webp`
 
   useEffect(() => { axios.get(`/utilidades/${cedula}`).then(res => setUtil(res.data)) }, [])
 
@@ -56,7 +57,7 @@ function ResumenPage() {
       </section>
 
       <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
-        {/* <RenderCategoria cat={pdv?.CATEGORIA!} ver={pdv?.VERSION || 'N/A'} /> */}
+        <img src={nameCategoria} loading='lazy' alt='logo segun categoria' />
       </figure>
       {
         util !== null

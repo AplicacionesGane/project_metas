@@ -8,6 +8,10 @@ export interface Historial {
   VERSION: string
 }
 
+interface CategoriaI{
+  CATEGORIZACION: string
+}
+
 interface SucursalInfo {
   ZONA: string
   NOMBRE: string
@@ -25,4 +29,5 @@ interface InfoGeneralI {
   user: UserI
   sucursal: SucursalInfo
   codigo: string
+  infCategoria: CategoriaI
 }

@@ -1,9 +1,11 @@
 import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
+import { Categoria } from '../models/vCatgSucuPowebi';
 import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { where } from 'sequelize';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const ENTORNO = process.env.ENV as string;
@@ -78,12 +80,18 @@ export async function getProfile(req: Request, res: Response) {
       where: { CODIGO: sucursal } 
     })
 
+    const CategoriaInfo = await Categoria.findOne({
+      attributes: ['CATEGORIZACION'],
+      where: { SUCURSAL_CODIGO: sucursal }
+    })
+
     if (!Vendedor || !SucursalInfo) return res.status(404).json({ message: 'Usuario no encontrado ó Sucursal no encontrada' })
 
     const InfoGeneral = {
       user: Vendedor,
       sucursal: SucursalInfo,
       codigo: sucursal,
+      infCategoria: CategoriaInfo
     }
 
     return res.status(200).json(InfoGeneral)
