@@ -8,6 +8,7 @@ pipeline {
   environment {
     ENV_API_METAS = credentials('ENV_API_METAS')
     ENV_CLIENT_METAS = credentials('ENV_CLIENT_METAS')
+    ENV_TNS_ORA = credentials('ENV_TNS_ORA_METAS')
   }
     
   stages {
@@ -16,9 +17,11 @@ pipeline {
         script {
             def env_api = readFile(ENV_API_METAS)
             def env_client = readFile(ENV_CLIENT_METAS)
+            def env_tns_ora = readFile(ENV_TNS_ORA)
                     
             writeFile file: './api/.env', text: env_api
             writeFile file: './client/.env', text: env_client
+            writeFile file: './api/tnsnames.ora', text: env_tns_ora
           }
         }
       }
@@ -42,7 +45,7 @@ pipeline {
       stage('delete images'){
         steps{
           script {
-          def images = 'api-metas:v1.0'
+          def images = 'api-metas:v2.1'
             if (sh(script: "docker images -q ${images}", returnStdout: true).trim()) {
               sh "docker rmi ${images}"
             } else {
@@ -52,6 +55,15 @@ pipeline {
           }
         }
       }
+
+      stage('copy folder instan client to api'){
+          steps {
+            script {
+              sh 'cp -r /var/lib/jenkins/instantclient_11_2 ./api'
+            }
+          }
+      }
+
       stage('run docker compose'){
         steps {
           script {

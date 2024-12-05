@@ -16,8 +16,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    container_name: api-metas
-    image: api-metas:v1.0
+    container_name: api_metas_cont
+    image: api-metas:v2.1
     networks:
       - red-gane-int
     environment:
