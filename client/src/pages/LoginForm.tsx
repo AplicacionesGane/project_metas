@@ -7,11 +7,12 @@ import { Input } from '../components/tremor/Input'
 import { useAuth } from '../auth/AuthContext'
 import { Toaster, toast } from 'sonner'
 
-const MAX_ATTEMPTS = 4
+const MAX_ATTEMPTS = 3
 const BLOCK_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 function LoginPage() {
   const { setAuth } = useAuth()
+
   const [attempts, setAttempts] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
   const [blockEndTime, setBlockEndTime] = useState<number | null>(null)
@@ -49,8 +50,16 @@ function LoginPage() {
     e.preventDefault()
 
     if (isBlocked) {
-      toast.error('Demasiados intentos fallidos. Inténtalo de nuevo más tarde (5 min).')
-      return
+      if (Date.now() > (blockEndTime || 0)) {
+        setIsBlocked(false)
+        setBlockEndTime(null)
+        setAttempts(0)
+        localStorage.removeItem('blockEndTime')
+        localStorage.removeItem('loginAttempts')
+      } else {
+        toast.error('Demasiados intentos fallidos. Inténtalo de nuevo más tarde 5(min).')
+        return
+      }
     }
 
     const form = e.target as HTMLFormElement
@@ -75,12 +84,13 @@ function LoginPage() {
             const endTime = Date.now() + BLOCK_TIME
             setIsBlocked(true)
             setBlockEndTime(endTime)
-            toast.error('Demasiados intentos fallidos. Inténtalo de nuevo en 5 minutos.')
+            toast.error('Demasiados intentos fallidos. Inténtalo de nuevo más tarde 5(min).')
           }
           return newAttempts
         })
       })
   }
+
 
   return (
     <section className='w-full h-screen flex flex-col items-center justify-center relative'>
