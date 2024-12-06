@@ -83,7 +83,7 @@ export async function getProfile(req: Request, res: Response) {
       where: { DOCUMENTO: cedula } 
     })
     const SucursalInfo = await Sucursal.findOne({
-      attributes: ['NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
       where: { CODIGO: sucursal } 
     })
 

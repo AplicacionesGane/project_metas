@@ -1,4 +1,4 @@
-import { AuthI } from '../types/interfaces'
+import { AuthI, ProfileI } from '../types/interfaces'
 import axios from 'axios'
 
 export const getLogin = async (username: string, password: string) => {
@@ -18,13 +18,13 @@ export const getLogin = async (username: string, password: string) => {
 
 export const getProfile = async () => {
   try {
-    const response = await axios.get('/profile')
+    const response = await axios.get<ProfileI | null>('/profile')
 
     if (response.status !== 200) {
       throw new Error('Error al obtener el perfil')
     }
 
-    return response
+    return response.data
   } catch (error) {
     console.error(error)
     throw error
