@@ -5,17 +5,15 @@ import axios from 'axios'
 import { useAuth } from '../auth/AuthContext'
 
 function HistCatPage () {
-  const { dataGeneral } = useAuth()
-
-  const codigo = dataGeneral?.codigo!
+  const { user } = useAuth()
 
   const [historial, setHistorial] = useState<Historial[]>([])
 
   useEffect(() => {
-    axios.get('/historial', { params: { codigo } })
+    axios.get('/historial', { params: { codigo: user?.sucursal } })
       .then(res => { setHistorial(res.data) })
       .catch(err => { console.log(err) })
-  }, [codigo])
+  }, [user?.sucursal])
 
   const annoActual = new Date().getFullYear()
   const annoAnterior = annoActual - 1

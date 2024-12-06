@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .catch((error) => { error.response.status === 401 && logout() });
   }, [user?.sucursal]);
 
-
   return (
     <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral,  }}>
       {children}
