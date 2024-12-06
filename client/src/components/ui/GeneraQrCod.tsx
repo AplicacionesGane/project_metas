@@ -7,7 +7,7 @@ interface GenerateQRProps {
 }
 
 export function GenerateQR ({ codigo, nombres, username }: GenerateQRProps) {
-  const ip = '172.20.1.221'
+  const ip = '0.0.0.0'
 
   return (
     <>

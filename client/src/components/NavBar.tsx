@@ -47,7 +47,7 @@ const navLinks = [
 
 function NavBar() {
   const { darkMode, toggleTheme } = useTheme()
-  const { setAuth } = useAuth()
+  const { setUser } = useAuth()
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
@@ -65,7 +65,7 @@ function NavBar() {
 
         <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all' 
         onClick={() => {
-          setAuth(false)
+          setUser(null)
           logout()
         }}>
           Cerrar Sesión
