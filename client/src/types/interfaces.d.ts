@@ -1,10 +1,15 @@
-import { User } from './User'
 import React from 'react'
 
 interface AuthI {
   sucursal: number;
   username: string;
   zona: number;
+}
+
+export interface User {
+  DOCUMENTO:   string;
+  NOMBRES:     string;
+  NOMBRECARGO: string;
 }
 
 export interface ProfileI {
@@ -25,11 +30,6 @@ export interface Sucursal {
   SUPERVISOR: string;
 }
 
-export interface User {
-  DOCUMENTO:   string;
-  NOMBRES:     string;
-  NOMBRECARGO: string;
-}
 
 export interface Historial {
   ANHO: number
