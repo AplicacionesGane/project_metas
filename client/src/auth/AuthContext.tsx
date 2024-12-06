@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user?.sucursal]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral,  }}>
+    <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral }}>
       {children}
     </AuthContext.Provider>
   );

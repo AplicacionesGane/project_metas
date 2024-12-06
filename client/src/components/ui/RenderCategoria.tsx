@@ -1,14 +1,14 @@
 import { memo, useMemo } from 'react'
 
-type Categoria = 'DIAMANTE' | 'ZAFIRO' | 'ORO' | 'PLATA' | 'BRONCE'
+type Categoria = 'diamante' | 'zafiro' | 'oro' | 'plata' | 'bronce'
 
 function RenderCategoria ({ cat: categoria, ver: version }: { cat: string, ver: string }) {
   const imageMap = useMemo(() => ({
-    DIAMANTE: `/diamante${version}.webp`,
-    ZAFIRO: '/zafiro.webp',
-    ORO: '/oro.webp',
-    PLATA: '/plata.webp',
-    BRONCE: '/bronce.webp'
+    diamante: `/diamante${version}.webp`,
+    zafiro: '/zafiro.webp',
+    oro: '/oro.webp',
+    plata: '/plata.webp',
+    bronce: '/bronce.webp'
   }), [version])
 
   const RenderImagen = ({ cat } : {cat: Categoria}) => {

@@ -1,8 +1,8 @@
 import { HistComponent, TitleComponent } from '../components/HistoCatComp'
 import { Historial } from '../types/interfaces'
+import { useAuth } from '../auth/AuthContext'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '../auth/AuthContext'
 
 function HistCatPage () {
   const { user } = useAuth()
