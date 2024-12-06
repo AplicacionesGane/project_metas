@@ -13,6 +13,7 @@ const TOKEN_NAME = process.env.TOKEN_NAME as string;
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
 
+  // todo: validar esta info con zod
   if (!username || !password) {
     return res.status(400).json({ message: 'Usuario y contraseña son campos requeridos' })
   }

@@ -7,7 +7,7 @@ import { Input } from '../components/tremor/Input'
 import { useAuth } from '../auth/AuthContext'
 import { Toaster, toast } from 'sonner'
 
-const MAX_ATTEMPTS = 3
+const MAX_ATTEMPTS = 4
 const BLOCK_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 function LoginPage() {
