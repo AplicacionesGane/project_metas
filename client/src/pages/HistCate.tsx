@@ -1,19 +1,19 @@
 import { HistComponent, TitleComponent } from '../components/HistoCatComp'
-import { Historial } from '../types/interfaces'
 import { useAuth } from '../auth/AuthContext'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { CategoriasI } from '../types/interfaces'
 
 function HistCatPage () {
-  const { user } = useAuth()
+  const { profileData } = useAuth()
 
-  const [historial, setHistorial] = useState<Historial[]>([])
+  const [historial, setHistorial] = useState<CategoriasI[]>([])
 
   useEffect(() => {
-    axios.get('/historial', { params: { codigo: user?.sucursal } })
+    axios.get('/historial', { params: { codigo: profileData?.sucursal.CODIGO } })
       .then(res => { setHistorial(res.data) })
       .catch(err => { console.log(err) })
-  }, [user?.sucursal])
+  }, [profileData?.sucursal.CODIGO])
 
   const annoActual = new Date().getFullYear()
   const annoAnterior = annoActual - 1

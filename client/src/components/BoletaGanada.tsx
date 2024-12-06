@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-export function ConsultarBoletasGanadas({ codigo, names, user }: { codigo: number, user: string, names: string }) {
+export function ConsultarBoletasGanadas({ codigo, names, user }: { codigo: string, user: string, names: string }) {
   const [data, setData] = useState<{ boletas: number }>({ boletas: 0 })
   useEffect(() => {
     axios.post('/boletasGanadas', { codigo, user })
