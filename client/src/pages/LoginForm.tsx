@@ -11,7 +11,7 @@ const MAX_ATTEMPTS = 4
 const BLOCK_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 function LoginPage() {
-  const { setUser } = useAuth()
+  const { setAuth } = useAuth()
 
   const [attempts, setAttempts] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
@@ -68,9 +68,11 @@ function LoginPage() {
 
     getLogin(username, password)
       .then(res => {
-        setUser(res)
-        setAttempts(0) // Reset attempts on successful login
-        localStorage.removeItem('loginAttempts')
+        if (res.status === 200) {
+          setAuth(true)
+          setAttempts(0) // Reset attempts on successful login
+          localStorage.removeItem('loginAttempts')
+        }
       })
       .catch(err => {
         const message = err.response.data.message

@@ -1,7 +1,7 @@
 import RenderCategoria from './ui/RenderCategoria'
-import { Historial } from '../types/interfaces'
+import { CategoriasI } from '../types/interfaces'
 
-export function HistComponent ({ data }:{data: Historial[]}) {
+export function HistComponent ({ data }:{data: CategoriasI[]}) {
   const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
   return (

@@ -1,7 +1,7 @@
 import { QRCodeCanvas } from 'qrcode.react'
 
 interface GenerateQRProps {
-  codigo: number
+  codigo: string
   nombres: string
   username: string
 }

@@ -2,7 +2,7 @@ import { getSugeridos1 } from '../services/getSugeridos'
 import { useEffect, useState } from 'react'
 import { Sugeridos } from '../types/Metas'
 
-export const useSugeridos = (codigo: number, username: string, zona: number) => {
+export const useSugeridos = (codigo: string, username: string, zona: string) => {
   const [data, setData] = useState<Sugeridos | null>(null)
   const [error, setError] = useState(null)
 

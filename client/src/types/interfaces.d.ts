@@ -1,41 +1,30 @@
-import React from 'react'
-
-interface AuthI {
-  sucursal: number;
-  username: string;
-  zona: number;
-}
-
-export interface User {
-  DOCUMENTO:   string;
-  NOMBRES:     string;
+interface UserI {
+  DOCUMENTO: string;
+  NOMBRES: string;
   NOMBRECARGO: string;
 }
 
-export interface ProfileI {
-  user:         User;
-  sucursal:     Sucursal;
-  infCategoria: InfCategoria;
-}
-
-export interface InfCategoria {
-  CATEGORIZACION: string;
-}
-
-export interface Sucursal {
-  ZONA:       string;
-  CODIGO:     string;
-  NOMBRE:     string;
-  DIRECCION:  string;
+interface SucursalI {
+  ZONA: string;
+  CODIGO: string;
+  NOMBRE: string;
+  DIRECCION: string;
   SUPERVISOR: string;
 }
 
-
-export interface Historial {
-  ANHO: number
-  MES: number
-  CATEGORIA: string
-  VERSION: string
+interface CategoriaI {
+  CATEGORIZACION: string;
 }
 
+export interface ProfileDataI {
+  user: UserI;
+  sucursal: SucursalI;
+  infCategoria: CategoriaI;
+}
 
+export interface CategoriasI {
+  ANHO: number;
+  MES: number;
+  CATEGORIA: string;
+  VERSION: string;
+}

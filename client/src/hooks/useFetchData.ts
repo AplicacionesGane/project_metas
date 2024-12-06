@@ -2,7 +2,7 @@ import { MetasProducto } from '../types/Metas'
 import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 
-export function useFecthMetasData (url: string, company: number, codigo: number) {
+export function useFecthMetasData (url: string, company: string, codigo: string) {
   const [data, setData] = useState<MetasProducto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)

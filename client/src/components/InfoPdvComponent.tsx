@@ -2,11 +2,11 @@ import { DataInfSucursal } from './ui/DataInfPdvComp'
 import { useAuth } from '../auth/AuthContext'
 
 function InfoPdvComponent() {
-  const { dataGeneral } = useAuth()
+  const { profileData } = useAuth()
   
   return (
     <section className='grid grid-cols-2 w-full lg:text-sm xl:text-base 2xl:text-xl justify-around py-2 px-1 gap-2 dark:text-white'>
-      <DataInfSucursal nombre={dataGeneral?.sucursal.NOMBRE || 'Desconocido'} supervisor={dataGeneral?.sucursal.SUPERVISOR || 'N/A'} />
+      <DataInfSucursal nombre={profileData?.sucursal.NOMBRE || 'Desconocido'} supervisor={profileData?.sucursal.SUPERVISOR || 'N/A'} />
       {/*
         pdv?.VERSION !== '0'
           ? (

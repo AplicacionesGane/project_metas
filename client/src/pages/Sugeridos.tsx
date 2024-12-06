@@ -6,12 +6,12 @@ import { ConsultarBoletasGanadas } from '../components/BoletaGanada'
 import { useAuth } from '../auth/AuthContext'
 
 function SugeridosPage () {
-  const { user, dataGeneral } = useAuth()
+  const { profileData } = useAuth()
 
-  const username = `CV${dataGeneral?.user.DOCUMENTO}`
+  const username = `CV${profileData?.user.DOCUMENTO}`
 
-  const { data } = useSugeridos(user?.sucursal!, username, user?.zona!)
-  const { data2 } = useSugeridos2(user?.sucursal!, username, user?.zona!)
+  const { data } = useSugeridos(profileData?.sucursal.CODIGO!, username, profileData?.sucursal.ZONA!)
+  const { data2 } = useSugeridos2(profileData?.sucursal.CODIGO!, username, profileData?.sucursal.ZONA!)
 
   return (
     <section className='flex flex-col mx-2'>
@@ -34,7 +34,7 @@ function SugeridosPage () {
       </main>
 
       <footer className='py-2'>
-        <ConsultarBoletasGanadas codigo={user?.sucursal!} user={username} names={dataGeneral?.user.NOMBRES || 'ninguno'} />
+        <ConsultarBoletasGanadas codigo={profileData?.sucursal.CODIGO!} user={username} names={profileData?.user.NOMBRES || 'ninguno'} />
       </footer>
 
     </section>
