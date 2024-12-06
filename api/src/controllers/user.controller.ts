@@ -36,10 +36,18 @@ export async function Login(req: Request, res: Response) {
     if (strResult[0] === 'FALSE' && strResult[2] === 'A') return res.status(401).json({ message: 'Contraseña incorrecta' });
     if (strResult[0] === 'TRUE' && strResult[2] === 'B') return res.status(401).json({ message: 'Usuario se encuentra bloqueado' });
 
+    const zona = await Sucursal.findOne({
+      attributes: ['ZONA'],
+      where: { CODIGO: strResult[1] },
+    })
+
+    if (!zona) return res.status(404).json({ message: 'error al obtener la zona' })
+
     // TODO: creamos el payload del token que es el usuario
     const user = {
-      sucursal: strResult[1],
+      sucursal: parseInt(strResult[1]),
       username: username as string,
+      zona: parseInt(zona.dataValues.ZONA)
     }
 
     // TODO: asignamos el token al usuario con una duración de 2 horas
@@ -75,7 +83,7 @@ export async function getProfile(req: Request, res: Response) {
       where: { DOCUMENTO: cedula } 
     })
     const SucursalInfo = await Sucursal.findOne({
-      attributes: ['ZONA', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      attributes: ['NOMBRE', 'DIRECCION', 'SUPERVISOR'],
       where: { CODIGO: sucursal } 
     })
 
@@ -89,7 +97,6 @@ export async function getProfile(req: Request, res: Response) {
     const InfoGeneral = {
       user: Vendedor,
       sucursal: SucursalInfo,
-      codigo: sucursal,
       infCategoria: CategoriaInfo
     }
 

@@ -116,4 +116,5 @@ export interface IProduct {
 interface User extends JwtPayload {
   sucursal: number;
   username: string;
+  zona: number;
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const getLogin = async (username: string, password: string) => {
   try {
-    const response = await axios.post<{ auth: boolean, codigo: number }>('/login', { username, password })
+    const response = await axios.post<{ auth: boolean, codigo: string }>('/login', { username, password })
 
     if (response.status !== 200) {
       throw new Error('Error en la autenticación')

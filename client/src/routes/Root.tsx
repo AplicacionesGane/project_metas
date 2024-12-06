@@ -9,9 +9,9 @@ const LoginPage = lazy(() => import('../pages/LoginForm'))
 const NavBar = lazy(() => import('../components/NavBar'))
 
 export default function Root() {
-  const { auth } = useAuth()
+  const { auth, codigo } = useAuth()
 
-  if (!auth) return (
+  if (!auth || codigo === null) return (
     <Suspense fallback={<Loading />}>
       <LoginPage />
     </Suspense>
