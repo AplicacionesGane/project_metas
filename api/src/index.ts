@@ -3,6 +3,8 @@ import express from 'express';
 import morgan from 'morgan'
 import cors from 'cors'
 
+import { API_PORT, API_VERSION, API_URL_ORIGIN } from './config/enviroments';
+
 import { RouteUtilidades } from './routes/utilidades.routes';
 import { infopdvRouter } from './routes/infopdv.routes'
 import { routerMetas } from './routes/metas.routes'
@@ -11,11 +13,7 @@ import { RouteHist } from './routes/hist.routes'
 import { RouteSuge } from './routes/suge.routes'
 import { RouteHoras } from './routes/horas.routes';
 
-const PORT = process.env.PORT || 3030
 const app = express();
-const ORIGIN = process.env.ORIGIN_URL || 'http://localhost:3000'
-
-const v1 = '/api/v1'
 
 // Usa cookie-parser middleware
 app.use(cookieParser());
@@ -28,17 +26,17 @@ app.disable('x-powered-by');
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors({
-  origin: ORIGIN,
+  origin: API_URL_ORIGIN,
   credentials: true
 }))
 
-app.use(v1, UserRouter)
-app.use(v1, infopdvRouter)
-app.use(v1, routerMetas)
-app.use(v1, RouteHist)
-app.use(v1, RouteSuge)
-app.use(v1, RouteHoras)
-app.use(v1, RouteUtilidades)
+app.use(API_VERSION, UserRouter)
+app.use(API_VERSION, infopdvRouter)
+app.use(API_VERSION, routerMetas)
+app.use(API_VERSION, RouteHist)
+app.use(API_VERSION, RouteSuge)
+app.use(API_VERSION, RouteHoras)
+app.use(API_VERSION, RouteUtilidades)
 
 app.get('/api/v1/dataTime', async (_req, res) => {
   try {
@@ -60,6 +58,6 @@ app.get('/api/v1/dataTime2', async (_req, res) => {
   }
 })
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+app.listen(API_PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${API_PORT}`);
 });

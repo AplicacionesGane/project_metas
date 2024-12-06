@@ -6,9 +6,12 @@ import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
-const ENTORNO = process.env.ENV as string;
-const TOKEN_NAME = process.env.TOKEN_NAME as string;
+const {
+  JWT_SECRET,
+  ENTORNO,
+  TOKEN_NAME,
+  EXPIRES
+} = process.env;
 
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
@@ -52,11 +55,11 @@ export async function Login(req: Request, res: Response) {
     }
 
     // TODO: asignamos el token al usuario con una duración de 2 horas
-    jwt.sign(user, JWT_SECRET, { expiresIn: '2m' }, (err, token) => {
+    jwt.sign(user, JWT_SECRET!, { expiresIn: EXPIRES }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
       // TODO: asignación del token a la cookie
-      return res.cookie(TOKEN_NAME, token, {
+      return res.cookie(TOKEN_NAME!, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
@@ -79,13 +82,13 @@ export async function getProfile(req: Request, res: Response) {
     const { sucursal, username } = req.user as UserPayload
     const cedula = username.split('CV')[1]
 
-    const Vendedor = await User.findOne({ 
+    const Vendedor = await User.findOne({
       attributes: ['DOCUMENTO', 'NOMBRES', 'NOMBRECARGO'],
-      where: { DOCUMENTO: cedula } 
+      where: { DOCUMENTO: cedula }
     })
     const SucursalInfo = await Sucursal.findOne({
       attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
-      where: { CODIGO: sucursal } 
+      where: { CODIGO: sucursal }
     })
 
     const CategoriaInfo = await Categoria.findOne({
@@ -110,7 +113,7 @@ export async function getProfile(req: Request, res: Response) {
 
 export async function Logout(req: Request, res: Response) {
   try {
-    return res.cookie(TOKEN_NAME, '', {
+    return res.cookie(TOKEN_NAME!, '', {
       httpOnly: true,
       expires: new Date(0),
       sameSite: 'lax',
