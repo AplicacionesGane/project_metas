@@ -4,6 +4,8 @@ import { InfoGeneralI } from '../types/interfaces';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
+  codigo: number | null;
+  setCodigo: React.Dispatch<React.SetStateAction<number | null>>
   dataGeneral: InfoGeneralI | null;
   setDataGeneral: React.Dispatch<React.SetStateAction<InfoGeneralI | null>>
   auth: boolean;
@@ -16,6 +18,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 // Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [dataGeneral, setDataGeneral] = useState<InfoGeneralI | null>(null);
+  const [codigo, setCodigo] = useState<number | null>(null);
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <AuthContext.Provider value={{ dataGeneral, auth, setAuth, setDataGeneral }}>
+    <AuthContext.Provider value={{ codigo, dataGeneral, auth, setAuth, setDataGeneral, setCodigo }}>
       {children}
     </AuthContext.Provider>
   );

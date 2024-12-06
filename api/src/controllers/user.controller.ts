@@ -5,7 +5,6 @@ import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { where } from 'sequelize';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 const ENTORNO = process.env.ENV as string;
@@ -53,7 +52,7 @@ export async function Login(req: Request, res: Response) {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: ENTORNO !== 'dev' ? true : false
-      }).status(200).json({ message: 'Usuario autenticado correctamente' })
+      }).status(200).json({ auth: true, codigo: strResult[1] })
     })
   } catch (error) {
     console.log(error);

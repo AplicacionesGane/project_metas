@@ -11,7 +11,7 @@ const MAX_ATTEMPTS = 3
 const BLOCK_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 function LoginPage() {
-  const { setAuth } = useAuth()
+  const { setAuth, setCodigo } = useAuth()
 
   const [attempts, setAttempts] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
@@ -68,9 +68,9 @@ function LoginPage() {
 
     getLogin(username, password)
       .then(res => {
-        if (res.status === 200) {
+        if (res.auth) {
           setAuth(true)
-          toast.success('Inicio de sesión exitoso', { description: 'Bienvenido' })
+          setCodigo(res.codigo)
           setAttempts(0) // Reset attempts on successful login
           localStorage.removeItem('loginAttempts')
         }
@@ -78,16 +78,18 @@ function LoginPage() {
       .catch(err => {
         const message = err.response.data.message
         toast.error(message, { description: 'Hubo un problema al iniciar sesión' })
-        setAttempts(prev => {
-          const newAttempts = prev + 1
-          if (newAttempts >= MAX_ATTEMPTS) {
-            const endTime = Date.now() + BLOCK_TIME
-            setIsBlocked(true)
-            setBlockEndTime(endTime)
-            toast.error('Demasiados intentos fallidos. Inténtalo de nuevo más tarde 5(min).')
-          }
-          return newAttempts
-        })
+        if (err.response.status === 401) {
+          setAttempts(prev => {
+            const newAttempts = prev + 1
+            if (newAttempts >= MAX_ATTEMPTS) {
+              const endTime = Date.now() + BLOCK_TIME
+              setIsBlocked(true)
+              setBlockEndTime(endTime)
+              toast.error('Demasiados intentos fallidos. Inténtalo de nuevo más tarde 5(min).')
+            }
+            return newAttempts
+          })
+        }
       })
   }
 
