@@ -60,7 +60,7 @@ export async function Login(req: Request, res: Response) {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: ENTORNO !== 'dev' ? true : false
-      }).status(200).json({ auth: true, codigo: strResult[1] })
+      }).status(200).json(user)
     })
   } catch (error) {
     console.log(error);

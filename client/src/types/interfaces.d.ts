@@ -31,3 +31,9 @@ interface InfoGeneralI {
   codigo: string
   infCategoria: CategoriaI
 }
+
+interface AuthI {
+  sucursal: number;
+  username: string;
+  zona: number;
+}
