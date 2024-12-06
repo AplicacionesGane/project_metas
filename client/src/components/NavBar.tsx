@@ -2,9 +2,8 @@ import { RiDashboardLine, RiSunLine, RiCalendar2Line, RiCalendarTodoLine, RiLine
 import { Switch } from '../components/tremor/Switch'
 import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
-import { logout } from '../services/LoginServices'
-import LogoEmpresa from './LogoEmpresa'
 import { useAuth } from '../auth/AuthContext'
+import LogoEmpresa from './LogoEmpresa'
 
 const navLinks = [
   {
@@ -47,7 +46,7 @@ const navLinks = [
 
 function NavBar() {
   const { darkMode, toggleTheme } = useTheme()
-  const { setAuth } = useAuth()
+  const { funLogOut } = useAuth()
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
@@ -64,10 +63,7 @@ function NavBar() {
         </section>
 
         <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all' 
-        onClick={() => {
-          setAuth(false)
-          logout()
-        }}>
+        onClick={() => funLogOut()}>
           Cerrar Sesión
         </button>
 

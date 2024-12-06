@@ -14,7 +14,6 @@ export const useSugeridos2 = (codigo: number, user: string, zona: number) => {
       .catch((error) => {
         setError2(error.response.data.error || 'Error fetching data')
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { data2, error2 }

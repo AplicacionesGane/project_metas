@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
 import { MetasProducto } from '../types/Metas'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
+import axios, { AxiosError } from 'axios'
 
-export function useFecthMetasData (url: string, company: string, codigo: number) {
+export function useFecthMetasData (url: string, company: number, codigo: number) {
   const [data, setData] = useState<MetasProducto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const [close, setClose] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,8 +15,17 @@ export function useFecthMetasData (url: string, company: string, codigo: number)
         const response = await axios.get(url, { params: { zona: company, codigo } })
         setData(response.data)
         setError(null)
-      } catch (err) {
-        setError(err as Error)
+      } catch (err: AxiosError | Error | unknown) {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            setClose(true)
+          } else {
+            setError(new Error(err.response?.data.message || 'An error occurred'))
+          }
+        } else {
+          setError(err as Error)
+        }
+        
       } finally {
         setIsLoading(false)
       }
@@ -28,5 +38,5 @@ export function useFecthMetasData (url: string, company: string, codigo: number)
     return () => clearInterval(intervalId) // Clean up on unmount
   }, [url, company, codigo])
 
-  return { data, isLoading, error }
+  return { data, isLoading, error, close }
 }

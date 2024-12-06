@@ -5,15 +5,18 @@ import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { where } from 'sequelize';
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
-const ENTORNO = process.env.ENV as string;
-const TOKEN_NAME = process.env.TOKEN_NAME as string;
+const {
+  JWT_SECRET,
+  ENTORNO,
+  TOKEN_NAME,
+  EXPIRES
+} = process.env;
 
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
 
+  // todo: validar esta info con zod
   if (!username || !password) {
     return res.status(400).json({ message: 'Usuario y contraseña son campos requeridos' })
   }
@@ -37,23 +40,31 @@ export async function Login(req: Request, res: Response) {
     if (strResult[0] === 'FALSE' && strResult[2] === 'A') return res.status(401).json({ message: 'Contraseña incorrecta' });
     if (strResult[0] === 'TRUE' && strResult[2] === 'B') return res.status(401).json({ message: 'Usuario se encuentra bloqueado' });
 
+    const zona = await Sucursal.findOne({
+      attributes: ['ZONA'],
+      where: { CODIGO: strResult[1] },
+    })
+
+    if (!zona) return res.status(404).json({ message: 'error al obtener la zona' })
+
     // TODO: creamos el payload del token que es el usuario
     const user = {
-      sucursal: strResult[1],
+      sucursal: parseInt(strResult[1]),
       username: username as string,
+      zona: parseInt(zona.dataValues.ZONA)
     }
 
     // TODO: asignamos el token al usuario con una duración de 2 horas
-    jwt.sign(user, JWT_SECRET, { expiresIn: '2h' }, (err, token) => {
+    jwt.sign(user, JWT_SECRET!, { expiresIn: EXPIRES }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
       // TODO: asignación del token a la cookie
-      return res.cookie(TOKEN_NAME, token, {
+      return res.cookie(TOKEN_NAME!, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: ENTORNO !== 'dev' ? true : false
-      }).status(200).json({ message: 'Usuario autenticado correctamente' })
+      }).status(200).json(user)
     })
   } catch (error) {
     console.log(error);
@@ -71,13 +82,13 @@ export async function getProfile(req: Request, res: Response) {
     const { sucursal, username } = req.user as UserPayload
     const cedula = username.split('CV')[1]
 
-    const Vendedor = await User.findOne({ 
+    const Vendedor = await User.findOne({
       attributes: ['DOCUMENTO', 'NOMBRES', 'NOMBRECARGO'],
-      where: { DOCUMENTO: cedula } 
+      where: { DOCUMENTO: cedula }
     })
     const SucursalInfo = await Sucursal.findOne({
-      attributes: ['ZONA', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
-      where: { CODIGO: sucursal } 
+      attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      where: { CODIGO: sucursal }
     })
 
     const CategoriaInfo = await Categoria.findOne({
@@ -90,7 +101,6 @@ export async function getProfile(req: Request, res: Response) {
     const InfoGeneral = {
       user: Vendedor,
       sucursal: SucursalInfo,
-      codigo: sucursal,
       infCategoria: CategoriaInfo
     }
 
@@ -103,7 +113,7 @@ export async function getProfile(req: Request, res: Response) {
 
 export async function Logout(req: Request, res: Response) {
   try {
-    return res.cookie(TOKEN_NAME, '', {
+    return res.cookie(TOKEN_NAME!, '', {
       httpOnly: true,
       expires: new Date(0),
       sameSite: 'lax',

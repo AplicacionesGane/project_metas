@@ -6,36 +6,27 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function ResumenPage() {
-  const { dataGeneral } = useAuth()
+  const { dataGeneral, user, funLogOut } = useAuth()
   const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
   const [util, setUtil] = useState<{ cc_asesor: string, comision: number } | null>(null)
 
-  const codigo = dataGeneral?.codigo!
-  const zona = dataGeneral?.sucursal.ZONA!
-  const cedula = dataGeneral?.user.DOCUMENTO!
-  const user = dataGeneral?.user.NOMBRES!
+  const userName = dataGeneral?.user.NOMBRES!
   const nameCategoria = `${dataGeneral?.infCategoria.CATEGORIZACION!.toLocaleLowerCase()}.webp`
 
-  useEffect(() => { axios.get(`/utilidades/${cedula}`).then(res => setUtil(res.data)) }, [])
+  useEffect(() => {
+    axios.post('/metasDia', { codigo: user?.sucursal, zona: user?.zona })
+      .then(res => setData(res.data))
+      .catch(err => {
+        if (err.response.status === 401) {
+          funLogOut()
+        }
+      })
+  }, [user?.sucursal])
 
   useEffect(() => {
-    if (codigo && zona) {
-      // Fetch data immediately
-      axios.post('/metasDia', { codigo, zona })
-        .then(res => setData(res.data))
-        .catch(err => console.error(err))
-
-      // Then fetch data every 5 minutes
-      const intervalId = setInterval(() => {
-        axios.post('/metasDia', { codigo, zona })
-          .then(res => setData(res.data))
-          .catch(err => console.error(err))
-      }, 5 * 60 * 1000) // 5 minutes in milliseconds
-
-      // Clear interval on component unmount
-      return () => clearInterval(intervalId)
-    }
-  }, [])
+    axios.get(`/utilidades/${dataGeneral?.user.DOCUMENTO!}`)
+      .then(res => setUtil(res.data))
+  }, [dataGeneral?.user.DOCUMENTO!])
 
   return (
     <section className='w-full px-1 grid grid-cols-3 text-center font-semibold rounded-lg gap-2 text-gray-700 dark:text-white'>
@@ -51,7 +42,7 @@ function ResumenPage() {
         <VentasDiaResumen venta={data.ventaActual} aspiracion={data.aspiracionDia} />
 
         <div className='w-full flex items-center rounded-lg justify-center py-2 dark:bg-slate-200'>
-          <GenerateQR codigo={parseInt(codigo) || 0} nombres={user || 'undefined'} username={cedula || 'undefined'} />
+          <GenerateQR codigo={user?.sucursal!} nombres={userName || 'undefined'} username={dataGeneral?.user.DOCUMENTO! || 'undefined'} />
         </div>
 
       </section>

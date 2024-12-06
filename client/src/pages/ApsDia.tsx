@@ -6,17 +6,19 @@ import { useAuth } from '../auth/AuthContext'
 import { useMemo, useState } from 'react'
 
 function AspDiaPage() {
-  const { dataGeneral} = useAuth()
+  const { user, funLogOut } = useAuth()
 
-  const codigo = dataGeneral?.codigo!
-  const zona = dataGeneral?.sucursal.ZONA!
-
-  const { data, isLoading } = useFecthMetasData('/cumpDiaProd', zona, parseInt(codigo))
+  const { data, isLoading, close } = useFecthMetasData('/cumpDiaProd', user?.zona!, user?.sucursal!)
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
+
+  if(close) {
+    funLogOut()
+    return null
+  }
 
   return (
     <section className='px-1'>

@@ -11,7 +11,7 @@ export function HistComponent ({ data }:{data: Historial[]}) {
         <ul key={hist.MES} className='flex flex-col w-full items-center gap-2 pt-2'>
           <p className='w-full text-center font-semibold text-lg dark:text-white'>{meses[hist.MES - 1]}</p>
           <figure className='lg:w-20 xl:w-28 2xl:w-32 3xl:w-40'>
-            <RenderCategoria cat={hist.CATEGORIA} ver={hist.VERSION} />
+            <RenderCategoria cat={hist.CATEGORIA.toLocaleLowerCase()} />
           </figure>
         </ul>
       ))

@@ -1,13 +1,14 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { getProfile, logout } from '../services/LoginServices';
-import { InfoGeneralI } from '../types/interfaces';
+import { AuthI, ProfileI } from '../types/interfaces';
 
 // Definimos la interfaz para el contexto de autenticación
 export interface AuthContextType {
-  dataGeneral: InfoGeneralI | null;
-  setDataGeneral: React.Dispatch<React.SetStateAction<InfoGeneralI | null>>
-  auth: boolean;
-  setAuth: React.Dispatch<React.SetStateAction<boolean>>
+  user: AuthI | null;
+  setUser: React.Dispatch<React.SetStateAction<AuthI | null>>;
+  dataGeneral: ProfileI | null;
+  setDataGeneral: React.Dispatch<React.SetStateAction<ProfileI | null>>
+  funLogOut: () => void;
 }
 
 // Creamos el contexto de autenticación con un valor inicial nulo
@@ -15,21 +16,32 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 // Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [dataGeneral, setDataGeneral] = useState<InfoGeneralI | null>(null);
-  const [auth, setAuth] = useState(false);
+  const [dataGeneral, setDataGeneral] = useState<ProfileI | null>(null);
+  const [user, setUser] = useState<AuthI | null>(null);
+
+  const funLogOut = () => {
+    setDataGeneral(null);
+    setUser(null);
+    logout();
+  }
 
   useEffect(() => {
     getProfile()
-      .then(res => {
-        setAuth(true);
-        setDataGeneral(res.data);
+      .then(data => {
+        setDataGeneral(data)
+        let codigo, zona, username;
+        if (data) {
+          codigo = data.sucursal.CODIGO;
+          zona = data.sucursal.ZONA;
+          username = data.user.NOMBRES;
+          setUser({ sucursal: parseInt(codigo), zona: parseInt(zona), username });
+        }
       })
       .catch((error) => { error.response.status === 401 && logout() });
-  }, [auth]);
-
+  }, [user?.sucursal]);
 
   return (
-    <AuthContext.Provider value={{ dataGeneral, auth, setAuth, setDataGeneral }}>
+    <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral, funLogOut }}>
       {children}
     </AuthContext.Provider>
   );
