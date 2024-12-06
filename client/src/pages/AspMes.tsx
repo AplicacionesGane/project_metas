@@ -6,14 +6,19 @@ import { HeaderComponent } from '../components/ui/headerComponent'
 import { useAuth } from '../auth/AuthContext'
 
 function AspMesPage () {
-  const { user} = useAuth()
+  const { user, funLogOut} = useAuth()
 
-  const { data, isLoading } = useFecthMetasData('/cumpMesAct', user?.zona!, user?.sucursal!)
+  const { data, isLoading, close } = useFecthMetasData('/cumpMesAct', user?.zona!, user?.sucursal!)
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
+
+  if(close) {
+    funLogOut()
+    return null
+  }
 
   return (
     <section className='relative'>

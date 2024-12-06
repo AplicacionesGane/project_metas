@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function ResumenPage() {
-  const { dataGeneral, user } = useAuth()
+  const { dataGeneral, user, funLogOut } = useAuth()
   const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
   const [util, setUtil] = useState<{ cc_asesor: string, comision: number } | null>(null)
 
@@ -16,7 +16,11 @@ function ResumenPage() {
   useEffect(() => {
     axios.post('/metasDia', { codigo: user?.sucursal, zona: user?.zona })
       .then(res => setData(res.data))
-      .catch(err => console.error(err))
+      .catch(err => {
+        if (err.response.status === 401) {
+          funLogOut()
+        }
+      })
   }, [user?.sucursal])
 
   useEffect(() => {

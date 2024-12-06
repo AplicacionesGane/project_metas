@@ -8,6 +8,7 @@ export interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<AuthI | null>>;
   dataGeneral: ProfileI | null;
   setDataGeneral: React.Dispatch<React.SetStateAction<ProfileI | null>>
+  funLogOut: () => void;
 }
 
 // Creamos el contexto de autenticación con un valor inicial nulo
@@ -17,6 +18,12 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [dataGeneral, setDataGeneral] = useState<ProfileI | null>(null);
   const [user, setUser] = useState<AuthI | null>(null);
+
+  const funLogOut = () => {
+    setDataGeneral(null);
+    setUser(null);
+    logout();
+  }
 
   useEffect(() => {
     getProfile()
@@ -34,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user?.sucursal]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral }}>
+    <AuthContext.Provider value={{ user, setUser, dataGeneral, setDataGeneral, funLogOut }}>
       {children}
     </AuthContext.Provider>
   );
