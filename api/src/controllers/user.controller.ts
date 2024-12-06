@@ -1,3 +1,4 @@
+import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
 import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
 import { Categoria } from '../models/vCatgSucuPowebi';
@@ -6,12 +7,6 @@ import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-const {
-  JWT_SECRET,
-  ENTORNO,
-  TOKEN_NAME,
-  EXPIRES
-} = process.env;
 
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
@@ -55,15 +50,15 @@ export async function Login(req: Request, res: Response) {
     }
 
     // TODO: asignamos el token al usuario con una duración de 2 horas
-    jwt.sign(user, JWT_SECRET!, { expiresIn: EXPIRES }, (err, token) => {
+    jwt.sign(user, API_TOKEN_SECRET, { expiresIn: API_TOKEN_EXPIRES }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
       // TODO: asignación del token a la cookie
-      return res.cookie(TOKEN_NAME!, token, {
+      return res.cookie(API_TOKEN_NAME, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
-        secure: ENTORNO !== 'dev' ? true : false
+        secure: API_ENV !== 'dev' ? true : false
       }).status(200).json(user)
     })
   } catch (error) {
@@ -113,11 +108,11 @@ export async function getProfile(req: Request, res: Response) {
 
 export async function Logout(req: Request, res: Response) {
   try {
-    return res.cookie(TOKEN_NAME!, '', {
+    return res.cookie(API_TOKEN_NAME!, '', {
       httpOnly: true,
       expires: new Date(0),
       sameSite: 'lax',
-      secure: ENTORNO !== 'dev' ? true : false
+      secure: API_ENV !== 'dev' ? true : false
     })
       .status(200)
       .json({ message: 'Sesión cerrada correctamente' });
