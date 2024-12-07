@@ -1,12 +1,13 @@
 import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
 import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
+import { HistLogin } from '../models/histLoginPowerbi';
 import { Categoria } from '../models/vCatgSucuPowebi';
 import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
+import { fn } from 'sequelize';
 import jwt from 'jsonwebtoken';
-
 
 export async function Login(req: Request, res: Response) {
   const { username, password } = req.body
@@ -49,6 +50,24 @@ export async function Login(req: Request, res: Response) {
       zona: parseInt(zona.dataValues.ZONA)
     }
 
+    //TODO: Insertar un dato de login si no existe en la tabla de historialLogin del día actual con la función CURDATE
+    try {
+      const histLogin = await HistLogin.findOne({
+        where: { USERNAME: username, SUCURSAL: user.sucursal, FECHA_LOGIN: fn('CURDATE') }
+      });
+
+      if (!histLogin) {
+        await HistLogin.create({
+          USERNAME: username,
+          SUCURSAL: user.sucursal
+        });
+      } else {
+        console.log('Ya existe un registro de login para el usuario para el día de hoy');
+      }
+    } catch (error) {
+      console.error('Error al insertar el registro de login:', error);
+    }
+
     // TODO: asignamos el token al usuario con una duración de 2 horas
     jwt.sign(user, API_TOKEN_SECRET, { expiresIn: API_TOKEN_EXPIRES }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
@@ -63,7 +82,7 @@ export async function Login(req: Request, res: Response) {
     })
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Error al obtener el usuario', error })
+    return res.status(500).json({ message: 'Error al intentar iniciar sesión', error })
   }
 }
 
