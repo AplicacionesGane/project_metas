@@ -4,9 +4,9 @@ import { useAuth } from '../auth/AuthContext';
 import { Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
-const ComPdvInfo = lazy(() => import('../components/InfoPdvComponent'))
 const LoginPage = lazy(() => import('../pages/LoginForm'))
 const NavBar = lazy(() => import('../components/NavBar'))
+const InfoSucursal = lazy(() => import('../components/InfoPdvComponent'))
 
 export default function Root() {
   const { profileData } = useAuth()
@@ -24,7 +24,7 @@ export default function Root() {
           <NavBar />
         </nav>
         <main className='w-9/12  overflow-y-auto'>
-          <ComPdvInfo />
+          <InfoSucursal />
           <Outlet />
         </main>
       </Suspense>

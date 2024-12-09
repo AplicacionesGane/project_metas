@@ -5,42 +5,42 @@ import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
 import LogoEmpresa from './LogoEmpresa'
 
-const navLinks = [
+const NavLinksItems = [
   {
     id: 1,
-    path: '/',
-    icon: RiDashboardLine,
-    label: 'Resumen De Aspiración'
+    routeTo: '/',
+    IconRender: RiDashboardLine,
+    titleName: 'Resumen De Aspiración'
   },
   {
     id: 2,
-    path: '/aspiracionDia',
-    icon: RiSunLine,
-    label: 'Aspiración Del Día'
+    routeTo: '/aspiracionDia',
+    IconRender: RiSunLine,
+    titleName: 'Aspiración Del Día'
   },
   {
     id: 3,
-    path: '/aspiracionMesActual',
-    icon: RiCalendar2Line,
-    label: 'Aspiración Mes Actual'
+    routeTo: '/aspiracionMesActual',
+    IconRender: RiCalendar2Line,
+    titleName: 'Aspiración Mes Actual'
   },
   {
     id: 4,
-    path: '/aspiracionMesAnterior',
-    icon: RiCalendarTodoLine,
-    label: 'Aspiración Mes Anterior'
+    routeTo: '/aspiracionMesAnterior',
+    IconRender: RiCalendarTodoLine,
+    titleName: 'Aspiración Mes Anterior'
   },
   {
     id: 5,
-    path: '/historial',
-    icon: RiLineChartLine,
-    label: 'Historial Categorías'
+    routeTo: '/historial',
+    IconRender: RiLineChartLine,
+    titleName: 'Historial Categorías'
   },
   {
     id: 6,
-    path: '/sugeridos',
-    icon: RiTaskLine,
-    label: 'Sugeridos'
+    routeTo: '/sugeridos',
+    IconRender: RiTaskLine,
+    titleName: 'Sugeridos'
   }
 ]
 
@@ -53,7 +53,16 @@ function NavBar() {
       <LogoEmpresa />
 
       <li className='flex flex-col gap-4 2xl:gap-6 3xl:gap-8 font-semibold dark:text-white'>
-        {navLinks.map(link => <NavLinkItem key={link.id} path={link.path} icon={link.icon} label={link.label} />)}
+        {
+          NavLinksItems.map(link =>
+            <NavLinkItem
+              key={link.id}
+              IconRender={link.IconRender}
+              routeTo={link.routeTo}
+              titleName={link.titleName}
+            />
+          )
+        }
       </li>
 
       <li className='flex flex-col items-center gap-4'>
@@ -62,8 +71,8 @@ function NavBar() {
           <Switch checked={darkMode} onCheckedChange={toggleTheme} />
         </section>
 
-        <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all' 
-        onClick={() => funLogOut()}>
+        <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all'
+          onClick={() => funLogOut()}>
           Cerrar Sesión
         </button>
 
