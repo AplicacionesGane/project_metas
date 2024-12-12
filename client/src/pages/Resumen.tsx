@@ -63,7 +63,7 @@ function ResumenPage() {
                     <th>FECHA</th>
                     <th>N° DOCUMENTO</th>    
                     <th>CONCEPTO</th>
-                    <th>REFERENCIA</th>
+                    <th>N° REFERENCIA</th>
                   </tr>
                 </thead>
                 <tbody>
