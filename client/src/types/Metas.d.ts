@@ -26,3 +26,12 @@ export interface Sugeridos {
   VTA_SUGERIDO: number
   META_SUG1: number
 }
+
+
+export interface Comiciones {
+  FECHA:      Date;
+  DOCUMENTO:  string;
+  CONCEPTO:   string;
+  REFERENCIA: string;
+  VERSION:    null;
+}

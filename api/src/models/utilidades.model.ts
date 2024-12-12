@@ -1,9 +1,12 @@
 import { Model, DataTypes } from "sequelize";
-import { MetasConn } from "../connections/metasConn";
+import { powerBi } from "../connections/powerbi";
 
 type UtilidadesAttributes = {
-  cc_asesor: string
-  comision: number
+  FECHA: Date;
+  DOCUMENTO: string;
+  CONCEPTO: string;
+  REFERENCIA: string;
+  VERSION: string;
 }
 
 class Utilidades extends Model<UtilidadesAttributes> {
@@ -12,12 +15,15 @@ class Utilidades extends Model<UtilidadesAttributes> {
 }
 
 Utilidades.init({
-  cc_asesor: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  comision: { type: DataTypes.NUMBER, allowNull: false }
+  FECHA: { type: DataTypes.DATE, allowNull: false },
+  DOCUMENTO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+  CONCEPTO: { type: DataTypes.STRING, allowNull: false },
+  REFERENCIA: { type: DataTypes.STRING, allowNull: false },
+  VERSION: { type: DataTypes.STRING, allowNull: false }
 }, {
-  sequelize: MetasConn,
+  sequelize: powerBi,
   modelName: 'utilidades',
-  tableName: 'comision_asesor',
+  tableName: 'COMISIONES',
   timestamps: false
 })
 
