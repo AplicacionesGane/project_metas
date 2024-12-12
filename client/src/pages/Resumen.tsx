@@ -4,11 +4,12 @@ import { GenerateQR } from '../components/ui/GeneraQrCod'
 import { useAuth } from '../auth/AuthContext'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Comiciones } from '../types/Metas'
 
 function ResumenPage() {
   const { profileData, funLogOut } = useAuth()
   const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
-  const [util, setUtil] = useState<{ cc_asesor: string, comision: number } | null>(null)
+  const [util, setUtil] = useState<Comiciones | null>(null)
 
   const userName = profileData?.user.NOMBRES!
   const nameCategoria = `${profileData?.infCategoria.CATEGORIZACION!.toLocaleLowerCase()}.webp`
@@ -22,6 +23,8 @@ function ResumenPage() {
         }
       })
   }, [profileData?.sucursal.CODIGO])
+
+  console.log('first', `/utilidades/${profileData?.user.DOCUMENTO!}`)
 
   useEffect(() => {
     axios.get(`/utilidades/${profileData?.user.DOCUMENTO!}`)
@@ -53,18 +56,22 @@ function ResumenPage() {
       {
         util !== null
           ? (
-            <section className='bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
+            <section className='col-span-3 flex flex-col items-center justify-center  bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
               <table className='w-full table-auto border-collapse'>
                 <thead>
                   <tr>
-                    <th>N° Documento</th>
+                    <th>Fecha</th>
+                    <th>N° Documento</th>    
+                    <th>Consepto</th>
                     <th>Referencia</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{util.cc_asesor}</td>
-                    <td>{util.comision}</td>
+                    <td>{util.FECHA.toLocaleString()}</td>
+                    <td>{util.DOCUMENTO}</td>
+                    <td>{util.CONCEPTO}</td>
+                    <td>{util.REFERENCIA}</td>
                   </tr>
                 </tbody>
               </table>
