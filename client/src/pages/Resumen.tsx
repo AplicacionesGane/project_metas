@@ -56,14 +56,14 @@ function ResumenPage() {
       {
         util !== null
           ? (
-            <section className='col-span-3 flex flex-col items-center justify-center  bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
+            <section className='col-span-3 flex flex-col bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
               <table className='w-full table-auto border-collapse'>
                 <thead>
                   <tr>
-                    <th>Fecha</th>
-                    <th>N° Documento</th>    
-                    <th>Consepto</th>
-                    <th>Referencia</th>
+                    <th>FECHA</th>
+                    <th>N° DOCUMENTO</th>    
+                    <th>CONCEPTO</th>
+                    <th>N° REFERENCIA</th>
                   </tr>
                 </thead>
                 <tbody>
