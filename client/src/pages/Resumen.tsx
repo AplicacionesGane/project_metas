@@ -2,14 +2,14 @@ import { ProgressCircleComponent } from '../components/ui/ProgressCircle'
 import { VentasDiaResumen } from '../components/ui/VentaDiaResumen'
 import { GenerateQR } from '../components/ui/GeneraQrCod'
 import { useAuth } from '../auth/AuthContext'
+import { ComisionesI } from '../types/Metas'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Comiciones } from '../types/Metas'
 
 function ResumenPage() {
   const { profileData, funLogOut } = useAuth()
   const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
-  const [util, setUtil] = useState<Comiciones | null>(null)
+  const [util, setUtil] = useState<ComisionesI[]>([])
 
   const userName = profileData?.user.NOMBRES!
   const nameCategoria = `${profileData?.infCategoria.CATEGORIZACION!.toLocaleLowerCase()}.webp`
@@ -54,25 +54,29 @@ function ResumenPage() {
         <img src={nameCategoria} loading='lazy' alt='logo segun categoria' />
       </figure>
       {
-        util !== null
+        util
           ? (
             <section className='col-span-3 flex flex-col bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500 mb-2'>
               <table className='w-full table-auto border-collapse'>
                 <thead>
                   <tr>
                     <th>FECHA</th>
-                    <th>N° DOCUMENTO</th>    
+                    <th>N° DOCUMENTO</th>
                     <th>CONCEPTO</th>
                     <th>N° REFERENCIA</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>{util.FECHA.toLocaleString()}</td>
-                    <td>{util.DOCUMENTO}</td>
-                    <td>{util.CONCEPTO}</td>
-                    <td>{util.REFERENCIA}</td>
-                  </tr>
+                  {
+                    util.map((item, index) => (
+                      <tr key={index} className='border-t border-gray-300 dark:border-gray-500'>
+                        <td>{item.FECHA}</td>
+                        <td>{item.DOCUMENTO}</td>
+                        <td>{item.CONCEPTO}</td>
+                        <td>{item.REFERENCIA}</td>
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </table>
             </section>
