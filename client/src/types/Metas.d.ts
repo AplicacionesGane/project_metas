@@ -28,10 +28,10 @@ export interface Sugeridos {
 }
 
 
-export interface Comiciones {
-  FECHA:      Date;
-  DOCUMENTO:  string;
-  CONCEPTO:   string;
+export interface ComisionesI {
+  FECHA: string;
+  DOCUMENTO: string;
+  CONCEPTO: string;
   REFERENCIA: string;
-  VERSION:    null;
+  VERSION: null;
 }

@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { getUtilidades } from "../controllers/metas.controller";
+import { getUtilidades } from '../controllers/metas.controller';
+import { Router } from 'express';
 
 export const RouteUtilidades = Router()
 
