@@ -147,7 +147,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
 
   const PROMO1 = {
     id: 18,
-    producto: 'Prima Navideña',
+    producto: 'Super Win',
     ventaActual: data.PROMO1,
     aspiracionDia: data.META_PROMO1,
     porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),
@@ -278,7 +278,6 @@ function parsearInfoArrayServired(data: ProductsJamundi) {
     porcentaje: calcularPorcentaje(data.RECARGAS, data.PROMEDIO_DIARIO_RECARGAS),
     porcentaje2: calcularPorcentajeSinLimite(data.RECARGAS, data.PROMEDIO_DIARIO_RECARGAS)
   }
-
   const PROMO2 = {
     id: 16,
     producto: 'Promo 2',
@@ -288,7 +287,7 @@ function parsearInfoArrayServired(data: ProductsJamundi) {
     porcentaje2: calcularPorcentajeSinLimite(data.PROMO2, data.META_PROMO2)
   }
 
-  let ventaActualAzarCal = 0; 
+  let ventaActualAzarCal = 0;
   let aspiracionDiaAzarCal = 0;
 
   ventaActualAzarCal = data.CHANCE + data.CHOLADITO + data.PAGATODO_JAMUNDI + data.GANE5 + data.DOBLECHANCE + data.CHANCE_MILLONARIO;
@@ -306,14 +305,14 @@ function parsearInfoArrayServired(data: ProductsJamundi) {
 
   const PROMO1 = {
     id: 18,
-    producto: 'Prima Navideña',
+    producto: 'Super Win',
     ventaActual: data.PROMO1,
     aspiracionDia: data.META_PROMO1,
     porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),
     porcentaje2: calcularPorcentajeSinLimite(data.PROMO1, data.META_PROMO1)
   }
 
-  return[CHANCE, BALOTO, PATA_MILLONARIA, GANE5, PAGATODO_JAMUNDI, CHOLADITO, DOBLECHANCE, CHANCE_MILLONARIO, ASTRO, LOTERIA_VIRTUAL, LOTERIA_FISICA, BETPLAY, GIROS, RECAUDOS, RECARGAS, PROMO1, PROMO2, JUEGOS_AZAR]
+  return [CHANCE, BALOTO, PATA_MILLONARIA, GANE5, PAGATODO_JAMUNDI, CHOLADITO, DOBLECHANCE, CHANCE_MILLONARIO, ASTRO, LOTERIA_VIRTUAL, LOTERIA_FISICA, BETPLAY, GIROS, RECAUDOS, RECARGAS, PROMO1, PROMO2, JUEGOS_AZAR]
 }
 
 const PRM = 'PROMEDIO_DIARIO_'
@@ -346,10 +345,10 @@ export function ReturnCompanyAtributesMetProducts(zona: string) {
   if (zona === '39628') return Servired
 }
 
-export function ReturnArrayMetProducts (zona: string, metas: ProductsYumbo | ProductsJamundi) {
+export function ReturnArrayMetProducts(zona: string, metas: ProductsYumbo | ProductsJamundi) {
   if (zona === '39627') {
     return parsearInfoArrayMultired(metas as ProductsYumbo)
-  } else if(zona === '39628') {
+  } else if (zona === '39628') {
     return parsearInfoArrayServired(metas as ProductsJamundi)
   }
   throw new Error('Error al parsear la informacion')
