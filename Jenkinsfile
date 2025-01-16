@@ -30,7 +30,7 @@ pipeline {
         steps {
           script {
             dir('client') {
-              sh 'pnpm install'
+              sh 'pnpm install --no-frozen-lockfile'
             }
           }
         }
