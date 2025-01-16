@@ -26,11 +26,22 @@ pipeline {
         }
       }
 
-      stage('install dependencies') {
+      stage('Install Client Dependencies') {
         steps {
           script {
-            sh 'cd ./client && npm install'
-            sh 'cd ./client && node --run build'
+            dir('client') {
+              sh 'pnpm install'
+            }
+          }
+        }
+      }
+
+      stage('Build Client') {
+        steps {
+          script {
+            dir('client') {
+              sh 'pnpm build'
+            }
           }
         }
       }
