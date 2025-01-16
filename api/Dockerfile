@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y libaio1
 
 # Instalar dependencias y construir la aplicación
 RUN npm install -g pnpm && \
-    pnpm install && \
+    pnpm install --no-frozen-lockfile && \
     pnpm build
 
 # Configurar Oracle Instant Client
