@@ -16,7 +16,6 @@ const Sug = async (codigo: number, user: string) => {
   return consulta
 }
 
-
 export const SugeridosPrimeraConsulta = async (req: Request, res: Response) => {
   const { codigo, user } = req.body
 
@@ -42,7 +41,6 @@ export const SugeridosPrimeraConsulta = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Hubo un problema al obtener los sugeridos de la primera consulta. Por favor, inténtalo de nuevo más tarde.' })
   }
 }
-
 
 export const SugeridosSegundaConsulta = async (req: Request, res: Response) => {
   const { codigo, user } = req.body
@@ -82,7 +80,7 @@ export const BoletasGanadas = async (req: Request, res: Response) => {
   try {
     const cumplimiento = await Boletas.findOne({ where: { FECHA: fn('CURDATE'), SUCURSAL: codigo, USUARIO: user } })
 
-    const SUM = cumplimiento?.dataValues.CUMPLIMIENTO! + cumplimiento?.dataValues.CUMPLIMIENTO2! + cumplimiento?.dataValues.CUMPLIMIENTO3! 
+    const SUM = cumplimiento?.dataValues.CUMPLIMIENTO! + cumplimiento?.dataValues.CUMPLIMIENTO2! + cumplimiento?.dataValues.CUMPLIMIENTO3!
 
     return res.status(200).json({ boletas: SUM })
   } catch (error) {

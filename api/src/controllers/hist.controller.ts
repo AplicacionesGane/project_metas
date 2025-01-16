@@ -1,7 +1,5 @@
 import { HistorialCategoria } from '../models/histcatpowerbi'
-
 import { Request, Response } from "express"
-import { escape } from 'querystring'
 
 export async function HistCat(req: Request, res: Response) {
   const { codigo } = req.query
