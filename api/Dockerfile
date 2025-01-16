@@ -8,7 +8,9 @@ COPY . /app
 RUN apt-get update && apt-get install -y libaio1
 
 # Instalar dependencias y construir la aplicación
-RUN npm install && node --run build
+RUN npm install -g pnpm && \
+    pnpm install --frozen-lockfile && \
+    pnpm build
 
 # Configurar Oracle Instant Client
 RUN mkdir -p /opt/oracle && \
