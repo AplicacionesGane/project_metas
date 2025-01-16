@@ -3,9 +3,11 @@ import { Request, Response, NextFunction } from 'express';
 import { User } from '../types/interfaces';
 import jwt from 'jsonwebtoken';
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    user?: User;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: User;
+    }
   }
 }
 
@@ -19,7 +21,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
     jwt.verify(token, API_TOKEN_SECRET, (err, decoded) => {
       if (err) {
-        if(err.name === 'TokenExpiredError') {
+        if (err.name === 'TokenExpiredError') {
           return res.status(401).json({ message: 'Token expired' });
         }
         return res.status(401).json({ message: 'Invalid token' });
