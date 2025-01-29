@@ -2,7 +2,6 @@ import { Horas } from '../models/metas_70.model';
 import { Request, Response } from 'express'
 import { fn, Op } from 'sequelize';
 
-
 export const HorasBySucursal = async (req: Request, res: Response) => {
   const { id, producto } = req.params
 
