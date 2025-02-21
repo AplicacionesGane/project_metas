@@ -12,7 +12,6 @@ function InfoSucursalComponent() {
       .then(res => { setFecha(res.fecha) })
   }, [])
 
-
   return (
     <section className='grid grid-cols-2 w-full lg:text-sm xl:text-base 2xl:text-xl justify-around py-2 px-1 gap-2 dark:text-white'>
       <article className='flex items-center justify-center text-center border py-1 rounded-md bg-slate-300 dark:bg-slate-900 font-semibold'>
@@ -26,7 +25,7 @@ function InfoSucursalComponent() {
         <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.sucursal.SUPERVISOR}</div>
       </article>
       <article className='flex items-center justify-center text-center border py-1 rounded-md bg-slate-300 dark:bg-slate-900 font-semibold'>
-        <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.infCategoria?.CATEGORIZACION}</div>
+        <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.infCategoria === null ? 'Sin Categoría' : profileData?.infCategoria.CATEGORIZACION}</div>
       </article>
     </section>
   )
