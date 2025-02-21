@@ -12,7 +12,7 @@ function ResumenPage() {
   const [util, setUtil] = useState<ComisionesI[]>([])
 
   const userName = profileData?.user.NOMBRES!
-  const nameCategoria = `${profileData?.infCategoria.CATEGORIZACION!.toLocaleLowerCase()}.webp`
+  const nameCategoria = `${profileData?.infCategoria?.CATEGORIZACION!.toLocaleLowerCase()}.webp`
 
   useEffect(() => {
     axios.post('/metasDia', { codigo: profileData?.sucursal.CODIGO, zona: profileData?.sucursal.ZONA })
