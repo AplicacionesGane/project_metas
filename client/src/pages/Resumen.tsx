@@ -24,8 +24,6 @@ function ResumenPage() {
       })
   }, [profileData?.sucursal.CODIGO])
 
-  console.log('first', `/utilidades/${profileData?.user.DOCUMENTO!}`)
-
   useEffect(() => {
     axios.get(`/utilidades/${profileData?.user.DOCUMENTO!}`)
       .then(res => setUtil(res.data))
@@ -52,6 +50,7 @@ function ResumenPage() {
 
       <figure className='col-span-2 flex flex-col items-center justify-center bg-slate-300 dark:bg-slate-900 rounded-md dark:border dark:border-gray-500'>
         <img src={nameCategoria} loading='lazy' alt='logo segun categoria' />
+        {nameCategoria === 'undefined.webp' ? 'Sucursal Sin Categorizar ...' : ''}
       </figure>
       {
         util
