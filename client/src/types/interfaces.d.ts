@@ -19,7 +19,7 @@ interface CategoriaI {
 export interface ProfileDataI {
   user: UserI;
   sucursal: SucursalI;
-  infCategoria: CategoriaI;
+  infCategoria: CategoriaI | null;
 }
 
 export interface CategoriasI {

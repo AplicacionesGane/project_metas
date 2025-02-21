@@ -26,7 +26,7 @@ function InfoSucursalComponent() {
         <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.sucursal.SUPERVISOR}</div>
       </article>
       <article className='flex items-center justify-center text-center border py-1 rounded-md bg-slate-300 dark:bg-slate-900 font-semibold'>
-        <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.infCategoria.CATEGORIZACION}</div>
+        <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>{profileData?.infCategoria?.CATEGORIZACION}</div>
       </article>
     </section>
   )
