@@ -6,14 +6,16 @@ import { Categoria } from '../models/vCatgSucuPowebi';
 import { oracleUser } from '../services/oracleUser';
 import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
+import { BaseError } from '../utils/baseError';
 import { Request, Response } from 'express';
 import { fn } from 'sequelize';
 import jwt from 'jsonwebtoken';
 
 export async function Login(req: Request, res: Response) {
-  const { username, password } = await validateCredentials(req.body);
-
+  
   try {
+    const { username, password } = validateCredentials(req.body);
+    
     const user = await oracleUser(password, username);
 
     //TODO: Insertar un dato de login si no existe en la tabla de historialLogin del día actual con la función CURDATE
@@ -47,8 +49,10 @@ export async function Login(req: Request, res: Response) {
       }).status(200).json(user)
     })
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: 'Error al intentar iniciar sesión', error })
+    if(error instanceof BaseError){
+      return res.status(error.statusCode).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'Error al intentar iniciar sesión' })
   }
 }
 
