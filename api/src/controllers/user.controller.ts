@@ -1,8 +1,9 @@
 import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
-import { connectionOracle } from '../connections/oracledb';
 import { User as UserPayload } from '../types/interfaces';
+import { validateCredentials } from '../schemas/validate';
 import { HistLogin } from '../models/histLoginPowerbi';
 import { Categoria } from '../models/vCatgSucuPowebi';
+import { oracleUser } from '../services/oracleUser';
 import { Sucursal } from '../models/sucursalespw';
 import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
@@ -10,55 +11,20 @@ import { fn } from 'sequelize';
 import jwt from 'jsonwebtoken';
 
 export async function Login(req: Request, res: Response) {
-  const { username, password } = req.body
-
-  // todo: validar esta info con zod
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Usuario y contraseña son campos requeridos' })
-  }
+  const { username, password } = await validateCredentials(req.body);
 
   try {
-    const connection = await connectionOracle();
-
-    if (connection instanceof Error) return res.status(500).json({ message: 'Error al conectar a la base de datos', error: connection });
-
-    const { rows } = await connection.execute<string[]>(
-      "SELECT get_authentication_msr(:password, :username) AS AUTH FROM dual",
-      [password, username]
-    );
-
-    if (rows === undefined) return res.status(500).json({ message: 'Error al obtener el usuario en la base de datos' });
-
-    // TODO: dividimos el resultado en un array de 3 elementos para validar el resultado
-    const strResult = rows[0][0].split(',')
-
-    if (strResult[0] === 'No data found') return res.status(401).json({ message: 'Usuario no encontrado o no existe' });
-    if (strResult[0] === 'FALSE' && strResult[2] === 'A') return res.status(401).json({ message: 'Contraseña incorrecta' });
-    if (strResult[0] === 'TRUE' && strResult[2] === 'B') return res.status(401).json({ message: 'Usuario se encuentra bloqueado' });
-
-    const zona = await Sucursal.findOne({
-      attributes: ['ZONA'],
-      where: { CODIGO: strResult[1] },
-    })
-
-    if (!zona) return res.status(404).json({ message: 'error al obtener la zona' })
-
-    // TODO: creamos el payload del token que es el usuario
-    const user = {
-      sucursal: parseInt(strResult[1]),
-      username: username as string,
-      zona: parseInt(zona.dataValues.ZONA)
-    }
+    const user = await oracleUser(password, username);
 
     //TODO: Insertar un dato de login si no existe en la tabla de historialLogin del día actual con la función CURDATE
     try {
       const histLogin = await HistLogin.findOne({
-        where: { USERNAME: username, SUCURSAL: user.sucursal, FECHA_LOGIN: fn('CURDATE') }
+        where: { USERNAME: user.username, SUCURSAL: user.sucursal, FECHA_LOGIN: fn('CURDATE') }
       });
 
       if (!histLogin) {
         await HistLogin.create({
-          USERNAME: username,
+          USERNAME: user.username,
           SUCURSAL: user.sucursal
         });
       } else {
