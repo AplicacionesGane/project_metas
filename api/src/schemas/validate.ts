@@ -9,8 +9,8 @@ const loginSchema = z.object({
   .min(3, { message: "Contraseña debe contener más de 3 caracteres" })
 })
 
-export const validateCredentials = (credentials: unknown) => {
-  const { success, data, error } = loginSchema.safeParse(credentials);
+export const validateCredentials = async (credentials: unknown) => {
+  const { success, data, error } = await loginSchema.safeParseAsync(credentials);
 
   if(!success) throw new Error(error.errors[0].message);
 
