@@ -1,12 +1,10 @@
 import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
+import { getProfileByToken } from '../services/getProfileByToken';
 import { HistLoginRegister } from '../services/historialLogin';
 import { User as UserPayload } from '../types/interfaces';
 import { validateCredentials } from '../schemas/validate';
 import { getUserOracle } from '../services/oracleUser';
-import { Categoria } from '../models/vCatgSucuPowebi';
-import { Sucursal } from '../models/sucursalespw';
 import { BaseError } from '../utils/baseError';
-import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
@@ -44,29 +42,8 @@ export async function Login(req: Request, res: Response) {
 export async function getProfile(req: Request, res: Response) {
   try {
     const { sucursal, username } = req.user as UserPayload
-    const cedula = username.split('CV')[1]
 
-    const Vendedor = await User.findOne({
-      attributes: ['DOCUMENTO', 'NOMBRES', 'NOMBRECARGO'],
-      where: { DOCUMENTO: cedula }
-    })
-    const SucursalInfo = await Sucursal.findOne({
-      attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
-      where: { CODIGO: sucursal }
-    })
-
-    const CategoriaInfo = await Categoria.findOne({
-      attributes: ['CATEGORIZACION'],
-      where: { SUCURSAL_CODIGO: sucursal }
-    })
-
-    if (!Vendedor || !SucursalInfo) return res.status(404).json({ message: 'Usuario no encontrado ó Sucursal no encontrada' })
-
-    const InfoGeneral = {
-      user: Vendedor,
-      sucursal: SucursalInfo,
-      infCategoria: CategoriaInfo
-    }
+    const InfoGeneral = await getProfileByToken(sucursal, username)
 
     return res.status(200).json(InfoGeneral)
   } catch (error) {
