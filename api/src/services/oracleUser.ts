@@ -40,12 +40,10 @@ export const oracleUser = async (password: string, username: string) => {
     throw new Error('No se encontro la zona de la sucursal en la base de datos powerbi')
   }
 
-  // TODO: creamos el payload del token que es el usuario
-  const user = {
+  // TODO: retornamos el resultado de la consulta en un objeto
+  return {
     sucursal: parseInt(strResult[1]),
-    username: username,
+    username,
     zona: parseInt(zona.dataValues.ZONA)
   }
-
-  return user
 }
