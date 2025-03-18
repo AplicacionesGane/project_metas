@@ -12,7 +12,6 @@ import { fn } from 'sequelize';
 import jwt from 'jsonwebtoken';
 
 export async function Login(req: Request, res: Response) {
-  
   try {
     const { username, password } = validateCredentials(req.body);
     
@@ -52,6 +51,7 @@ export async function Login(req: Request, res: Response) {
     if(error instanceof BaseError){
       return res.status(error.statusCode).json({ message: error.message })
     }
+    console.log(error);
     return res.status(500).json({ message: 'Error al intentar iniciar sesión' })
   }
 }
