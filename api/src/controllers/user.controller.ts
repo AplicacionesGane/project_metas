@@ -2,18 +2,18 @@ import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '..
 import { HistLoginRegister } from '../services/historialLogin';
 import { User as UserPayload } from '../types/interfaces';
 import { validateCredentials } from '../schemas/validate';
+import { getUserOracle } from '../services/oracleUser';
 import { Categoria } from '../models/vCatgSucuPowebi';
-import { oracleUser } from '../services/oracleUser';
 import { Sucursal } from '../models/sucursalespw';
-import { User } from '../models/vendedorespw';
 import { BaseError } from '../utils/baseError';
+import { User } from '../models/vendedorespw';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 export async function Login(req: Request, res: Response) {
   try {
     const { username, password } = validateCredentials(req.body);
-    const user = await oracleUser(password, username);
+    const user = await getUserOracle(password, username);
     await HistLoginRegister(username, user.sucursal);
 
     jwt.sign(user, API_TOKEN_SECRET, { expiresIn: API_TOKEN_EXPIRES }, (err, token) => {

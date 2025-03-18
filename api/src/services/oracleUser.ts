@@ -2,7 +2,7 @@ import { connectionOracle } from "../connections/oracledb";
 import { Sucursal } from "../models/sucursalespw";
 import { BaseError } from "../utils/baseError";
 
-export const oracleUser = async (password: string, username: string) => {
+export const getUserOracle = async (password: string, username: string) => {
   const connection = await connectionOracle();
 
   if (connection instanceof Error) {
