@@ -11,7 +11,7 @@ export function GenerateQR ({ codigo, nombres, username }: GenerateQRProps) {
 
   return (
     <>
-      <QRCodeCanvas size={180} value={`${ip}&${nombres}&${username}&${codigo}`} />
+      <QRCodeCanvas size={160} value={`${ip}&${nombres}&${username}&${codigo}`} />
     </>
   )
 }
