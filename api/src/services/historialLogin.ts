@@ -14,6 +14,7 @@ export const HistLoginRegister = async (username: string, sucursal: number) => {
         SUCURSAL: sucursal
       });
     } else {
+      console.log(histLogin);
       console.log('Ya existe un registro de login para el usuario para el día de hoy');
     }
   } catch (error) {
