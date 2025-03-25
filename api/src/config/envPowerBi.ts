@@ -4,7 +4,7 @@ const envPowerBi = z.object({
   DB_POWERBI_USER: z.string(),
   DB_POWERBI_PASSWORD: z.string(),
   DB_POWERBI_HOST: z.string(),
-  DB_POWERBI_PORT: z.string(),
+  DB_POWERBI_PORT: z.string().min(2).transform( (e) => parseInt(e)),
   DB_POWERBI_DATABASE: z.string(),
 })
 
