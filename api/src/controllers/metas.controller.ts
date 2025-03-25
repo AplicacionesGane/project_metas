@@ -11,15 +11,25 @@ import { Utilidades } from '../models/utilidades.model'
 import { Request, Response } from 'express'
 import { escape } from 'querystring'
 import { fn } from 'sequelize'
+import { z } from 'zod'
+
+const validInfo = z.object({
+  codigo: z.string().transform(c => parseInt(c)),
+  zona: z.string().transform(c => parseInt(c)),
+})
 
 export const metasDelDia = async (req: Request, res: Response) => {
-  const { codigo, zona } = req.body
+  const { success, data, error } = validInfo.safeParse(req.body)
+
+  if (!success) return res.status(400).json({ message: 'Se requiere número de sucursal y zona', error })
+
+  const { codigo, zona } = data
 
   if (!codigo && !zona) return res.status(400).json({ message: 'Se requiere número de sucursal y zona' })
 
   try {
-    const ventaActual = await getVentaActualProductos(parseInt(codigo), parseInt(zona))
-    const aspiracionDia = await getAspiracionDiaActual(parseInt(codigo), parseInt(zona))
+    const ventaActual = await getVentaActualProductos(codigo, zona)
+    const aspiracionDia = await getAspiracionDiaActual(codigo, zona)
 
     const porcentajeCumplimiento = calcularPorcentaje(ventaActual, aspiracionDia)
 
