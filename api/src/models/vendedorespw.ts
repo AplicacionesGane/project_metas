@@ -12,13 +12,42 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 }
 
 User.init({
-  DOCUMENTO: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
-  NOMBRES: { type: DataTypes.STRING, allowNull: false },
-  GRPVTAS_CODIGO: { type: DataTypes.STRING, allowNull: false },
-  CARGO: { type: DataTypes.STRING, allowNull: false },
-  VERSION: { type: DataTypes.STRING, allowNull: false },
-  NOMBRECARGO: { type: DataTypes.STRING, allowNull: false },
-  CCOSTO: { type: DataTypes.STRING, allowNull: false }
+  DOCUMENTO: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    defaultValue: null,
+    primaryKey: true
+  },
+  NOMBRES: {
+    type: DataTypes.STRING(60),
+    allowNull: false,
+    defaultValue: null
+  },
+  GRPVTAS_CODIGO: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+    defaultValue: null
+  },
+  CARGO: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+    defaultValue: null
+  },
+  VERSION: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    defaultValue: null
+  },
+  NOMBRECARGO: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+    defaultValue: null
+  },
+  CCOSTO: {
+    type: DataTypes.STRING(10),
+    allowNull: false,
+    defaultValue: null,
+  }
 }, {
   sequelize: powerBi,
   tableName: 'VENDEDORES',
