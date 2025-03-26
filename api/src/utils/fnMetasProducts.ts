@@ -340,15 +340,15 @@ const Multired = [
   `${PRM}RECAUDOS`, `${PRM}RECARGAS`, `${PRM}LV`,
 ]
 
-export function ReturnCompanyAtributesMetProducts(zona: string) {
-  if (zona === '39627') return Multired
-  if (zona === '39628') return Servired
+export function ReturnCompanyAtributesMetProducts(zona: number) {
+  if (zona === 39627) return Multired
+  if (zona === 39628) return Servired
 }
 
-export function ReturnArrayMetProducts(zona: string, metas: ProductsYumbo | ProductsJamundi) {
-  if (zona === '39627') {
+export function ReturnArrayMetProducts(zona: number, metas: ProductsYumbo | ProductsJamundi) {
+  if (zona === 39627) {
     return parsearInfoArrayMultired(metas as ProductsYumbo)
-  } else if (zona === '39628') {
+  } else if (zona === 39628) {
     return parsearInfoArrayServired(metas as ProductsJamundi)
   }
   throw new Error('Error al parsear la informacion')
