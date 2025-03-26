@@ -2,7 +2,7 @@ import { MetasProducto } from '../types/Metas'
 import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 
-export function useFecthMetasData (url: string, company: string, codigo: string) {
+export function useFecthMetasData (url: string) {
   const [data, setData] = useState<MetasProducto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -12,7 +12,7 @@ export function useFecthMetasData (url: string, company: string, codigo: string)
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const response = await axios.get(url, { params: { zona: company, codigo } })
+        const response = await axios.get(url)
         setData(response.data)
         setError(null)
       } catch (err: AxiosError | Error | unknown) {
@@ -36,7 +36,7 @@ export function useFecthMetasData (url: string, company: string, codigo: string)
     const intervalId = setInterval(fetchData, 5 * 60 * 1000) // Fetch data every 5 minutes
 
     return () => clearInterval(intervalId) // Clean up on unmount
-  }, [url, company, codigo])
+  }, [url])
 
   return { data, isLoading, error, close }
 }
