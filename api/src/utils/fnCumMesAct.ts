@@ -461,15 +461,15 @@ function parsearInfoArrayServired(data: MesActServired){
 }
 
 
-export function ReturnCompanyAtriCumMesActu(zona: string) {
-  if (zona === '39627') return MetasMesActMultired
-  if (zona === '39628') return MetasMesActServired
+export function ReturnCompanyAtriCumMesActu(zona: number) {
+  if (zona === 39627) return MetasMesActMultired
+  if (zona === 39628) return MetasMesActServired
 }
 
-export function ReturArrayCumpMesActProducts (zona: string, metas: MesActMultired | MesActServired) {
-  if (zona === '39627') {
+export function ReturArrayCumpMesActProducts (zona: number, metas: MesActMultired | MesActServired) {
+  if (zona === 39627) {
     return parsearInfoArrayMultired(metas as MesActMultired)
-  } else if(zona === '39628') {
+  } else if(zona === 39628) {
     return parsearInfoArrayServired(metas as MesActServired)
   }
   throw new Error('Error al parsear la informacion')
