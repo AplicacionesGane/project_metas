@@ -24,9 +24,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
   try {
     const token = req.cookies[API_TOKEN_NAME] as string;
 
-    if (!token) {
-      return res.status(401).json({ message: 'No token provided' });
-    }
+    if (!token) return res.status(401).json({ message: 'No token provided' })
 
     const user = await verifyToken(token);
     req.user = user;
