@@ -9,23 +9,11 @@ import { getVentaActualProductos, getAspiracionDiaActual } from '../services/met
 import { calcularPorcentaje } from '../utils/funtionsReutilizables'
 import { Utilidades } from '../models/utilidades.model'
 import { Request, Response } from 'express'
-import { escape } from 'querystring'
+import { User } from '../types/interfaces'
 import { fn } from 'sequelize'
-import { z } from 'zod'
-
-const validInfo = z.object({
-  codigo: z.string().transform(c => parseInt(c)),
-  zona: z.string().transform(c => parseInt(c)),
-})
 
 export const metasDelDia = async (req: Request, res: Response) => {
-  const { success, data, error } = validInfo.safeParse(req.body)
-
-  if (!success) return res.status(400).json({ message: 'Se requiere número de sucursal y zona', error })
-
-  const { codigo, zona } = data
-
-  if (!codigo && !zona) return res.status(400).json({ message: 'Se requiere número de sucursal y zona' })
+  const { sucursal: codigo, zona } = req.user as User
 
   try {
     const ventaActual = await getVentaActualProductos(codigo, zona)
@@ -40,15 +28,13 @@ export const metasDelDia = async (req: Request, res: Response) => {
 }
 
 export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
-  const { codigo, zona } = req.query
-  if (!codigo || !zona) return res.status(400).json({ error: 'Falta el código del punto de venta' })
-  if (zona !== '39627' && zona !== '39628') return res.status(400).json({ error: 'Zona invalida ' })
+  const { sucursal: codigo, zona } = req.user as User
 
   try {
     await MetasProducts.sync() // SINCRONIZA MODELO
     const metas = await MetasProducts.findOne({
       attributes: ReturnCompanyAtributesMetProducts(zona), // select * {} 
-      where: { SUCURSAL: escape(codigo as string), FECHA: fn('CURDATE') }
+      where: { SUCURSAL: codigo, FECHA: fn('CURDATE') }
     })
 
     if (!metas) return res.status(404).json({ error: 'No se encontraron metas para el código y zona proporcionados' })
@@ -63,15 +49,13 @@ export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
 }
 
 export const cumplimientoMesActualProducto = async (req: Request, res: Response) => {
-  const { codigo, zona } = req.query
-  if (!codigo || !zona) return res.status(400).json({ error: 'Falta el código del punto de venta' })
-  if (zona !== '39627' && zona !== '39628') return res.status(400).json({ error: 'Zona invalida ' })
+  const { sucursal: codigo, zona } = req.user as User
 
   try {
     await MetasMesActProd.sync()
     const metasMesAct = await MetasMesActProd.findOne({
       attributes: ReturnCompanyAtriCumMesActu(zona),
-      where: { SUCURSAL: escape(codigo as string), ZONA: escape(zona as string), FECHA: fn('CURDATE') }
+      where: { SUCURSAL: codigo, ZONA: zona, FECHA: fn('CURDATE') }
     })
 
     const result = ReturArrayCumpMesActProducts(zona, metasMesAct?.dataValues)
@@ -84,9 +68,7 @@ export const cumplimientoMesActualProducto = async (req: Request, res: Response)
 }
 
 export const vtaMesAntPro = async (req: Request, res: Response) => {
-  const { codigo, zona } = req.query
-  if (!codigo || !zona) return res.status(400).json({ error: 'Falta el código del punto de venta' })
-  if (zona !== '39627' && zona !== '39628') return res.status(400).json({ error: 'Zona invalida ' })
+  const { sucursal: codigo, zona } = req.user as User
 
   // TODO: en la bd el mes 1 es enero, pero en js el mes 0 es enero, por lo que se debe hacer un ajuste para traer el mes anterior
   let getMesAnt = new Date().getMonth()
@@ -97,7 +79,7 @@ export const vtaMesAntPro = async (req: Request, res: Response) => {
 
     const metasMesAnt = await vtaMesAntCump.findOne({
       attributes: ReturnCompanyAtriCumMesActu(zona),
-      where: { SUCURSAL: escape(codigo as string), ZONA: escape(zona as string), MES: getMesAnt }
+      where: { SUCURSAL: codigo, ZONA: zona, MES: getMesAnt }
     })
 
     const result = ReturArrayCumpMesActProducts(zona, metasMesAnt?.dataValues)
