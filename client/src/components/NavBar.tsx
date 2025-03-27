@@ -4,6 +4,8 @@ import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
 import LogoEmpresa from './LogoEmpresa'
+import { useState } from 'react'
+import Modal from './ui/Modal'
 
 const NavLinksItems = [
   {
@@ -45,6 +47,7 @@ const NavLinksItems = [
 ]
 
 function NavBar() {
+  const [isModalOpen, setModalOpen] = useState(false);
   const { darkMode, toggleTheme } = useTheme()
   const { funLogOut } = useAuth()
 
@@ -76,7 +79,39 @@ function NavBar() {
           Cerrar Sesión
         </button>
 
-        <p className='text-sm text-center dark:text-white'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
+        <p className='text-sm text-center dark:text-white px-4 text-gray-700'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
+
+        <button className={`${isModalOpen ? 'text-red-600' : 'hover:text-blue-700'}`} onClick={() => setModalOpen(true)} >
+          Registrar Salida
+        </button>
+
+        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+          <h2 className="text-xl font-bold">Registrar Salida Turno</h2>
+
+          <article className='pt-4'>
+            <p className="text-gray-600">
+              Estás seguro que deseas realizar salida de tu turno ?
+            </p>
+            <p className='text-gray-600'>
+              Esto enviará un reporte como hora de salida y solo se podrá realizar una vez.
+            </p>
+          </article>
+
+          <article className='flex gap-2'>
+            <button
+              className="mt-4 px-4 py-2 text-white bg-red-700 rounded hover:bg-red-600"
+              onClick={() => setModalOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              className="mt-4 px-4 py-2 text-white bg-green-700 rounded hover:bg-green-600"
+              onClick={() => setModalOpen(false)}
+            >
+              Enviar Salida
+            </button>
+          </article>
+        </Modal>
       </li>
     </ul>
   )
