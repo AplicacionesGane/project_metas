@@ -1,3 +1,4 @@
+import { fn } from "sequelize"
 import { HistRegisSalida } from "../models/histRegisSalida"
 import { Sucursal } from "../models/sucursalespw"
 import { Categoria } from "../models/vCatgSucuPowebi"
@@ -23,7 +24,7 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
     })
 
     const StateSalida = await HistRegisSalida.findOne({
-      where: { SUCURSAL: sucursal, USERNAME: cedula }
+      where: { SUCURSAL: sucursal, USERNAME: cedula, FECHA_LOGOUT: fn('CURDATE') }
     })
 
 
@@ -31,13 +32,13 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
       throw new BaseError('Usuario no encontrado ó Sucursal no encontrada', 404)
     }
 
-    console.log(StateSalida);
+    const state = StateSalida ? StateSalida.BLOQREG === 1 ? false : false : true
 
     const InfoGeneral = {
       user: Vendedor,
       sucursal: SucursalInfo,
       infCategoria: CategoriaInfo,
-      stateSalida: StateSalida ? false : true
+      stateSalida: state 
     }
 
     return InfoGeneral

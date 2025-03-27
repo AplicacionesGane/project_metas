@@ -4,8 +4,10 @@ import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
 import LogoEmpresa from './LogoEmpresa'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import { toast } from 'sonner'
 import Modal from './ui/Modal'
+import axios from 'axios'
 
 const NavLinksItems = [
   {
@@ -48,8 +50,30 @@ const NavLinksItems = [
 
 function NavBar() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const { darkMode, toggleTheme } = useTheme()
-  const { funLogOut, profileData } = useAuth()
+  const { darkMode, toggleTheme } = useTheme();
+  const { funLogOut, profileData, setProfileData } = useAuth();
+
+  const handleClickSalida = (ev: FormEvent) => {
+    ev.preventDefault()
+
+    axios.post('/salida')
+      .then(res => {
+        if(res.status === 200){
+          setModalOpen(false)
+          const date = res.data.time as string
+
+          toast.success('Salida Registrada Correctamente', {
+            description: `Fecha: ${date.split('--')[0]} <--->  Hora: ${date.split('--')[1]} `,
+            duration: 10000
+           })
+          setProfileData({ ...profileData!, stateSalida: false })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        toast.error('Error al registrar salida')
+      })
+  }
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
@@ -97,7 +121,7 @@ function NavBar() {
               Estás seguro que deseas realizar salida de tu turno ?
             </p>
             <p className='text-gray-600'>
-              Esto enviará un reporte como hora de salida y solo se podrá realizar una vez.
+              Esto enviará un reporte como hora de salida y solo se podrá realizar una vez por día.
             </p>
           </article>
 
@@ -109,8 +133,9 @@ function NavBar() {
               Cancelar
             </button>
             <button
+              type='submit'
               className="mt-4 px-4 py-2 text-white bg-green-700 rounded hover:bg-green-600"
-              onClick={() => setModalOpen(false)}
+              onClick={handleClickSalida}
             >
               Enviar Salida
             </button>
