@@ -4,6 +4,10 @@ import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
 import { useAuth } from '../auth/AuthContext'
 import LogoEmpresa from './LogoEmpresa'
+import { FormEvent, useState } from 'react'
+import { toast } from 'sonner'
+import Modal from './ui/Modal'
+import axios from 'axios'
 
 const NavLinksItems = [
   {
@@ -45,8 +49,31 @@ const NavLinksItems = [
 ]
 
 function NavBar() {
-  const { darkMode, toggleTheme } = useTheme()
-  const { funLogOut } = useAuth()
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { darkMode, toggleTheme } = useTheme();
+  const { funLogOut, profileData, setProfileData } = useAuth();
+
+  const handleClickSalida = (ev: FormEvent) => {
+    ev.preventDefault()
+
+    axios.post('/salida')
+      .then(res => {
+        if(res.status === 200){
+          setModalOpen(false)
+          const date = res.data.time as string
+
+          toast.success('Salida Registrada Correctamente', {
+            description: `Fecha: ${date.split('--')[0]} <--->  Hora: ${date.split('--')[1]} `,
+            duration: 10000
+           })
+          setProfileData({ ...profileData!, stateSalida: false })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        toast.error('Error al registrar salida')
+      })
+  }
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
@@ -76,7 +103,44 @@ function NavBar() {
           Cerrar Sesión
         </button>
 
-        <p className='text-sm text-center dark:text-white'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
+        <p className='text-sm text-center dark:text-white px-4 text-gray-700'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
+
+        {
+          profileData?.stateSalida && (
+            <button className={`${isModalOpen ? 'text-red-600' : 'hover:text-blue-700'}`} onClick={() => setModalOpen(true)} >
+              Registrar Salida
+            </button>
+          )
+        }
+
+        <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+          <h2 className="text-xl font-bold">Registrar Salida Turno</h2>
+
+          <article className='pt-4'>
+            <p className="text-gray-600">
+              Estás seguro que deseas realizar salida de tu turno ?
+            </p>
+            <p className='text-gray-600'>
+              Esto enviará un reporte como hora de salida y solo se podrá realizar una vez por día.
+            </p>
+          </article>
+
+          <article className='flex gap-2'>
+            <button
+              className="mt-4 px-4 py-2 text-white bg-red-700 rounded hover:bg-red-600"
+              onClick={() => setModalOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              type='submit'
+              className="mt-4 px-4 py-2 text-white bg-green-700 rounded hover:bg-green-600"
+              onClick={handleClickSalida}
+            >
+              Enviar Salida
+            </button>
+          </article>
+        </Modal>
       </li>
     </ul>
   )

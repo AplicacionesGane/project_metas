@@ -3,6 +3,7 @@ import { Loading } from '../components/Loading';
 import { useAuth } from '../auth/AuthContext';
 import { Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { Toaster } from 'sonner';
 
 const LoginPage = lazy(() => import('../pages/LoginForm'))
 const NavBar = lazy(() => import('../components/NavBar'))
@@ -28,6 +29,7 @@ export default function Root() {
           <Outlet />
         </main>
       </Suspense>
+      <Toaster richColors position='top-right' />
     </ThemeProvider>
   )
 

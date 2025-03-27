@@ -12,6 +12,7 @@ import { UserRouter } from './routes/user.routes';
 import { RouteHist } from './routes/hist.routes'
 import { RouteSuge } from './routes/suge.routes'
 import { RouteHoras } from './routes/horas.routes';
+import { routerSalida } from './routes/salida.routes';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(API_VERSION, RouteHist)
 app.use(API_VERSION, RouteSuge)
 app.use(API_VERSION, RouteHoras)
 app.use(API_VERSION, RouteUtilidades)
+app.use(API_VERSION, routerSalida)
 
 app.get('/api/v1/dataTime', async (_req, res) => {
   try {
