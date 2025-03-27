@@ -9,7 +9,7 @@ export class HistRegisSalida extends Model<InferAttributes<HistRegisSalida>, Inf
   declare BLOQREG: number;
   declare FECHACREATE?: Date;
   declare FECHAUPDATE?: Date;
-  declare VERSION: number;
+  declare VERSION?: number;
 }
 
 HistRegisSalida.init({
