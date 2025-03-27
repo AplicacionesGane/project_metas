@@ -93,12 +93,12 @@ function NavBar() {
       </li>
 
       <li className='flex flex-col items-center gap-4'>
-        <section className={`flex items-center gap-2 px-4 py-2 ${darkMode ? 'bg-slate-200' : 'bg-slate-600 '} rounded-md`}>
+        <section className={`flex items-center gap-2 px-4 py-2 text-xs 2xl:text-lg ${darkMode ? 'bg-slate-200' : 'bg-slate-600 '} rounded-md`}>
           {darkMode ? <p className='text-white font-semibold dark:text-black'>Cambiar Modo Claro</p> : <p className='text-white font-semibold dark:text-black'>Cambiar Modo Oscuro</p>}
           <Switch checked={darkMode} onCheckedChange={toggleTheme} />
         </section>
 
-        <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all'
+        <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all text-xs 2xl:text-lg'
           onClick={() => funLogOut()}>
           Cerrar Sesión
         </button>

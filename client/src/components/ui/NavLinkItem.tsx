@@ -10,8 +10,8 @@ interface NavLinkItemProps {
 export const NavLinkItem = ({ IconRender, routeTo, titleName }: NavLinkItemProps) => {
   return (
     <NavLink className={({ isActive }) => isActive
-      ? 'flex items-center gap-3 3xl:gap-4 text-blue-700 dark:text-yellow-500 text-xs lg:text-xl 2xl:text-2xl'
-      : 'flex items-center gap-3 3xl:gap-4 text-xs lg:text-xl 2xl:text-2xl'}
+      ? 'flex items-center gap-3 3xl:gap-4 text-blue-700 dark:text-yellow-500 text-xs 2xl:text-xl'
+      : 'flex items-center gap-3 3xl:gap-4 text-xs 2xl:text-xl'}
       to={routeTo}
     >
       <IconRender />
