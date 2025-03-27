@@ -1,3 +1,4 @@
+import { HistRegisSalida } from "../models/histRegisSalida"
 import { Sucursal } from "../models/sucursalespw"
 import { Categoria } from "../models/vCatgSucuPowebi"
 import { User } from "../models/vendedorespw"
@@ -21,14 +22,22 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
       where: { SUCURSAL_CODIGO: sucursal }
     })
 
+    const StateSalida = await HistRegisSalida.findOne({
+      where: { SUCURSAL: sucursal, USERNAME: cedula }
+    })
+
+
     if (!Vendedor || !SucursalInfo) {
       throw new BaseError('Usuario no encontrado ó Sucursal no encontrada', 404)
     }
 
+    console.log(StateSalida);
+
     const InfoGeneral = {
       user: Vendedor,
       sucursal: SucursalInfo,
-      infCategoria: CategoriaInfo
+      infCategoria: CategoriaInfo,
+      stateSalida: StateSalida ? false : true
     }
 
     return InfoGeneral

@@ -49,7 +49,7 @@ const NavLinksItems = [
 function NavBar() {
   const [isModalOpen, setModalOpen] = useState(false);
   const { darkMode, toggleTheme } = useTheme()
-  const { funLogOut } = useAuth()
+  const { funLogOut, profileData } = useAuth()
 
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
@@ -81,9 +81,13 @@ function NavBar() {
 
         <p className='text-sm text-center dark:text-white px-4 text-gray-700'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
 
-        <button className={`${isModalOpen ? 'text-red-600' : 'hover:text-blue-700'}`} onClick={() => setModalOpen(true)} >
-          Registrar Salida
-        </button>
+        {
+          profileData?.stateSalida && (
+            <button className={`${isModalOpen ? 'text-red-600' : 'hover:text-blue-700'}`} onClick={() => setModalOpen(true)} >
+              Registrar Salida
+            </button>
+          )
+        }
 
         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
           <h2 className="text-xl font-bold">Registrar Salida Turno</h2>

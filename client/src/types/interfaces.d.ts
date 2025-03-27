@@ -20,6 +20,7 @@ export interface ProfileDataI {
   user: UserI;
   sucursal: SucursalI;
   infCategoria: CategoriaI | null;
+  stateSalida: boolean;
 }
 
 export interface CategoriasI {
