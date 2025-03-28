@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getSugeridos2 } from '../services/getSugeridos'
+import { getSugeridos2 } from '../services/Sugeridos'
 import { Sugeridos } from '../types/Metas'
 
 export const useSugeridos2 = (codigo: string, user: string, zona: string) => {
