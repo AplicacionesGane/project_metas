@@ -22,9 +22,11 @@ const productMetaMap = {
 export type Product = keyof typeof productMetaMap
 
 export interface Sugeridos {
-  SUGERIDO1: Product
-  VTA_SUGERIDO: number
-  META_SUG1: number
+  ID:           number;
+  PRODUCTO:     string;
+  VTA_SUGERIDO: number;
+  META_VALOR:   number;
+  ESTADO:       string;
 }
 
 
