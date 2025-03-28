@@ -1,6 +1,8 @@
-import { Request, Response } from 'express';
-import { SugModel } from '../models/sug.model';
+import { SugeridosVendedorPB } from '../models/SugeridosVendedorPB';
 import { Boletas } from '../models/boeltas.model';
+import { SugModel } from '../models/sug.model';
+import { Request, Response } from 'express';
+import { User } from '../types/interfaces';
 import { fn } from 'sequelize';
 
 const Sug = async (codigo: number, user: string) => {
@@ -86,5 +88,25 @@ export const BoletasGanadas = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error)
     return res.status(500).json({ message: 'Hubo un problema al obtener las boletas ganadas. Por favor, inténtalo de nuevo más tarde.' })
+  }
+}
+
+export const SugNewPowerBi = async (req: Request, res: Response) => {
+  try {
+    const { sucursal: codigo, username, } = req.user as User
+
+    const result = await SugeridosVendedorPB.findAll({
+      attributes: ['ID', 'PRODUCTO', 'VTA_SUGERIDO', 'META_VALOR', 'ESTADO'],
+      where: {
+        SUCURSAL: codigo,
+        FECHA: fn('CURDATE'),
+        LOGIN: username
+      }
+    })
+
+    res.status(200).json(result)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Hubo un problema al obtener los sugeridos. Por favor, inténtalo de nuevo más tarde.' })
   }
 }
