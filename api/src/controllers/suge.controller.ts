@@ -5,6 +5,29 @@ import { Request, Response } from 'express';
 import { User } from '../types/interfaces';
 import { fn } from 'sequelize';
 
+// Función para procesar productos duplicados
+const processDuplicatedProducts = (data: any[]) => {
+  const productMap = new Map<string, any>(); // Mapa para rastrear productos únicos
+
+  data.forEach((item) => {
+    const { PRODUCTO, META_VALOR, ID } = item.dataValues;
+
+    if (productMap.has(PRODUCTO)) {
+      // Si el producto ya existe, duplicamos el META_VALOR del producto anterior
+      const existingProduct = productMap.get(PRODUCTO);
+
+      if (ID > existingProduct.ID) {
+        item.dataValues.META_VALOR = existingProduct.META_VALOR * 2; // Duplicamos el valor
+      }
+    } else {
+      // Si el producto no existe, lo agregamos al mapeo
+      productMap.set(PRODUCTO, item.dataValues);
+    }
+  });
+
+  return data;
+};
+
 const Sug = async (codigo: number, user: string) => {
   const consulta = await SugModel.findOne({
     attributes: ['SUGERIDO1', 'META_SUG1', 'VTA_CHANCE', 'VTA_PAGAMAS', 'VTA_PAGATODO', 'VTA_GANE5', 'VTA_PATA_MILLONARIA', 'VTA_DOBLECHANCE', 'VTA_CHANCE_MILLONARIO'],
@@ -104,7 +127,9 @@ export const SugNewPowerBi = async (req: Request, res: Response) => {
       }
     })
 
-    res.status(200).json(result)
+    const processedResult = processDuplicatedProducts(result);
+
+    res.status(200).json(processedResult);
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Hubo un problema al obtener los sugeridos. Por favor, inténtalo de nuevo más tarde.' })
