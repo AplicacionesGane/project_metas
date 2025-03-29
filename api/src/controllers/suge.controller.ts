@@ -6,26 +6,29 @@ import { User } from '../types/interfaces';
 import { fn } from 'sequelize';
 
 // Función para procesar productos duplicados
-const processDuplicatedProducts = (data: any[]) => {
-  const productMap = new Map<string, any>(); // Mapa para rastrear productos únicos
+const processDuplicatedProducts = (data: SugeridosVendedorPB[]) => {
+  const productMap = new Map<string, { ID: number; META_VALOR: number }>();
 
-  data.forEach((item) => {
+  return data.map((item) => {
     const { PRODUCTO, META_VALOR, ID } = item.dataValues;
 
     if (productMap.has(PRODUCTO)) {
-      // Si el producto ya existe, duplicamos el META_VALOR del producto anterior
-      const existingProduct = productMap.get(PRODUCTO);
+      const existingProduct = productMap.get(PRODUCTO)!;
 
+      // Solo duplicar si el ID actual es mayor
       if (ID > existingProduct.ID) {
-        item.dataValues.META_VALOR = existingProduct.META_VALOR * 2; // Duplicamos el valor
+        productMap.set(PRODUCTO, { ID, META_VALOR: existingProduct.META_VALOR * 2 });
+        return {
+          ...item.dataValues,
+          META_VALOR: existingProduct.META_VALOR * 2,
+        };
       }
     } else {
-      // Si el producto no existe, lo agregamos al mapeo
-      productMap.set(PRODUCTO, item.dataValues);
+      productMap.set(PRODUCTO, { ID, META_VALOR });
     }
-  });
 
-  return data;
+    return item.dataValues;
+  });
 };
 
 const Sug = async (codigo: number, user: string) => {
