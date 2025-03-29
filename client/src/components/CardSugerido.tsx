@@ -11,7 +11,7 @@ export function CardSugerido({ sugerido }: { sugerido: Sugeridos }) {
   const variantColor = getColorVariant(parseFloat(percentage));
 
   return (
-    <Card className={`w-1/2 ${bgColor} shadow-md`} key={sugerido.ID}>
+    <Card className={`w-full ${bgColor} shadow-md`} key={sugerido.ID}>
       <article className='flex justify-between py-2'>
         <h2 className='font-semibold text-lg'>Producto Sugerido:</h2>
         <span>-</span>
