@@ -100,9 +100,7 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       }
     })
 
-    console.log(mapedResults);
-
-    res.status(200).json('ok');
+    res.status(200).json(mapedResults);
     return
   } catch (error) {
     console.error('Error fetching data:', error);
