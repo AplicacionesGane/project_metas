@@ -11,6 +11,7 @@ const HistCatPage = lazy(() => import('../pages/HistCate'));
 const ResumenPage = lazy(() => import('../pages/Resumen'));
 const AspMesPage = lazy(() => import('../pages/AspMes'));
 const AspDiaPage = lazy(() => import('../pages/ApsDia'));
+const MetaXhora = lazy(() => import('../pages/metaxhora'));
 
 export const RouterMain = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ export const RouterMain = createBrowserRouter([
           </Suspense>
         )
       },
+      {
+        path: '/metaxhora/:producto',
+        element: <MetaXhora />,
+      }
     ]
   }
 ]);
