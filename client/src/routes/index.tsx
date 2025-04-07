@@ -67,7 +67,7 @@ export const RouterMain = createBrowserRouter([
         )
       },
       {
-        path: '/metaxhora/:producto',
+        path: '/metaxhora/:producto/:sucursal',
         element: <MetaXhora />,
       }
     ]
