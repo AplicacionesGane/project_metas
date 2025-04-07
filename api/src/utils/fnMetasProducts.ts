@@ -147,7 +147,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
 
   const PROMO1 = {
     id: 18,
-    producto: 'Super Win',
+    producto: 'SuperWin',
     ventaActual: data.PROMO1,
     aspiracionDia: data.META_PROMO1,
     porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),
