@@ -1,4 +1,4 @@
-import { Test70Conn } from '../connections/test_92';
+import { Test70Conn } from '../connections/database_tes';
 import { DataTypes, Model, Optional } from 'sequelize';
 
 interface HorasAttributes {
