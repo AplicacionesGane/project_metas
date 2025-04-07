@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface MetaXhoraData {
-  HORA: number;
-  VENTA: string;
+  id: number;
+  Hora: string;
+  aspiracion: number;
+  venta: number;
 }
 
 export default function MetaXhora() {
@@ -30,8 +32,8 @@ export default function MetaXhora() {
       <AreaChart
         className='h-80'
         data={data}
-        index='HORA'
-        categories={['VENTA']}
+        index='Hora'
+        categories={['aspiracion', 'venta']}
         valueFormatter={(number: number) =>
           `$${Intl.NumberFormat('us').format(number).toString()}`
         }
@@ -42,10 +44,14 @@ export default function MetaXhora() {
         {
           data.map((item, index) => (
             <div key={index} className='grid grid-cols-4 gap-6 p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 m-4'>
-              <h2 className='text-xl font-bold text-blue-600 col-span-1'>{item.HORA}:00 - {item.HORA.toString().split(':')[0]}:59</h2>
+              <h2 className='text-xl font-bold text-blue-600 col-span-1'>{item.Hora} - {item.Hora.toString().split(':')[0]}:59</h2>
               <p className='text-base text-gray-700 col-span-1'>
                 <span className='font-semibold text-gray-900'>Venta Esta Hora:</span>
-                {` $${Intl.NumberFormat('CO').format(parseInt(item.VENTA)).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.venta).toString()}`}
+              </p>
+              <p className='text-base text-gray-700 col-span-1'>
+                <span className='font-semibold text-gray-900'>Aspiración Hora:</span>
+                {` $${Intl.NumberFormat('CO').format(item.aspiracion).toString()}`}
               </p>
             </div>
           ))
