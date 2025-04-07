@@ -28,7 +28,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const DOBLECHANCE = {
     id: 4,
-    producto: 'Doble Chance',
+    producto: 'DobleChance',
     ventaActual: data.DOBLECHANCE,
     aspiracionDia: data.PROMEDIO_DIARIO_DOBLECHANCE,
     porcentaje: calcularPorcentaje(data.DOBLECHANCE, data.PROMEDIO_DIARIO_DOBLECHANCE),

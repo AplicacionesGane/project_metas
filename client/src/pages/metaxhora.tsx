@@ -17,7 +17,6 @@ export default function MetaXhora() {
 
   }, [producto, sucursal]);
 
-  
   return (
     <div>
       <h1>MetaXhora</h1>

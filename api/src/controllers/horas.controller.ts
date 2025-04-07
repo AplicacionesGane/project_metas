@@ -1,30 +1,34 @@
-import { Horas } from '../models/metas_70.model';
+import { MetaxHora } from '../models/metas_70.model';
 import { Request, Response } from 'express'
 import { fn, Op } from 'sequelize';
+import { z } from 'zod';
 
-export const HorasBySucursal = async (req: Request, res: Response) => {
-  const { id, producto } = req.params
+const MetaxHoraInterface = z.object({
+  producto: z.string().min(2),
+  sucursal: z.string().min(2)
+})
 
-  if (!id || !producto) {
-    return res.status(400).json({ message: 'Falta el código del punto de venta y/o producto' })
+export const MetaHoraSucursal = async (req: Request, res: Response) => {
+ const params = req.query
+
+ const { success, data, error } = MetaxHoraInterface.safeParse(params)
+
+  if (!success) {
+    res.status(400).json({ error: error.format() })
+    return 
   }
 
   try {
-    const result = await Horas.findAll({
-      attributes: ['id', 'hora', `${producto}`],
+    const metasxhoras = await MetaxHora.findAll({
       where: {
-        sucursal: id,
-        fecha: { [Op.and]: { [Op.eq]: fn('CURDATE') } }
+        producto: { [Op.like]: `%${data.producto.toUpperCase()}%` },
+        sucursal: data.sucursal
       }
     })
 
-    if (!result) {
-      return res.status(404).json({ message: 'No se encontraron horas para la sucursal' })
-    }
-
-    return res.status(200).json(result)
+    res.status(200).json(metasxhoras)
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({ message: 'Hubo un problema al obtener las horas de la sucursal. Por favor, inténtalo de nuevo más tarde.' })
+    console.error('Error fetching data:', error)
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
