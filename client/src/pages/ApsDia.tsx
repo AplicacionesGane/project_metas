@@ -4,6 +4,7 @@ import { useFecthMetasData } from '../hooks/useFetchData'
 import { sortData } from '../utils/funtions'
 import { useAuth } from '../auth/AuthContext'
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function AspDiaPage() {
   const { funLogOut } = useAuth()
@@ -15,7 +16,7 @@ function AspDiaPage() {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
 
-  if(close) {
+  if (close) {
     funLogOut()
     return null
   }
@@ -26,10 +27,12 @@ function AspDiaPage() {
       <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {
           sortedData.map(meta => (
-            <BarraProgressProduct
-              key={meta.id} pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
-              percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
-            />
+            <Link to={`/metaxhora/${meta.producto}`}>
+              <BarraProgressProduct
+                key={meta.id} pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
+                percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
+              />
+            </Link>
           ))
         }
       </article>
