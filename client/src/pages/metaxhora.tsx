@@ -30,8 +30,8 @@ export default function MetaXhora() {
       <AreaChart
         className='h-80'
         data={data}
-        index='hora'
-        categories={['aspiracion', 'ventaHora']}
+        index='HORA'
+        categories={['VENTA']}
         valueFormatter={(number: number) =>
           `$${Intl.NumberFormat('us').format(number).toString()}`
         }
