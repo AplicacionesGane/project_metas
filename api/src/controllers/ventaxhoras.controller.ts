@@ -61,51 +61,31 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
     return
   }
 
+  const horaActual = new Date().getHours() - 1;
+
   try {
     const results = await Ventaxhoras.sequelize?.query<DataQueryHora>(`
-      SELECT 
-        VH.HORA,
-        VH.VTAPH AS VENTA,
-        P.CODIGO AS PRODUCTO_ID
-      FROM 
-        VENTAHORAPRODUCTOS AS VH
-      JOIN PRODUCTOS AS P ON (VH.PRODUCTO_CODIGO = P.CODIGO)
-      WHERE VH.FECHA = CURDATE() 
-        AND VH.SUCURSAL = ?
-        AND VH.ZONA = ?
-        AND VH.HORA BETWEEN 6 AND 23
+        SELECT 
+          VH.HORA,
+          SUM(VH.VTAPH) AS VENTA
+        FROM VENTAHORAPRODUCTOS AS VH
+        JOIN PRODUCTOS AS P ON (VH.PRODUCTO_CODIGO = P.CODIGO)
+        WHERE VH.FECHA = CURDATE() 
+          AND VH.SUCURSAL = ?
+          AND VH.ZONA = ?
+          AND P.VERSION = ?
+          AND VH.HORA BETWEEN 6 AND ?
+        GROUP BY HORA
       `,
-      { replacements: [sucursal, zona], type: QueryTypes.SELECT, }
+      { replacements: [sucursal, zona, data.producto, horaActual], type: QueryTypes.SELECT, }
     )
-
-    console.log(data.producto);
 
     if (!results) {
       res.status(404).json({ message: 'No data found' });
       return
     }
 
-    /*
-    const mappedResults = results.map((res, index) => {
-      return {
-        id: index + 1,
-        hora: HorasEnum[res.HORA as keyof typeof HorasEnum],
-        ventaHora: parseInt(res.VENTA_HORA.toString()),
-        producto: res.PRODUCTO
-      }
-    })
-
-    // agregar la aspiracion a cada hora x id y agregar la venta acomulada sumando la ventaHora anterior
-    const mappedResultsWithAspiracion = mappedResults.map((res, index) => {
-      return {
-        ...res,
-        ventaAcumulada: mappedResults.slice(0, index + 1).reduce((acc, curr) => acc + curr.ventaHora, 0),
-        aspiracion: aspiracionxhora[index].aspiracion
-      }
-    })
-      */
-
-    res.status(200).json('ok');
+    res.status(200).json(results);
     return
   } catch (error) {
     console.error('Error fetching data:', error);
