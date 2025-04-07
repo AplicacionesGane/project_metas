@@ -36,20 +36,23 @@ enum HorasEnum {
 }
 
 const aspiracionxhora = [
-  { id: 1, aspiracion: 8000 },
-  { id: 2, aspiracion: 4000 },
-  { id: 3, aspiracion: 7000 },
-  { id: 4, aspiracion: 15000 },
-  { id: 5, aspiracion: 12000 },
-  { id: 6, aspiracion: 21000 },
-  { id: 7, aspiracion: 13500 },
-  { id: 8, aspiracion: 18000 },
+  { id: 6, aspiracion: 8000 },
+  { id: 7, aspiracion: 4000 },
+  { id: 8, aspiracion: 7000 },
   { id: 9, aspiracion: 15000 },
-  { id: 10, aspiracion: 8000 },
-  { id: 11, aspiracion: 9500 },
-  { id: 12, aspiracion: 12500 },
-  { id: 13, aspiracion: 14500 },
-  { id: 14, aspiracion: 16500 },
+  { id: 10, aspiracion: 12000 },
+  { id: 11, aspiracion: 21000 },
+  { id: 12, aspiracion: 13500 },
+  { id: 13, aspiracion: 18000 },
+  { id: 14, aspiracion: 15000 },
+  { id: 15, aspiracion: 8000 },
+  { id: 16, aspiracion: 9500 },
+  { id: 17, aspiracion: 12500 },
+  { id: 18, aspiracion: 14500 },
+  { id: 19, aspiracion: 16500 },
+  { id: 20, aspiracion: 16500 },
+  { id: 21, aspiracion: 16500 },
+  { id: 22, aspiracion: 16500 },
 ]
 
 export const ventaxhorasController = async (req: Request, res: Response) => {
@@ -85,7 +88,21 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(200).json(results);
+    const mapedResults = results.map( (item, index) => {
+      const hora = item.HORA as keyof typeof HorasEnum;
+      const aspiracion = aspiracionxhora.find((asp) => asp.id === parseInt(item.HORA) ? asp.aspiracion : 0)
+
+      return {
+        id: index + 1,
+        Hora: HorasEnum[hora],
+        aspiracion: aspiracion?.aspiracion,
+        venta: parseInt(item.VENTA.toString())
+      }
+    })
+
+    console.log(mapedResults);
+
+    res.status(200).json('ok');
     return
   } catch (error) {
     console.error('Error fetching data:', error);
