@@ -29,10 +29,32 @@ const estimado = {
   hora23: 500,
 }
 
+enum Horas {
+  hora6 = '06:00',
+  hora7 = '07:00',
+  hora8 = '08:00',
+  hora9 = '09:00',
+  hora10 = '10:00',
+  hora11 = '11:00',
+  hora12 = '12:00',
+  hora13 = '13:00',
+  hora14 = '14:00',
+  hora15 = '15:00',
+  hora16 = '16:00',
+  hora17 = '17:00',
+  hora18 = '18:00',
+  hora19 = '19:00',
+  hora20 = '20:00',
+  hora21 = '21:00',
+  hora22 = '22:00',
+  hora23 = '23:00'
+}
+
 interface ObjectEsperado {
   venta: number;
   hora: string;
-  estimado: number;
+  estimado: number,
+  ventaEstaHora: number
 }
 
 export const MetaHoraSucursal = async (req: Request, res: Response) => {
@@ -46,34 +68,58 @@ export const MetaHoraSucursal = async (req: Request, res: Response) => {
   }
 
   try {
-    const metasxhoras = await MetaxHora.findAll({
+    const metasxhoras = await MetaxHora.findOne({
       where: {
         producto: { [Op.like]: `%${data.producto.toUpperCase()}%` },
         sucursal: data.sucursal
       }
     })
-  
-    // Object.entries(horas).find(([_, value]) => value === 0)?.[0]
-  
-    const crearNuevaMeta = () => {
-      const nuevaMeta: ObjectEsperado[] = []
-      for (const [key, value] of Object.entries(estimado)) {
-        const meta = metasxhoras.map((meta) => {
-    
-          return {
-            venta: meta.dataValues[key as keyof typeof meta.dataValues] || 0,
-            hora: key,
-            estimado: value
-          } as ObjectEsperado
-        })
-        nuevaMeta.push(...meta)
-      }
-      return nuevaMeta
+
+    if(!metasxhoras) {
+      res.status(404).json("No se encontraron resultados para este producto :'C ")
+      return
     }
 
-    const nuevaMeta = crearNuevaMeta()
+    const crearNuevoArray = (): ObjectEsperado[] => {
+      const nuevoArray: ObjectEsperado[] = [];
+      let ventaAcumulada = 0; // Variable para almacenar la venta acumulada de la hora anterior
+    
+      for (const key of Object.keys(estimado)) {
+        if (key !== 'id' && key !== 'producto' && key !== 'sucursal') {
+          const ventaActual: number = metasxhoras[key]
+          const estimadoActual = estimado[key as keyof typeof estimado]; // Estimado de la hora actual
+          let ventaEstaHora: number;
+          let venta: number;
+    
+          if (nuevoArray.length === 0) {
+            // Primera hora: venta y ventaEstaHora son iguales a la venta actual
+            ventaEstaHora = ventaActual;
+            venta = ventaActual;
+          } else {
+            // Horas siguientes: ventaEstaHora es la diferencia entre la venta actual y la venta acumulada
+            ventaEstaHora = Math.max(ventaActual - ventaAcumulada, 0);
+            venta = ventaEstaHora;
+          }
+    
+          // Actualizar la venta acumulada para la siguiente iteración
+          ventaAcumulada = ventaActual;
+    
+          // Agregar el objeto al nuevo array
+          nuevoArray.push({
+            venta,
+            hora: Horas[key as keyof typeof Horas], // Hora del enum
+            estimado: estimadoActual, // Solo se incluye como referencia
+            ventaEstaHora,
+          });
+        }
+      }
+    
+      return nuevoArray;
+    };
 
-    res.status(200).json(nuevaMeta)
+    const nuevoArray = crearNuevoArray()
+
+    res.status(200).json(nuevoArray)
   } catch (error) {
     console.error('Error fetching data:', error)
     res.status(500).json({ error: 'Internal Server Error' })
