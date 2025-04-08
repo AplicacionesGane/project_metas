@@ -3,6 +3,7 @@ version: '3.7'
 services:
   web-metas:
     image: nginx:stable-alpine3.19-slim
+    restart: always
     container_name: web-metas
     volumes:
       - ./client/dist:/usr/share/nginx/html
@@ -17,6 +18,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
     container_name: api_metas_cont
+    restart: always
     image: api-metas:v2.1
     networks:
       - red-gane-int
