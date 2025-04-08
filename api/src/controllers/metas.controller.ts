@@ -11,6 +11,7 @@ import { Utilidades } from '../models/utilidades.model'
 import { Request, Response } from 'express'
 import { User } from '../types/interfaces'
 import { fn } from 'sequelize'
+import { getProductsActives } from '../services/getProductsActives'
 
 export const metasDelDia = async (req: Request, res: Response) => {
   const { sucursal: codigo, zona } = req.user as User
@@ -40,6 +41,9 @@ export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
     if (!metas) return res.status(404).json({ error: 'No se encontraron metas para el código y zona proporcionados' })
 
     const result = ReturnArrayMetProducts(zona, metas?.dataValues)
+    const productsActives = await getProductsActives(codigo.toString())
+
+    console.log(productsActives);
 
     return res.status(200).json(result)
   } catch (error) {
