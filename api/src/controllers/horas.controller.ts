@@ -85,8 +85,9 @@ export const MetaHoraSucursal = async (req: Request, res: Response) => {
       let ventaAcumulada = 0; // Variable para almacenar la venta acumulada de la hora anterior
     
       for (const key of Object.keys(estimado)) {
-        if (key !== 'id' && key !== 'producto' && key !== 'sucursal') {
-          const ventaActual: number = metasxhoras[key]
+        if (key !== 'id' && key !== 'producto' && key !== 'sucursal') {          
+          
+          const ventaActual = metasxhoras[key as keyof typeof metasxhoras] as number; // Venta de la hora actual
           const estimadoActual = estimado[key as keyof typeof estimado]; // Estimado de la hora actual
           let ventaEstaHora: number;
           let venta: number;
@@ -98,7 +99,7 @@ export const MetaHoraSucursal = async (req: Request, res: Response) => {
           } else {
             // Horas siguientes: ventaEstaHora es la diferencia entre la venta actual y la venta acumulada
             ventaEstaHora = Math.max(ventaActual - ventaAcumulada, 0);
-            venta = ventaEstaHora;
+            venta = ventaActual
           }
     
           // Actualizar la venta acumulada para la siguiente iteración
