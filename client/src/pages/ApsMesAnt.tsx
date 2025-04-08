@@ -1,7 +1,7 @@
-import { useAuth } from '../auth/AuthContext'
 import { BarraProgressProduct } from '../components/ProgresoProducto'
 import { HeaderComponent } from '../components/ui/headerComponent'
 import { useFecthMetasData } from '../hooks/useFetchData'
+import { useAuth } from '../auth/AuthContext'
 import { sortData } from '../utils/funtions'
 import { useMemo, useState } from 'react'
 
