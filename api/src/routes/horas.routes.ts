@@ -3,4 +3,4 @@ import { Router } from 'express';
 
 export const RouteHoras = Router()
 
-RouteHoras.get('/vantaxhora', MetaHoraSucursal)
+RouteHoras.get('/ventaxhora', MetaHoraSucursal)
