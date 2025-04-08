@@ -16,6 +16,7 @@ dist
 dist-ssr
 *.local
 tnsnames.ora
+instantclient_11_2
 
 # Editor directories and files
 .vscode/*

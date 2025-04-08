@@ -41,7 +41,7 @@ export default function MetaXhora() {
       />
 
       <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Meta por Hora</h1>
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Meta por Hora {producto}</h1>
 
         {
           data.map((item, index) => (
