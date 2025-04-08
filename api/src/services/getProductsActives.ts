@@ -1,4 +1,5 @@
 import { Ventaxhoras } from '../models/ventahoras';
+import { PRODUCTOS_DATA } from '../utils/constants';
 import { fn } from 'sequelize';
 
 export const getProductsActives = async (suc: string) => {
@@ -11,5 +12,12 @@ export const getProductsActives = async (suc: string) => {
     group: ['PRODUCTO_CODIGO']
   });
 
-  return ventaxhoras;
+  const productosActivos = ventaxhoras.map((producto) => {
+    const productoData = PRODUCTOS_DATA.find((p) => p.codigos.includes(producto.PRODUCTO_CODIGO));
+    return productoData ? productoData.nombre : null;
+  });
+
+  const productosUnicos = [...new Set(productosActivos)];
+
+  return productosUnicos;
 }
