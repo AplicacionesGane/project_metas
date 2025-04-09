@@ -3,22 +3,23 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface ObjectEsperado {
-  venta: number;
+interface MetaXhoraData {
+  id: number;
   hora: string;
-  estimado: number;
-  ventaEstaHora: number;
+  ventaHora: number;
+  producto: string;
+  ventaAcumulada: number;
+  aspiracion: number;
 }
 
 export default function MetaXhora() {
   const ulrparam = useParams();
   const { producto, sucursal } = ulrparam;
-  const [data, setData] = useState<ObjectEsperado[]>([]);
+  const [data, setData] = useState<MetaXhoraData[]>([]);
 
   useEffect(() => {
-    axios.get<ObjectEsperado[]>(`/metaxhoras`, { params: { producto } })
+    axios.get<MetaXhoraData[]>(`/metaxhoras`, { params: { producto } })
       .then((response) => {
-        console.log('Response:', response.data);
         setData(response.data);
       })
       .catch((error) => {
@@ -29,42 +30,36 @@ export default function MetaXhora() {
 
   return (
     <div>
+      <h1 className='text-2xl font-semibold text-gray-800 mb-6 text-center uppercase'>Aspiración x Hora - {producto}</h1>
       <AreaChart
-        className="h-80"
+        className='h-80'
         data={data}
-        index="hora"
-        categories={["venta", "estimado"]}
+        index='hora'
+        categories={['aspiracion', 'ventaHora']}
         valueFormatter={(number: number) =>
-          `$${Intl.NumberFormat("us").format(number).toString()}`
+          `$${Intl.NumberFormat('us').format(number).toString()}`
         }
         onValueChange={(v) => console.log(v)}
       />
 
-      <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Meta por Hora {producto}</h1>
-
+      <div className='bg-gray-50 p-6 rounded-lg shadow-lg'>
         {
           data.map((item, index) => (
-            item.venta !== 0 && item.ventaEstaHora !== 0 ? (
-              <div
-                key={index}
-                className="grid grid-cols-4 gap-6 p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 m-4"
-              >
-                <h2 className="text-xl font-bold text-blue-600 col-span-1">{item.hora}</h2>
-                <p className="text-base text-gray-700 col-span-1">
-                  <span className="font-semibold text-gray-900">Venta Acumulada:</span>
-                  {` $${Intl.NumberFormat("CO").format(item.venta).toString()}`}
-                </p>
-                <p className="text-base text-gray-700 col-span-1">
-                  <span className="font-semibold text-gray-900">Estimado:</span>
-                  {` $${Intl.NumberFormat("CO").format(item.estimado).toString()}`}
-                </p>
-                <p className="text-base text-gray-700 col-span-1">
-                  <span className="font-semibold text-gray-900">Venta Esta Hora:</span>
-                  {` $${Intl.NumberFormat("CO").format(item.ventaEstaHora).toString()}`}
-                </p>
-              </div>
-            ) : null
+            <div key={index} className='grid grid-cols-4 gap-6 p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 m-4'>
+              <h2 className='text-xl font-bold text-blue-600 col-span-1'>{item.hora} - {item.hora.split(':')[0]}:59</h2>
+              <p className='text-base text-gray-700 col-span-1'>
+                <span className='font-semibold text-gray-900'>Venta Esta Hora:</span>
+                {` $${Intl.NumberFormat('CO').format(item.ventaHora).toString()}`}
+              </p>
+              <p className='text-base text-gray-700 col-span-1'>
+                <span className='font-semibold text-gray-900'>Venta Aspiración:</span>
+                {` $${Intl.NumberFormat('CO').format(item.aspiracion).toString()}`}
+              </p>
+              <p className='text-base text-gray-700 col-span-1'>
+                <span className='font-semibold text-gray-900'>Venta Acomulada:</span>
+                {` $${Intl.NumberFormat('CO').format(item.ventaAcumulada).toString()}`}
+              </p>
+            </div>
           ))
         }
       </div>
