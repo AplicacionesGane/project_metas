@@ -13,4 +13,4 @@ routerMetas.get('/cumpMesAct', authenticateToken, cumplimientoMesActualProducto)
 
 routerMetas.get('/cumpMesAnt', authenticateToken, vtaMesAntPro)
 
-routerMetas.get('/metaxhoras', authenticateToken, ventaxhorasController)
+routerMetas.get('/metaxhoras', ventaxhorasController)
