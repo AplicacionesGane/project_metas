@@ -7,7 +7,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function AspDiaPage() {
-  const { funLogOut, profileData } = useAuth()
+  const { funLogOut } = useAuth()
 
   const { data, isLoading, close } = useFecthMetasData('/cumpDiaProd')
   const [isAscending, setIsAscending] = useState(false)
@@ -27,7 +27,7 @@ function AspDiaPage() {
       <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {
           sortedData.map(meta => (
-            <Link to={`/metaxhora/${meta.producto}/${profileData?.sucursal.CODIGO}`} key={meta.id}>
+            <Link to={`/metaxhora/${meta.producto}`} key={meta.id}>
               <BarraProgressProduct pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
                 percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
               />
