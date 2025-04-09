@@ -19,6 +19,7 @@ export class Ventaxhoras extends Model<InferAttributes<Ventaxhoras>, InferCreati
   declare VTAPH: number;
   declare NROFORMULARIOS: number;
   declare VERSION: string;
+  declare Producto?: InferAttributes<Productos>
 }
 
 Ventaxhoras.init(
