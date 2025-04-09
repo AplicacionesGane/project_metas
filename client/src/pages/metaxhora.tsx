@@ -16,7 +16,7 @@ export default function MetaXhora() {
   const [data, setData] = useState<ObjectEsperado[]>([]);
 
   useEffect(() => {
-    axios.get<ObjectEsperado[]>(`/ventaxhora`, { params: { producto, sucursal } })
+    axios.get<ObjectEsperado[]>(`/metaxhoras`, { params: { producto, sucursal } })
       .then((response) => {
         console.log('Response:', response.data);
         setData(response.data);

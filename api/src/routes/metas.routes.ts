@@ -1,4 +1,5 @@
 import { metasDelDia, cumplimientoDiaProducto, cumplimientoMesActualProducto, vtaMesAntPro } from "../controllers/metas.controller";
+import { ventaxhorasController } from '../controllers/ventaxhoras.controller';
 import { authenticateToken } from '../middleware/verifyToken'
 import { Router } from "express"; 
 
@@ -11,3 +12,5 @@ routerMetas.get('/cumpDiaProd', authenticateToken, cumplimientoDiaProducto)
 routerMetas.get('/cumpMesAct', authenticateToken, cumplimientoMesActualProducto)
 
 routerMetas.get('/cumpMesAnt', authenticateToken, vtaMesAntPro)
+
+routerMetas.get('/metaxhoras', authenticateToken, ventaxhorasController)
