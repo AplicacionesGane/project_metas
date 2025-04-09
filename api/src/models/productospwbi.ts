@@ -1,7 +1,8 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { powerBi } from '../connections/powerbi';
+import { Ventaxhoras } from './ventahoras';
 
-class Productos extends Model<InferAttributes<Productos>, InferCreationAttributes<Productos>> {
+export class Productos extends Model<InferAttributes<Productos>, InferCreationAttributes<Productos>> {
   declare CODIGO: string;
   declare NOMBRE: string;
   declare TIPOJUEGO: string;
@@ -23,5 +24,4 @@ Productos.init({
   sequelize: powerBi,
   tableName: 'PRODUCTOS',
   timestamps: false,
-}
-);
+});
