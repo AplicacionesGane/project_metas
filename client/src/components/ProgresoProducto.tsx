@@ -21,7 +21,10 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
     <Card className={`${background} space-y-2`}>
 
       <h2 className='flex justify-between'>
-        <span className='text-lg font-bold underline'>{pruducto}</span>
+        <span className='text-lg font-bold underline'>
+          {pruducto.slice(0, 1)}
+          {pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}
+        </span>
         <span>Aspiración</span>
       </h2>
 
