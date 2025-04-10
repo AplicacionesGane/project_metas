@@ -77,6 +77,7 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       AND VH.SUCURSAL = ? 
       AND P.VERSION = ?
       AND VH.ZONA = ?
+      AND VH.HORA BETWEEN 6 AND 23
       GROUP BY VH.HORA;
       `,
       { replacements: [sucursal, data.producto.toUpperCase(), zona], type: QueryTypes.SELECT, }
