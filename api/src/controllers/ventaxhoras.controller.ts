@@ -6,8 +6,8 @@ import { z } from 'zod';
 
 interface DataQueryHora {
   HORA: string;
-  VENTA_HORA: number | string;
-  PRODUCTO: string;
+  VENTA: number;
+  PRODUCTO_ID: string;
 }
 
 const paramsSchema = z.object({
@@ -64,31 +64,28 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
   try {
     const results = await Ventaxhoras.sequelize?.query<DataQueryHora>(`
       SELECT 
-        VH.HORA, 
-        SUM(VH.VTAH) AS VENTA_HORA,
-        P.VERSION AS PRODUCTO
+        VH.HORA,
+        VH.VTAPH AS VENTA,
+        P.CODIGO AS PRODUCTO_ID
       FROM 
         VENTAHORAPRODUCTOS AS VH
-      LEFT JOIN 
-        PRODUCTOS AS P 
-      ON 
-        (P.CODIGO = VH.PRODUCTO_CODIGO)
+      JOIN PRODUCTOS AS P ON (VH.PRODUCTO_CODIGO = P.CODIGO)
       WHERE VH.FECHA = CURDATE() 
-      AND VH.SUCURSAL = ? 
-      AND P.VERSION = ?
-      AND VH.ZONA = ?
-      AND VH.HORA BETWEEN 6 AND 23
-      GROUP BY VH.HORA;
+        AND VH.SUCURSAL = ?
+        AND VH.ZONA = ?
+        AND VH.HORA BETWEEN 6 AND 23
       `,
-      { replacements: [sucursal, data.producto.toUpperCase(), zona], type: QueryTypes.SELECT, }
+      { replacements: [sucursal, zona], type: QueryTypes.SELECT, }
     )
 
+    console.log(data.producto);
 
     if (!results) {
       res.status(404).json({ message: 'No data found' });
       return
     }
 
+    /*
     const mappedResults = results.map((res, index) => {
       return {
         id: index + 1,
@@ -106,8 +103,9 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
         aspiracion: aspiracionxhora[index].aspiracion
       }
     })
+      */
 
-    res.status(200).json(mappedResultsWithAspiracion);
+    res.status(200).json('ok');
     return
   } catch (error) {
     console.error('Error fetching data:', error);
