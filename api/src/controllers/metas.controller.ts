@@ -43,9 +43,15 @@ export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
     const result = ReturnArrayMetProducts(zona, metas?.dataValues)
     const productsActives = await getProductsActives(codigo.toString())
 
-    console.log(productsActives);
+    const addActives = result.map( product => {
+      const productActive = productsActives.find( prod => prod === product.producto)
+      return {
+        ...product,
+        activo: productActive === product.producto ? true : false
+      }
+    })
 
-    return res.status(200).json(result)
+    return res.status(200).json(addActives)
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Hubo un problema al obtener el cumplimiento del día por producto. Por favor, inténtalo de nuevo más tarde.' })
