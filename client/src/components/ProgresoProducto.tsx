@@ -10,7 +10,7 @@ interface BarraProgressProductProps {
   aspiracionDia: number
   percentage: number
   percentage2: number
-  activo: boolean
+  activo?: boolean
 }
 
 export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, percentage, percentage2, activo }: BarraProgressProductProps) {
