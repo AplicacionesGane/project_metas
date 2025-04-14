@@ -47,14 +47,6 @@ export default function MetaXhora() {
                 <span className='font-semibold text-gray-900'>Venta Esta Hora:</span>
                 {` $${Intl.NumberFormat('CO').format(parseInt(item.VENTA)).toString()}`}
               </p>
-              {/* <p className='text-base text-gray-700 col-span-1'>
-                <span className='font-semibold text-gray-900'>Venta Aspiración:</span>
-                {` $${Intl.NumberFormat('CO').format(item.aspiracion).toString()}`}
-              </p> */}
-              {/* <p className='text-base text-gray-700 col-span-1'>
-                <span className='font-semibold text-gray-900'>Venta Acomulada:</span>
-                {` $${Intl.NumberFormat('CO').format(item.ventaAcumulada).toString()}`}
-              </p> */}
             </div>
           ))
         }
