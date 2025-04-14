@@ -4,7 +4,7 @@ import { ProductsJamundi, ProductsYumbo } from '../types/interfaces'
 function parsearInfoArrayMultired(data: ProductsYumbo) {
   const ASTRO = {
     id: 1,
-    producto: 'Astro',
+    producto: 'ASTRO',
     ventaActual: data.ASTRO,
     aspiracionDia: data.PROMEDIO_DIARIO_ASTRO,
     porcentaje: calcularPorcentaje(data.ASTRO, data.PROMEDIO_DIARIO_ASTRO),
@@ -12,7 +12,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const CHANCE = {
     id: 2,
-    producto: 'Chance',
+    producto: 'CHANCE',
     ventaActual: data.CHANCE,
     aspiracionDia: data.PROMEDIO_DIARIO_CHANCE,
     porcentaje: calcularPorcentaje(data.CHANCE, data.PROMEDIO_DIARIO_CHANCE),
@@ -20,7 +20,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const CHANCE_MILLONARIO = {
     id: 3,
-    producto: 'Chance Millonario',
+    producto: 'CHANCEMILLONARIO',
     ventaActual: data.CHANCE_MILLONARIO,
     aspiracionDia: data.PROMEDIO_DIARIO_CHMILL,
     porcentaje: calcularPorcentaje(data.CHANCE_MILLONARIO, data.PROMEDIO_DIARIO_CHMILL),
@@ -28,7 +28,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const DOBLECHANCE = {
     id: 4,
-    producto: 'Doble Chance',
+    producto: 'DOBLECHANCE',
     ventaActual: data.DOBLECHANCE,
     aspiracionDia: data.PROMEDIO_DIARIO_DOBLECHANCE,
     porcentaje: calcularPorcentaje(data.DOBLECHANCE, data.PROMEDIO_DIARIO_DOBLECHANCE),
@@ -36,7 +36,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const PAGAMAS = {
     id: 5,
-    producto: 'Paga Más',
+    producto: 'PAGAMAS',
     ventaActual: data.PAGAMAS,
     aspiracionDia: data.PROMEDIO_DIARIO_PAGAMAS,
     porcentaje: calcularPorcentaje(data.PAGAMAS, data.PROMEDIO_DIARIO_PAGAMAS),
@@ -52,7 +52,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const PAGATODO = {
     id: 7,
-    producto: 'Paga Todo',
+    producto: 'PAGATODOY',
     ventaActual: data.PAGATODO,
     aspiracionDia: data.PROMEDIO_DIARIO_PAGATODO,
     porcentaje: calcularPorcentaje(data.PAGATODO, data.PROMEDIO_DIARIO_PAGATODO),
@@ -68,7 +68,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const GANE5 = {
     id: 9,
-    producto: 'Gane 5',
+    producto: 'GANE5',
     ventaActual: data.GANE5,
     aspiracionDia: data.PROMEDIO_DIARIO_GANE5,
     porcentaje: calcularPorcentaje(data.GANE5, data.PROMEDIO_DIARIO_GANE5),
@@ -76,7 +76,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
   }
   const PATA_MILLONARIA = {
     id: 10,
-    producto: 'Pata Millonaria',
+    producto: 'PATAMILLONARIA',
     ventaActual: data.PATA_MILLONARIA,
     aspiracionDia: data.PROMEDIO_DIARIO_PATAMI,
     porcentaje: calcularPorcentaje(data.PATA_MILLONARIA, data.PROMEDIO_DIARIO_PATAMI),
@@ -147,7 +147,7 @@ function parsearInfoArrayMultired(data: ProductsYumbo) {
 
   const PROMO1 = {
     id: 18,
-    producto: 'Super Win',
+    producto: 'SUPERWIN',
     ventaActual: data.PROMO1,
     aspiracionDia: data.META_PROMO1,
     porcentaje: calcularPorcentaje(data.PROMO1, data.META_PROMO1),

@@ -15,7 +15,7 @@ function AspDiaPage() {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
 
-  if(close) {
+  if (close) {
     funLogOut()
     return null
   }
@@ -25,12 +25,17 @@ function AspDiaPage() {
       <HeaderComponent setIsAscending={setIsAscending} isLoading={isLoading} isAscending={isAscending} text='Día Actual' />
       <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {
-          sortedData.map(meta => (
+          sortedData.map(meta =>
             <BarraProgressProduct
-              key={meta.id} pruducto={meta.producto} ventaActual={meta.ventaActual} aspiracionDia={meta.aspiracionDia}
-              percentage={parseFloat(meta.porcentaje)} percentage2={parseFloat(meta.porcentaje2)}
+              pruducto={meta.producto}
+              ventaActual={meta.ventaActual}
+              aspiracionDia={meta.aspiracionDia}
+              percentage={parseFloat(meta.porcentaje)}
+              percentage2={parseFloat(meta.porcentaje2)}
+              activo={meta.activo}
+              key={meta.producto}
             />
-          ))
+          )
         }
       </article>
     </section>

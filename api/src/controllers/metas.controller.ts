@@ -11,6 +11,7 @@ import { Utilidades } from '../models/utilidades.model'
 import { Request, Response } from 'express'
 import { User } from '../types/interfaces'
 import { fn } from 'sequelize'
+import { getProductsActives } from '../services/getProductsActives'
 
 export const metasDelDia = async (req: Request, res: Response) => {
   const { sucursal: codigo, zona } = req.user as User
@@ -40,8 +41,17 @@ export const cumplimientoDiaProducto = async (req: Request, res: Response) => {
     if (!metas) return res.status(404).json({ error: 'No se encontraron metas para el código y zona proporcionados' })
 
     const result = ReturnArrayMetProducts(zona, metas?.dataValues)
+    const productsActives = await getProductsActives(codigo.toString())
 
-    return res.status(200).json(result)
+    const addActives = result.map( product => {
+      const productActive = productsActives.find( prod => prod === product.producto)
+      return {
+        ...product,
+        activo: productActive === product.producto ? true : false
+      }
+    })
+
+    return res.status(200).json(addActives)
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Hubo un problema al obtener el cumplimiento del día por producto. Por favor, inténtalo de nuevo más tarde.' })
