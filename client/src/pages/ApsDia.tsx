@@ -32,7 +32,6 @@ function AspDiaPage() {
               aspiracionDia={meta.aspiracionDia}
               percentage={parseFloat(meta.porcentaje)}
               percentage2={parseFloat(meta.porcentaje2)}
-              activo={meta.activo}
               key={meta.producto}
             />
           )
