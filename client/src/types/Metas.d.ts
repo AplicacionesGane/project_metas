@@ -5,7 +5,6 @@ export interface MetasProducto {
   aspiracionDia: number
   porcentaje: string
   porcentaje2: string
-  activo: boolean
 }
 
 const productMetaMap = {

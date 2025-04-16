@@ -10,10 +10,9 @@ interface BarraProgressProductProps {
   aspiracionDia: number
   percentage: number
   percentage2: number
-  activo?: boolean
 }
 
-export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, percentage, percentage2, activo }: BarraProgressProductProps) {
+export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, percentage, percentage2 }: BarraProgressProductProps) {
   const venta = formatPrice(ventaActual)
   const aspiracion = formatPrice(aspiracionDia)
   const colorVariant = getColorVariant(percentage)
@@ -53,7 +52,7 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
       </section>
 
       {
-        activo && (
+        pruducto === 'Venta Total Chance' && (
           <section className="absolute right-0 bottom-0 w-10 h-14 overflow-hidden">
             <div className="relative w-full h-full">
               <div className="absolute inset-0 bg-blue-500 transform rotate-45 origin-bottom-left rounded-md"></div>
