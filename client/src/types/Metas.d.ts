@@ -7,6 +7,8 @@ export interface MetasProducto {
   porcentaje2: string
 }
 
+export type MetasProI = MetasProducto[]
+
 const productMetaMap = {
   CHANCE: 500,
   PAGAMAS: 750,
