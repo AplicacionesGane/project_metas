@@ -16,6 +16,7 @@ function LoginPage() {
   const [attempts, setAttempts] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
   const [blockEndTime, setBlockEndTime] = useState<number | null>(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const storedAttempts = localStorage.getItem('loginAttempts')
@@ -66,6 +67,8 @@ function LoginPage() {
     const username = form.username.value
     const password = form.password.value
 
+    setLoading(true)
+
     getLogin(username, password)
       .then(res => {
         if (res.status === 200) {
@@ -89,6 +92,9 @@ function LoginPage() {
             return newAttempts
           })
         }
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -130,8 +136,8 @@ function LoginPage() {
           </div>
         </article>
 
-        <Button type='submit'>
-          Iniciar Sesión
+        <Button type='submit' disabled={loading}>
+          {loading ? 'Iniciando Sesión ...' : 'Iniciar Sesión'}
         </Button>
       </form>
 
