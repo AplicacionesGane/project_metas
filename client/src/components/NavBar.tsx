@@ -51,7 +51,7 @@ const NavLinksItems = [
 function NavBar() {
   const [isModalOpen, setModalOpen] = useState(false);
   const { darkMode, toggleTheme } = useTheme();
-  const { funLogOut, profileData, setProfileData } = useAuth();
+  const { logout, setUser, user } = useAuth();
 
   const handleClickSalida = (ev: FormEvent) => {
     ev.preventDefault()
@@ -66,7 +66,7 @@ function NavBar() {
             description: `Fecha: ${date.split('--')[0]} <--->  Hora: ${date.split('--')[1]} `,
             duration: 10000
            })
-          setProfileData({ ...profileData!, stateSalida: false })
+           setUser((prev) => ({...prev!, stateSalida: true}))
         }
       })
       .catch(error => {
@@ -99,14 +99,14 @@ function NavBar() {
         </section>
 
         <button className='p-2  rounded-md font-semibold bg-blue-700 text-white hover:bg-green-600 transition-all text-xs 2xl:text-lg'
-          onClick={() => funLogOut()}>
+          onClick={logout}>
           Cerrar Sesión
         </button>
 
         <p className='text-sm text-center dark:text-white px-4 text-gray-700'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
 
         {
-          profileData?.stateSalida && (
+          user?.stateSalida && (
             <button className={`${isModalOpen ? 'text-red-600' : 'hover:text-blue-700'}`} onClick={() => setModalOpen(true)} >
               Registrar Salida
             </button>
