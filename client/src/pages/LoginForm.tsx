@@ -1,21 +1,22 @@
-import { RiUserLine, RiLockLine } from '@remixicon/react'
-import { FormEvent, useState, useEffect } from 'react'
-import { Button } from '../components/tremor/Button'
-import { getLogin } from '../services/LoginServices'
-import LogoEmpresa from '../components/LogoEmpresa'
-import { Input } from '../components/tremor/Input'
-import { useAuth } from '../auth/AuthContext'
-import { Toaster, toast } from 'sonner'
+import { RiUserLine, RiLockLine } from '@remixicon/react';
+import { FormEvent, useState, useEffect } from 'react';
+import { Button } from '../components/tremor/Button';
+import { getLogin } from '../services/LoginServices';
+import LogoEmpresa from '../components/LogoEmpresa';
+import { Input } from '../components/tremor/Input';
+import { useAuth } from '../hooks/useAuth';
+import { Toaster, toast } from 'sonner';
 
 const MAX_ATTEMPTS = 4
 const BLOCK_TIME = 5 * 60 * 1000 // 5 minutes in milliseconds
 
 function LoginPage() {
-  const { setAuth } = useAuth()
+  const { login } = useAuth()
 
   const [attempts, setAttempts] = useState(0)
   const [isBlocked, setIsBlocked] = useState(false)
   const [blockEndTime, setBlockEndTime] = useState<number | null>(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const storedAttempts = localStorage.getItem('loginAttempts')
@@ -66,10 +67,12 @@ function LoginPage() {
     const username = form.username.value
     const password = form.password.value
 
+    setLoading(true)
+
     getLogin(username, password)
       .then(res => {
         if (res.status === 200) {
-          setAuth(true)
+          login()
           setAttempts(0) // Reset attempts on successful login
           localStorage.removeItem('loginAttempts')
         }
@@ -90,8 +93,10 @@ function LoginPage() {
           })
         }
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }
-
 
   return (
     <section className='w-full h-screen flex flex-col items-center justify-center relative'>
@@ -131,8 +136,8 @@ function LoginPage() {
           </div>
         </article>
 
-        <Button type='submit'>
-          Iniciar Sesión
+        <Button type='submit' disabled={loading}>
+          {loading ? 'Iniciando Sesión ...' : 'Iniciar Sesión'}
         </Button>
       </form>
 

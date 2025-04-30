@@ -1,5 +1,5 @@
-import { CardSugerido } from '../components/CardSugerido'
-import { useSugeridos } from '../hooks/useSugeridos'
+import { CardSugerido } from '../components/CardSugerido';
+import { useSugeridos } from '../hooks/useSugeridos';
 
 function SugeridosPage() {
   const { data } = useSugeridos()

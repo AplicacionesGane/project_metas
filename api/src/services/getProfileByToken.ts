@@ -36,8 +36,14 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
 
     const InfoGeneral = {
       user: Vendedor,
-      sucursal: SucursalInfo,
-      infCategoria: CategoriaInfo,
+      sucursal: {
+        ZONA: SucursalInfo.dataValues.ZONA,
+        CODIGO: SucursalInfo.dataValues.CODIGO,
+        NOMBRE: SucursalInfo.dataValues.NOMBRE,
+        DIRECCION: SucursalInfo.dataValues.DIRECCION,
+        SUPERVISOR: SucursalInfo.dataValues.SUPERVISOR,
+        CATEGORIA: CategoriaInfo?.CATEGORIZACION
+      },
       stateSalida: state 
     }
 

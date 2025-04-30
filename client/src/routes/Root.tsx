@@ -1,18 +1,18 @@
 import { ThemeProvider } from '../context/ThemeContext';
 import { Loading } from '../components/Loading';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Toaster } from 'sonner';
 
+const InfoSucursal = lazy(() => import('../components/InfoPdvComponent'))
 const LoginPage = lazy(() => import('../pages/LoginForm'))
 const NavBar = lazy(() => import('../components/NavBar'))
-const InfoSucursal = lazy(() => import('../components/InfoPdvComponent'))
 
 export default function Root() {
-  const { profileData } = useAuth()
+  const { isAuthenticated } = useAuth()
 
-  if (!profileData?.sucursal || !profileData?.user) return (
+  if (!isAuthenticated) return (
     <Suspense fallback={<Loading />}>
       <LoginPage />
     </Suspense>
