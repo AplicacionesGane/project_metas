@@ -40,18 +40,8 @@ app.use(API_VERSION, routerSalida)
 
 app.get('/api/v1/dataTime', async (_req, res) => {
   try {
-    const fecha = new Date().toLocaleDateString()
-    res.json({ fecha })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: 'Error al obtener la fecha' })
-  }
-})
-
-app.get('/api/v1/dataTime2', async (_req, res) => {
-  try {
-    const hora = new Date().toLocaleTimeString()
-    res.json({ hora })
+    const time = new Date().toLocaleString()
+    res.json(time)
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Error al obtener la fecha' })
