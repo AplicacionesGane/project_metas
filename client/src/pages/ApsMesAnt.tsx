@@ -1,28 +1,29 @@
-import { BarraProgressProduct } from '../components/ProgresoProducto'
-import { HeaderComponent } from '../components/ui/headerComponent'
-import { useFecthMetasData } from '../hooks/useFetchData'
-import { useAuth } from '../auth/AuthContext'
-import { sortData } from '../utils/funtions'
-import { useMemo, useState } from 'react'
+import { BarraProgressProduct } from '../components/ProgresoProducto';
+import { HeaderComponent } from '../components/ui/headerComponent';
+import { useFetchData } from '../hooks/useFetch';
+import { useAuth } from '../auth/AuthContext';
+import { sortData } from '../utils/funtions';
+import { MetasProI } from '../types/Metas';
+import { useMemo, useState } from 'react';
 
 function AspMenAntPage () {
-  const { funLogOut} = useAuth()
+  const { logout} = useAuth()
 
-  const { data, isLoading, close } = useFecthMetasData('/cumpMesAnt')
+  const { data, loading, closeSesion } = useFetchData<MetasProI>('/cumpMesAnt')
   const [isAscending, setIsAscending] = useState(false)
 
   const sortedData = useMemo(() => {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
 
-  if(close) {
-    funLogOut()
+  if(closeSesion) {
+    logout()
     return null
   }
 
   return (
     <section className='relative'>
-      <HeaderComponent setIsAscending={setIsAscending} isAscending={isAscending} isLoading={isLoading} text='Mes Anterior' />
+      <HeaderComponent setIsAscending={setIsAscending} isAscending={isAscending} isLoading={loading} text='Mes Anterior' />
       <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {data && (
           sortedData.map(meta => (
