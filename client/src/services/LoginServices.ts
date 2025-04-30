@@ -1,4 +1,4 @@
-import { ProfileDataI } from '../types/interfaces'
+import { DataUserProfile } from '../auth/AuthContext'
 import axios from 'axios'
 
 export const getLogin = async (username: string, password: string) => {
@@ -18,7 +18,7 @@ export const getLogin = async (username: string, password: string) => {
 
 export const getProfile = async () => {
   try {
-    const response = await axios.get<ProfileDataI | null>('/profile')
+    const response = await axios.get<DataUserProfile | null>('/profile')
 
     if (response.status !== 200) {
       throw new Error('Error al obtener el perfil')
@@ -31,8 +31,13 @@ export const getProfile = async () => {
   }
 }
 
-export const logout = async () => {
-  const response = await axios.get('/logout')
-  console.log(response);
-  return 'Sesión Cerrada'
+export const closeSession = async () => {
+	try {
+		const response = await axios.get("/logout");
+		if (response.status === 200) {
+			return true
+		}
+	} catch (error) {
+		console.error("Error during logout:", error);
+	}
 }
