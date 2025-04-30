@@ -1,24 +1,24 @@
-import { BarraProgressProduct } from '../components/ProgresoProducto'
-import { HeaderComponent } from '../components/ui/headerComponent'
-import { useFetchData } from '../hooks/useFetch'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../auth/AuthContext'
-import { sortData } from '../utils/funtions'
-import { MetasProI } from '../types/Metas'
-import { useMemo, useState } from 'react'
+import { BarraProgressProduct } from '../components/ProgresoProducto';
+import { HeaderComponent } from '../components/ui/headerComponent';
+import { useFetchData } from '../hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import { sortData } from '../utils/funtions';
+import { MetasProI } from '../types/Metas';
+import { useMemo, useState } from 'react';
 
 function AspDiaPage() {
   const { data, error, loading, closeSesion } = useFetchData<MetasProI>('/cumpDiaProd')
   const navigate = useNavigate()
   const [isAscending, setIsAscending] = useState(false)
-  const { funLogOut } = useAuth()
+  const { logout } = useAuth()
 
   const sortedData = useMemo(() => {
     return Array.isArray(data) ? sortData(data, isAscending) : []
   }, [data, isAscending])
 
   if(closeSesion){
-    funLogOut()
+    logout()
     navigate('/')
     return null
   }
