@@ -32,16 +32,7 @@ export const getProfile = async () => {
 }
 
 export const logout = async () => {
-  try {
-    const response = await axios.get('/logout')
-
-    if (response.status !== 200) {
-      throw new Error('Error al cerrar sesión')
-    }
-
-    return response
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  const response = await axios.get('/logout')
+  console.log(response);
+  return 'Sesión Cerrada'
 }
