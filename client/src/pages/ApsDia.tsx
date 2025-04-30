@@ -2,7 +2,7 @@ import { BarraProgressProduct } from '../components/ProgresoProducto';
 import { HeaderComponent } from '../components/ui/headerComponent';
 import { useFetchData } from '../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { sortData } from '../utils/funtions';
 import { MetasProI } from '../types/Metas';
 import { useMemo, useState } from 'react';

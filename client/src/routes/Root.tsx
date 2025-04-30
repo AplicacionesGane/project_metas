@@ -1,6 +1,6 @@
 import { ThemeProvider } from '../context/ThemeContext';
 import { Loading } from '../components/Loading';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { Outlet } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Toaster } from 'sonner';

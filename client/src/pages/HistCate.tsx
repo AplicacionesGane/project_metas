@@ -1,6 +1,6 @@
 import { HistComponent, TitleComponent } from '../components/HistoCatComp';
 import { CategoriasI } from '../types/interfaces';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 

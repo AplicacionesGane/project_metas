@@ -2,7 +2,7 @@ import { ProgressCircleComponent } from '../components/ui/ProgressCircle';
 import { VentasDiaResumen } from '../components/ui/VentaDiaResumen';
 import { TableUtilidades } from '../components/ui/TableUtilidades';
 import { GenerateQR } from '../components/ui/GeneraQrCod';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 

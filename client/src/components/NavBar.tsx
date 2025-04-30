@@ -2,7 +2,7 @@ import { RiDashboardLine, RiSunLine, RiCalendar2Line, RiCalendarTodoLine, RiLine
 import { Switch } from '../components/tremor/Switch'
 import { useTheme } from '../context/ThemeContext'
 import { NavLinkItem } from './ui/NavLinkItem'
-import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '../hooks/useAuth';
 import LogoEmpresa from './LogoEmpresa'
 import { FormEvent, useState } from 'react'
 import { toast } from 'sonner'

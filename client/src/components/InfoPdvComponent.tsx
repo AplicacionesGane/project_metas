@@ -1,5 +1,5 @@
 import { SimularReloj } from './ui/SimularReloj';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 

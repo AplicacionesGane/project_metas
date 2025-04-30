@@ -4,7 +4,7 @@ import { Button } from '../components/tremor/Button';
 import { getLogin } from '../services/LoginServices';
 import LogoEmpresa from '../components/LogoEmpresa';
 import { Input } from '../components/tremor/Input';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { Toaster, toast } from 'sonner';
 
 const MAX_ATTEMPTS = 4

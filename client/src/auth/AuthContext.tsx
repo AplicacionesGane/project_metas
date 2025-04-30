@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState, FC } from 'react';
+import { createContext, ReactNode, useEffect, useState, FC } from 'react';
 import { getProfile, closeSession } from '../services/LoginServices';
 
 interface UserInt {
@@ -30,7 +30,7 @@ export interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<DataUserProfile | null>>;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -74,13 +74,4 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-// Hook personalizado para usar el contexto de autenticación
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };
