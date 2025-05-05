@@ -30,14 +30,16 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       type: QueryTypes.SELECT
     })
 
-    // parsear el resultado que es un object de objetos a un array de objetos
+    const beforeHour = new Date().getHours() - 1
+
     const parsedResults = Object.values(results[0])
-      .filter((item: ResultsProcedure) => item.HORA >= 5 && item.HORA <= 22) // Filtrar horas entre 5 y 22
+      .filter((item: ResultsProcedure) => item.HORA >= 5 && item.HORA <= beforeHour)
       .map((item: ResultsProcedure, index: number) => ({
         ID: index + 1,
         HORA: `${item.HORA}:00`,
         VTAH: parseInt(item.VTAH),
         METAH: parseInt(item.METAH),
+        DIF: parseInt(item.VTAH) - parseInt(item.METAH)
       }));
 
     res.status(200).json(parsedResults);
