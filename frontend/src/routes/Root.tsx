@@ -1,3 +1,4 @@
+
 import { Loading } from '@/components/ui/Loading';
 import { ThemeProvider } from '@/context/theme';
 import { useAuth } from '@/hooks/useAuth';
@@ -6,6 +7,8 @@ import { Outlet } from 'react-router';
 import { Toaster } from 'sonner';
 
 const LoginPage = lazy(() => import('@/app/login'));
+const NavBar = lazy(() => import('@/components/nav-bar'));
+const HeaderMain = lazy(() => import('@/components/header-main'));
 
 export default function Root() {
   const { isAuthenticated } = useAuth()
@@ -13,7 +16,13 @@ export default function Root() {
   if (isAuthenticated) return (
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
-        <Outlet />
+        <section className='flex'>
+          <NavBar />
+          <main className='flex-1'>
+            <HeaderMain />
+            <Outlet />
+          </main>
+        </section>
         <Toaster richColors position='top-right' />
       </ThemeProvider>
     </Suspense>
