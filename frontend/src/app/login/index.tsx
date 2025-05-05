@@ -136,7 +136,7 @@ function LoginPage() {
           </div>
         </article>
 
-        <Button type='submit' disabled={loading}>
+        <Button type='submit' disabled={loading} >
           {loading ? 'Iniciando Sesión ...' : 'Iniciar Sesión'}
         </Button>
       </form>
