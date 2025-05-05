@@ -18,7 +18,7 @@ export default function Root() {
       <ThemeProvider>
         <section className='flex'>
           <NavBar />
-          <main className='flex-1'>
+          <main className='flex-1 h-screen overflow-y-auto'>
             <HeaderMain />
             <Outlet />
           </main>

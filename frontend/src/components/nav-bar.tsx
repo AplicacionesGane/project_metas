@@ -49,7 +49,7 @@ function NavBar() {
   const { user, logout } = useAuth();
 
   return (
-    <ul className='flex flex-col h-screen items-center justify-around'>
+    <ul className='flex flex-col h-screen items-center justify-around bg-slate-100'>
       <figure className=''>
         <img src="logogane.webp" alt="Logo Gane" width={180} height={180} />
       </figure>

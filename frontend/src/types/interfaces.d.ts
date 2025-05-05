@@ -26,3 +26,12 @@ export interface AuthContextType {
 	user: DataUserProfile | null;
 	setUser: React.Dispatch<React.SetStateAction<DataUserProfile | null>>;
 }
+
+
+export interface ComisionesI {
+	FECHA: string;
+	DOCUMENTO: string;
+	CONCEPTO: string;
+	REFERENCIA: string;
+	VERSION: null;
+}
