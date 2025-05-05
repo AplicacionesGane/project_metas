@@ -24,16 +24,16 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
 
   try {
     const query = 'CALL PRD_METASHORAXSUCURSAL_V(?);'
-    
+
     const results = await powerBi.query<ResultsProcedure[]>(query, {
       replacements: [sucursal],
       type: QueryTypes.SELECT
     })
 
-    const beforeHour = new Date().getHours() - 1
+    const hour = new Date().getHours()
 
     const parsedResults = Object.values(results[0])
-      .filter((item: ResultsProcedure) => item.HORA >= 5 && item.HORA <= beforeHour)
+      .filter((item: ResultsProcedure) => item.HORA >= 5 && item.HORA <= hour - 1)
       .map((item: ResultsProcedure, index: number) => ({
         ID: index + 1,
         HORA: `${item.HORA}:00`,
@@ -42,7 +42,19 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
         DIF: parseInt(item.VTAH) - parseInt(item.METAH)
       }));
 
-    res.status(200).json(parsedResults);
+    const acomulado = parsedResults.reduce((acc, item) => acc + item.DIF, 0);
+
+    const metaNextHour = Object.values(results[0])
+      .filter((item: ResultsProcedure) => item.HORA === hour)
+      .map((item: ResultsProcedure, index: number) => ({
+        ID: index + 1,
+        HORA: `${item.HORA}:00`,
+        VTAH: 0,
+        METAH: parseInt(item.METAH),
+        DIF: 0
+      }));
+
+    res.status(200).json({ parsedResults, metaNextHour, acomulado });
     return
   } catch (error) {
     console.error('Error fetching data:', error);
