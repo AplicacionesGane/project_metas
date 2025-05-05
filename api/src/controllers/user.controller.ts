@@ -1,4 +1,4 @@
-import { API_TOKEN_EXPIRES, API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
+import { API_TOKEN_NAME, API_TOKEN_SECRET, API_ENV } from '../config/enviroments';
 import { getProfileByToken } from '../services/getProfileByToken';
 import { HistLoginRegister } from '../services/historialLogin';
 import { User as UserPayload } from '../types/interfaces';
@@ -14,7 +14,7 @@ export async function Login(req: Request, res: Response) {
     const user = await getUserOracle(password, username);
     await HistLoginRegister(username, user.sucursal);
 
-    jwt.sign(user, API_TOKEN_SECRET, { expiresIn: API_TOKEN_EXPIRES }, (err, token) => {
+    jwt.sign(user, API_TOKEN_SECRET, { expiresIn: '2h' }, (err, token) => {
       if (err) return res.status(500).json({ message: 'Error al generar el token', err })
 
       // TODO: asignación del token a la cookie

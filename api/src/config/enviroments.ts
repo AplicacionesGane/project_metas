@@ -5,7 +5,6 @@ const envSchema = z.object({
   API_VERSION: z.string(),
   API_TOKEN_SECRET: z.string().min(8, "El secreto del token debe ser mayor a 8 caracteres y requerido"),
   API_TOKEN_NAME: z.string().min(4, "El nombre del token debe ser mayor a 4 caracteres y requerido"),
-  API_TOKEN_EXPIRES: z.string().min(2, "El tiempo de expiración del token debe ser mayor a 2 caracteres y requerido"),
   API_URL_ORIGIN: z.string().url().default('http://localhost:3000'),
   API_ENV: z.string(),
 });
@@ -22,7 +21,6 @@ export const {
   API_VERSION,
   API_TOKEN_SECRET,
   API_TOKEN_NAME,
-  API_TOKEN_EXPIRES,
   API_URL_ORIGIN,
   API_ENV
 } = data;
