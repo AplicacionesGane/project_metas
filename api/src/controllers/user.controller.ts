@@ -23,7 +23,7 @@ export async function Login(req: Request, res: Response) {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: 'lax',
         secure: API_ENV !== 'dev' ? true : false
-      }).status(200).json(user)
+      }).status(200).json({ message: 'Inicio de sesión exitoso' })
     })
   } catch (error) {
     if(error instanceof BaseError){
