@@ -10,8 +10,9 @@ import Root from './Root';
 // const AspMenAntPage = lazy(() => import('../pages/ApsMesAnt'));
 // const HistCatPage = lazy(() => import('../pages/HistCate'));
 const ResumenPage = lazy(() => import('@/app/resumen'));
+const AspDiaPage = lazy(() => import('@/app/asp-dia'));
+
 // const AspMesPage = lazy(() => import('../pages/AspMes'));
-// const AspDiaPage = lazy(() => import('../pages/ApsDia'));
 // const MetaXhora = lazy(() => import('../pages/metaxhora'));
 
 export const RouterMain = createBrowserRouter([
@@ -28,7 +29,6 @@ export const RouterMain = createBrowserRouter([
           </Suspense>
         )
       },
-      /*
       {
         path: '/aspiracionDia',
         element: (
@@ -37,7 +37,8 @@ export const RouterMain = createBrowserRouter([
           </Suspense>
         )
         },
-      {
+        /*
+        {
         path: '/aspiracionMesActual',
         element: (
           <Suspense fallback={<Loading />}>
