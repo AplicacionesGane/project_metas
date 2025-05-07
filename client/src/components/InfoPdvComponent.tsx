@@ -29,15 +29,15 @@ function InfoSucursalComponent() {
 
   return (
     <section className='grid grid-cols-2 w-full lg:text-sm xl:text-base 2xl:text-xl justify-around py-2 px-1 gap-2 dark:text-white'>
-      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-100 dark:bg-slate-900 font-semibold'>
+      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-50 dark:bg-slate-900 font-semibold'>
         <div className=''>Fecha: {fecha.split(',', 1)}</div>
       </article>
-      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-100 dark:bg-slate-900 font-semibold'>
+      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-50 dark:bg-slate-900 font-semibold'>
         {
           fecha && <SimularReloj key='horaStringDateTime' hora={fecha} />
         }
       </article>
-      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-100 dark:bg-slate-900 font-semibold gap-4'>
+      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-50 dark:bg-slate-900 font-semibold gap-4'>
         <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>
           {user?.sucursal.NOMBRE}
         </div>
@@ -45,7 +45,7 @@ function InfoSucursalComponent() {
           {user?.sucursal.SUPERVISOR}
         </div>
       </article>
-      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-100 dark:bg-slate-900 font-semibold'>
+      <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md bg-slate-50 dark:bg-slate-900 font-semibold'>
         <div className=' overflow-hidden overflow-ellipsis whitespace-nowrap'>
           {
             user?.sucursal.CATEGORIA === null

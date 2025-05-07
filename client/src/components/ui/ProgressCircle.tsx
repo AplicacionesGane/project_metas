@@ -20,7 +20,7 @@ export function ProgressCircleComponent({ porcentaje }: ProgressCircleProps) {
   const variant = colorVariant(porcentaje)
 
   return (
-    <section className="py-4 px-2 rounded-md dark:border dark:border-gray-500 bg-slate-100 border dark:bg-slate-900 flex flex-col justify-around gap-4">
+    <section className="py-4 px-2 rounded-md dark:border dark:border-gray-500 bg-slate-50 border dark:bg-slate-900 flex flex-col justify-around gap-4">
       <h2 className="text-center text-sm md:text-base lg:text-lg py-2">
         Porcentaje Meta Realizada
       </h2>

@@ -17,7 +17,9 @@ export default function Root() {
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
         <section className='flex'>
-          <NavBar />
+          <nav>
+            <NavBar />
+          </nav>
           <main className='flex-1 h-screen overflow-y-auto'>
             <HeaderMain />
             <Outlet />

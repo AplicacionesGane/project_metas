@@ -21,7 +21,7 @@ export default function Root() {
   return (
     <ThemeProvider>
       <Suspense fallback={<Loading />}>
-        <nav className='w-3/12 bg-slate-100 dark:bg-slate-900'>
+        <nav className='w-3/12 bg-slate-50 dark:bg-slate-900'>
           <NavBar />
         </nav>
         <main className='w-9/12  overflow-y-auto'>

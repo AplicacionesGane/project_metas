@@ -2,23 +2,36 @@ import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "re
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 
-const chartData = [
-  { browser: "safari", visitors: 20, fill: "var(--color-chart-5)" },
-]
-
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  ventas: {
+    label: "Ventas",
   },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-5)",
+  meta: {
+    label: "Meta",
+    color: "var(--chart-6)",
   },
 } satisfies ChartConfig
 
-export function PieChartComponent() {
+
+export function PieChartComponent({ porcentaje }: { porcentaje: number }) {
+  const getColorClass = () => {
+    if (porcentaje <= 40) return "var(--chart-1)";
+    if (porcentaje <= 80) return "var(--chart-4)";
+    if (porcentaje <= 99) return "var(--chart-3)";
+    if (porcentaje <= 100) return "var(--chart-2)";
+    return "var(--chart-5)"; // Verde
+  };
+
+  const calcularAngulo = () => {
+    return porcentaje * 3.6;
+  }
+
+  const chartData = [
+    { ventas: "Ventas", visitors: porcentaje, fill: getColorClass() },
+  ]
+
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col bg-slate-50 dark:bg-slate-900">
       <CardHeader className="items-center pb-0">
         <CardTitle>Porcentaje Meta Realizada</CardTitle>
       </CardHeader>
@@ -30,15 +43,15 @@ export function PieChartComponent() {
           <RadialBarChart
             data={chartData}
             startAngle={0}
-            endAngle={180}
-            innerRadius={80}
+            endAngle={calcularAngulo()}
+            innerRadius={82}
             outerRadius={130}
           >
             <PolarGrid
               gridType="circle"
               radialLines={false}
               stroke="none"
-              className="first:fill-muted last:fill-background"
+              className={`first:fill-muted last:fill-background`}
               polarRadius={[90, 74]}
             />
             <RadialBar dataKey="visitors" cornerRadius={20} />
@@ -52,24 +65,14 @@ export function PieChartComponent() {
                         y={viewBox.cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
+                        fontSize={24}
+                        fontWeight="bold"
                       >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-4xl font-bold"
-                        >
-                          {chartData[0].visitors.toLocaleString() + '%'}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-
-                        </tspan>
+                        {porcentaje}%
                       </text>
-                    )
+                    );
                   }
+                  return null;
                 }}
               />
             </PolarRadiusAxis>
