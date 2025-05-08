@@ -19,20 +19,20 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
   return (
     <Card className={`${colorBackground(percentage, 'light')} relative`}>
       <CardTitle className='flex justify-between'>
-        <h1>{pruducto.slice(0, 1)}{pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}</h1>
+        <h1 className='font-bold text-lg underline'>{pruducto.slice(0, 1)}{pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}</h1>
         <h1>Aspiración</h1>
       </CardTitle>
 
-      <CardDescription className='flex justify-between'>
+      <CardDescription className='flex justify-between text-black'>
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'>Venta Actual: <Badge>{venta}</Badge> </p>
-            : <p className='pr-1 text-base'>Venta Actual: <Badge>{venta}</Badge> </p>
+            ? <p className='pr-1 text-base'>Venta Actual: <Badge variant='success'>{ventaActual}</Badge> </p>
+            : <p className='pr-1 text-base'>Venta Actual: <Badge variant='success'>{venta}</Badge> </p>
         }
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'><Badge>{aspiracion}</Badge> </p>
-            : <p className='pr-1 text-base'><Badge>{aspiracion}</Badge></p>
+            ? <p className='pr-1 text-base'><Badge variant='default'>{aspiracionDia}</Badge> </p>
+            : <p className='pr-1 text-base'><Badge variant='default'>{aspiracion}</Badge></p>
         }
       </CardDescription>
 
@@ -40,7 +40,7 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
         <Progress value={percentage} />
       </CardContent>
 
-      <CardDescription className='flex justify-between'>
+      <CardDescription className='flex justify-between text-black'>
         <h4>Porcentaje De Ejecución:</h4>
         <span>{percentage2 > 100 ? percentage2 : percentage} %</span>
       </CardDescription>
