@@ -1,8 +1,8 @@
-// import { formatPrice, getColorVariant, colorBackground } from '../utils/funtions'
-// import { ProgressBar } from './tremor/ProgressBar'
-import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
-import { Link } from 'react-router'
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { formatPrice, colorBackground } from '@/lib/funtions';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router';
 
 interface BarraProgressProductProps {
   pruducto: string
@@ -13,43 +13,37 @@ interface BarraProgressProductProps {
 }
 
 export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, percentage, percentage2 }: BarraProgressProductProps) {
-  // const venta = formatPrice(ventaActual)
-  // const aspiracion = formatPrice(aspiracionDia)
-  // const colorVariant = getColorVariant(percentage)
-  // const background = colorBackground(percentage)
+  const venta = formatPrice(ventaActual)
+  const aspiracion = formatPrice(aspiracionDia)
 
   return (
-    <Card className={`space-y-2 relative`}>
-      <h2 className='flex justify-between'>
-        <span className='text-lg font-bold underline'>
-          {pruducto.slice(0, 1)}
-          {pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}
-        </span>
-        <span>Aspiración</span>
-      </h2>
+    <Card className={`${colorBackground(percentage, 'light')} relative`}>
+      <CardTitle className='flex justify-between'>
+        <h1>{pruducto.slice(0, 1)}{pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}</h1>
+        <h1>Aspiración</h1>
+      </CardTitle>
 
-      <article className='flex justify-between'>
+      <CardDescription className='flex justify-between'>
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold shadow' variant='default'>{ventaActual}</Badge> </p>
-            : <p className='pr-1 text-base'>Venta Actual: <Badge className='font-semibold shadow' variant='default'>{ventaActual}</Badge> </p>
+            ? <p className='pr-1 text-base'>Venta Actual: <Badge>{venta}</Badge> </p>
+            : <p className='pr-1 text-base'>Venta Actual: <Badge>{venta}</Badge> </p>
         }
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
-            ? <p className='pr-1 text-base'><Badge className='font-semibold shadow' >{aspiracionDia}</Badge> </p>
-            : <p className='pr-1 text-base'><Badge className='font-semibold shadow'>{aspiracionDia}</Badge></p>
+            ? <p className='pr-1 text-base'><Badge>{aspiracion}</Badge> </p>
+            : <p className='pr-1 text-base'><Badge>{aspiracion}</Badge></p>
         }
-      </article>
+      </CardDescription>
 
-      <section className='flex justify-center items-center gap-4'>
-        {/* <ProgressBar value={percentage} variant={colorVariant} showAnimation /> */}
-        <span>{percentage}%</span>
-      </section>
+      <CardContent className='p-0'>
+        <Progress value={percentage} />
+      </CardContent>
 
-      <section className='flex justify-between'>
+      <CardDescription className='flex justify-between'>
         <h4>Porcentaje De Ejecución:</h4>
         <span>{percentage2 > 100 ? percentage2 : percentage} %</span>
-      </section>
+      </CardDescription>
 
       {
         pruducto === 'Venta Total Chance' && (
