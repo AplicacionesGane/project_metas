@@ -77,9 +77,7 @@ function NavBar() {
 
         <p className='text-sm text-center dark:text-white px-4 text-gray-700'>La sesión se cerrará automáticamente cada 2 horas por seguridad</p>
 
-        {
-          user?.stateSalida ? <ModalSalida /> : null
-        }
+        {user?.stateSalida ? <ModalSalida /> : null}
       </li>
     </ul>
   )

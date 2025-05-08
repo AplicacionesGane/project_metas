@@ -52,7 +52,7 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
             <div className="relative w-full h-full">
               <div className="absolute inset-0 bg-blue-500 transform rotate-45 origin-bottom-left rounded-md"></div>
               <Link
-                to={`/metaxhora/${pruducto}`}
+                to="/metaxhora"
                 className="absolute inset-0 flex items-center justify-center text-white font-bold"
               >
               </Link>
