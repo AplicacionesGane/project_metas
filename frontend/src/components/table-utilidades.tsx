@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { ComisionesI } from "@/types/interfaces"
+import type { ComisionesI } from "@/types/DataInterface"
 import axios from "axios"
 
 export function TableUtilidades({ document }: { document: string }) {

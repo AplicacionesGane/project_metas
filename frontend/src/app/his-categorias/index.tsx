@@ -1,5 +1,5 @@
 import { HistComponent, TitleComponent } from '@/components/HistoCatComponent';
-import { type CategoriasI } from '@/types/interfaces';
+import { type CategoriasI } from '@/types/DataInterface';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import axios from 'axios';

@@ -31,7 +31,6 @@ export interface Sugeridos {
   ESTADO:       string;
 }
 
-
 export interface ComisionesI {
   FECHA: string;
   DOCUMENTO: string;

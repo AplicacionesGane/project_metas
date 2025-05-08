@@ -1,6 +1,6 @@
 import { Progress } from '@/components/ui/progress';
 import { colorBackground } from '@/lib/funtions'
-import { type Sugeridos } from '@/types/interfaces';
+import { type Sugeridos } from '@/types/DataInterface';
 import { formatPrice } from '@/lib/funtions';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';

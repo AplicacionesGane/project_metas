@@ -1,4 +1,4 @@
-import { type DataUserProfile } from '@/types/interfaces';
+import { type DataUserProfile } from '@/types/DataInterface';
 import axios from 'axios';
 
 export const getLogin = async (username: string, password: string) => {

@@ -1,4 +1,4 @@
-import { type AuthContextType, type DataUserProfile } from "@/types/interfaces";
+import { type AuthContextType, type DataUserProfile } from "@/types/DataInterface";
 import { createContext, useEffect, useState, type ReactNode } from "react";
 import { getProfile, closeSession } from "@/services/authServices";
 
