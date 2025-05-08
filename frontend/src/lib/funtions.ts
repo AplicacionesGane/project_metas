@@ -1,3 +1,5 @@
+import type { MetasProducto } from "@/types/Metas";
+
 export const formatPrice = (number: number) => `$ ${Intl.NumberFormat("es-CO").format(number).toString()}`
 
 export const colorBackground = (porcentaje: number = 0, variant: 'light' | 'dark' | 'default' = 'default'): string => {
@@ -17,4 +19,15 @@ export const colorBackground = (porcentaje: number = 0, variant: 'light' | 'dark
 export const ObtenerMes = () => {
   const fecha = new Date()
   return fecha.toLocaleString('es-ES', { month: 'long' })
+}
+
+export function sortData (data: MetasProducto[], isAscending: boolean): MetasProducto[] {
+  return [...data].sort((a, b) => {
+    // Siempre coloca el elemento con id 'especial' en primer lugar
+    if (a.id === 17 || a.id === 18) return -1
+    if (b.id === 17 || b.id === 18) return 1
+
+    // Para todos los demás elementos, ordena por porcentaje
+    return isAscending ? parseFloat(a.porcentaje) - parseFloat(b.porcentaje) : parseFloat(b.porcentaje) - parseFloat(a.porcentaje)
+  })
 }

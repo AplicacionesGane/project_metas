@@ -11,8 +11,9 @@ import Root from './Root';
 // const HistCatPage = lazy(() => import('../pages/HistCate'));
 const ResumenPage = lazy(() => import('@/app/resumen'));
 const AspDiaPage = lazy(() => import('@/app/asp-dia'));
+const AspMesPage = lazy(() => import('@/app/asp-mes-act'));
+const AspMenAntPage = lazy(() => import('@/app/aps-mes-ant'));
 
-// const AspMesPage = lazy(() => import('../pages/AspMes'));
 // const MetaXhora = lazy(() => import('../pages/metaxhora'));
 
 export const RouterMain = createBrowserRouter([
@@ -36,9 +37,8 @@ export const RouterMain = createBrowserRouter([
             <AspDiaPage />
           </Suspense>
         )
-        },
-        /*
-        {
+      },
+      {
         path: '/aspiracionMesActual',
         element: (
           <Suspense fallback={<Loading />}>
@@ -54,27 +54,28 @@ export const RouterMain = createBrowserRouter([
           </Suspense>
         )
       },
-      {
-        path: '/sugeridos',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <SugeridosPage />
-          </Suspense>
-        )
-      },
-      {
-        path: '/historial',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <HistCatPage />
-          </Suspense>
-        )
-      },
-      {
-        path: '/metaxhora/:producto',
-        element: <MetaXhora />,
-      }
-      */
+      /*
+    {
+      path: '/sugeridos',
+      element: (
+        <Suspense fallback={<Loading />}>
+          <SugeridosPage />
+        </Suspense>
+      )
+    },
+    {
+      path: '/historial',
+      element: (
+        <Suspense fallback={<Loading />}>
+          <HistCatPage />
+        </Suspense>
+      )
+    },
+    {
+      path: '/metaxhora/:producto',
+      element: <MetaXhora />,
+    }
+    */
     ]
   }
 ]);

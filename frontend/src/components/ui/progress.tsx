@@ -3,9 +3,9 @@ import { colorBackground } from "@/lib/funtions";
 
 function Progress({ value }: { value: number }) {
   return (
-    <Root className={`relative h-2 w-[85%] overflow-hidden rounded-full shadow ${colorBackground(value)}`}>
+    <Root className={`relative h-2 w-full overflow-hidden rounded-full shadow ${colorBackground(value)}`}>
       <Indicator
-        className={`h-full w-full transition-all duration-700 ease-in-out ${colorBackground(value, 'dark')}`}
+        className={`text-black h-full w-full transition-all duration-700 ease-in-out ${colorBackground(value, 'dark')}`}
         style={{ width: `${value}%` }}
       />
     </Root>

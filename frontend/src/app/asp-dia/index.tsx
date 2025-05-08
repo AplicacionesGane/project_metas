@@ -1,23 +1,12 @@
-import type { MetasProI, MetasProducto } from '@/types/Metas';
 import { useFetchData } from '@/hooks/useFetchData';
+import type { MetasProI } from '@/types/Metas';
 import { useNavigate } from 'react-router';
+import { sortData } from '@/lib/funtions';
 import { useAuth } from '@/hooks/useAuth';
 import { useMemo, useState } from 'react';
 
 import { HeaderComponent } from '@/components/header-components';
 import { BarraProgressProduct } from '@/components/progress-product';
-
-export function sortData (data: MetasProducto[], isAscending: boolean): MetasProducto[] {
-  return [...data].sort((a, b) => {
-    // Siempre coloca el elemento con id 'especial' en primer lugar
-    if (a.id === 17 || a.id === 18) return -1
-    if (b.id === 17 || b.id === 18) return 1
-
-    // Para todos los demás elementos, ordena por porcentaje
-    return isAscending ? parseFloat(a.porcentaje) - parseFloat(b.porcentaje) : parseFloat(b.porcentaje) - parseFloat(a.porcentaje)
-  })
-}
-
 
 export default function AspDiaPage() {
   const { data, error, loading, closeSesion } = useFetchData<MetasProI>('/cumpDiaProd')

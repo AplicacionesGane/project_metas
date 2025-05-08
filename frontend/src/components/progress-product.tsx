@@ -36,8 +36,9 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
         }
       </CardDescription>
 
-      <CardContent className='p-0'>
+      <CardContent className='p-0 flex items-center justify-between gap-2'>
         <Progress value={percentage} />
+        <p>{percentage}%</p>
       </CardContent>
 
       <CardDescription className='flex justify-between text-black'>
