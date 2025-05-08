@@ -35,3 +35,19 @@ export interface ComisionesI {
 	REFERENCIA: string;
 	VERSION: null;
 }
+
+export interface CategoriasI {
+	ANHO: number;
+	MES: number;
+	CATEGORIA: string;
+	VERSION: string;
+}
+
+
+export interface Sugeridos {
+	ID: number;
+	PRODUCTO: string;
+	VTA_SUGERIDO: number;
+	META_VALOR: number;
+	ESTADO: string;
+}
