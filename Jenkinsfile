@@ -22,6 +22,15 @@ pipeline {
         }
       }
 
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                // Ajusta la ruta si es diferente en tu sistema
+                sh 'export PATH=$PATH:/home/containers/.bun/bin && bun install'
+            }
+        }
+    }
+
       stage('Install Client Dependencies') {
         steps {
           script {
