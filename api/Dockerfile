@@ -6,11 +6,13 @@ COPY . /app
 
 # Instalar dependencias necesarias
 RUN apt-get update && apt-get install -y libaio1
+RUN curl -fsSL https://bun.sh/install | bash
 
 # Instalar dependencias y construir la aplicación
-RUN npm install -g pnpm && \
-    pnpm install --no-frozen-lockfile && \
-    pnpm build
+RUN export BUN_INSTALL="$HOME/.bun" && \
+    export PATH="$BUN_INSTALL/bin:$PATH" && \
+    bun install && \
+    bun run build
 
 # Configurar Oracle Instant Client
 RUN mkdir -p /opt/oracle && \
@@ -28,4 +30,4 @@ RUN echo "export LD_LIBRARY_PATH=/opt/oracle/instantclient_11_2:\$LD_LIBRARY_PAT
 
 EXPOSE 80
 
-CMD ["npm", "start"]
+CMD ["bun", "run", "start"]

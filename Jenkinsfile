@@ -1,10 +1,6 @@
 pipeline {
   agent any
     
-  tools {
-    nodejs 'node-v22'
-  }
-
   environment {
     ENV_API_METAS = credentials('ENV_API_METAS')
     ENV_CLIENT_METAS = credentials('ENV_CLIENT_METAS')
@@ -20,7 +16,7 @@ pipeline {
             def env_tns_ora = readFile(ENV_TNS_ORA)
                     
             writeFile file: './api/.env', text: env_api
-            writeFile file: './client/.env', text: env_client
+            writeFile file: './frontend/.env', text: env_client
             writeFile file: './api/tnsnames.ora', text: env_tns_ora
           }
         }
@@ -29,8 +25,8 @@ pipeline {
       stage('Install Client Dependencies') {
         steps {
           script {
-            dir('client') {
-              sh 'pnpm install --no-frozen-lockfile'
+            dir('frontend') {
+              sh 'bun install'
             }
           }
         }
@@ -39,8 +35,8 @@ pipeline {
       stage('Build Client') {
         steps {
           script {
-            dir('client') {
-              sh 'pnpm build'
+            dir('frontend') {
+              sh 'bun run build'
             }
           }
         }
