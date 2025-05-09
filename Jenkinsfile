@@ -12,11 +12,9 @@ pipeline {
       steps {
         script {
             def env_api = readFile(ENV_API_METAS)
-            def env_client = readFile(ENV_CLIENT_METAS)
             def env_tns_ora = readFile(ENV_TNS_ORA)
                     
             writeFile file: './api/.env', text: env_api
-            writeFile file: './frontend/.env', text: env_client
             writeFile file: './api/tnsnames.ora', text: env_tns_ora
           }
         }
