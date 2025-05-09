@@ -1,10 +1,6 @@
 pipeline {
   agent any
     
-  tools {
-    nodejs 'node-v22'
-  }
-
   environment {
     ENV_API_METAS = credentials('ENV_API_METAS')
     ENV_CLIENT_METAS = credentials('ENV_CLIENT_METAS')
@@ -16,32 +12,38 @@ pipeline {
       steps {
         script {
             def env_api = readFile(ENV_API_METAS)
-            def env_client = readFile(ENV_CLIENT_METAS)
             def env_tns_ora = readFile(ENV_TNS_ORA)
+            def env_client = readFile(ENV_CLIENT_METAS)
                     
             writeFile file: './api/.env', text: env_api
-            writeFile file: './client/.env', text: env_client
             writeFile file: './api/tnsnames.ora', text: env_tns_ora
+            writeFile file: './frontend/.env', text: env_client
           }
         }
       }
 
-      stage('Install Client Dependencies') {
+      stage('Install Dependencies') {
         steps {
-          script {
-            dir('client') {
-              sh 'pnpm install --no-frozen-lockfile'
-            }
+          sh 'curl -fsSL https://bun.sh/install | bash'
+          dir('frontend') {
+            sh '''
+                chmod -R u+rwX public
+                chmod -R u+rwX dist || true
+                export BUN_INSTALL="$HOME/.bun"
+                export PATH="$BUN_INSTALL/bin:$PATH"
+                chmod +x $BUN_INSTALL/bin/bun
+                bun install
+                bun run build
+            '''
           }
-        }
-      }
-
-      stage('Build Client') {
-        steps {
-          script {
-            dir('client') {
-              sh 'pnpm build'
-            }
+          dir('api') {
+            sh '''
+                export BUN_INSTALL="$HOME/.bun"
+                export PATH="$BUN_INSTALL/bin:$PATH"
+                chmod +x $BUN_INSTALL/bin/bun
+                bun install
+                bun run build
+            '''
           }
         }
       }
@@ -53,10 +55,11 @@ pipeline {
           }
         }
       }
+
       stage('delete images'){
         steps{
           script {
-          def images = 'api-metas:v2.1'
+          def images = 'api-metas:v2.3'
             if (sh(script: "docker images -q ${images}", returnStdout: true).trim()) {
               sh "docker rmi ${images}"
             } else {
