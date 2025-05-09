@@ -19,11 +19,11 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
   return (
     <Card className={`${colorBackground(percentage, 'light')} relative`}>
       <CardTitle className='flex justify-between'>
-        <h1 className='font-bold text-lg underline'>{pruducto.slice(0, 1)}{pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}</h1>
-        <h1>Aspiración</h1>
+        <h1 className='font-bold text-lg underline dark:text-white'>{pruducto.slice(0, 1)}{pruducto.toLocaleLowerCase().slice(1).replace('_', ' ')}</h1>
+        <h1 className='dark:text-white'>Aspiración</h1>
       </CardTitle>
 
-      <CardDescription className='flex justify-between text-black'>
+      <CardDescription className='flex justify-between text-black dark:text-white'>
         {
           pruducto === 'Recaudos' || pruducto === 'Giros'
             ? <p className='pr-1 text-base'>Venta Actual: <Badge variant='success'>{ventaActual}</Badge> </p>
@@ -41,7 +41,7 @@ export function BarraProgressProduct({ pruducto, ventaActual, aspiracionDia, per
         <p>{percentage}%</p>
       </CardContent>
 
-      <CardDescription className='flex justify-between text-black'>
+      <CardDescription className='flex justify-between text-black dark:text-white'>
         <h4>Porcentaje De Ejecución:</h4>
         <span>{percentage2 > 100 ? percentage2 : percentage} %</span>
       </CardDescription>
