@@ -7,7 +7,7 @@ import { RouterMain } from '@/routes';
 import { StrictMode } from 'react';
 import axios from 'axios';
 
-axios.defaults.baseURL = import.meta.env.VITE_URL_API || '/api'
+axios.defaults.baseURL = import.meta.env.VITE_URL_API || 'http://api-metas:80/api/v1'
 axios.defaults.withCredentials = true
 
 createRoot(document.getElementById('root')!).render(
