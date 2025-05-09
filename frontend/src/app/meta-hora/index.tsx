@@ -46,7 +46,7 @@ export default function MetaXhora() {
       </Card>
 
       <section className='px-2'>
-        <ChartVentaHora />
+        <ChartVentaHora data={data.parsedResults}/>
       </section>
 
       <div className='bg-gray-50 p-6 rounded-lg shadow-lg'>
