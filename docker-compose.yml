@@ -2,7 +2,7 @@ services:
   web-metas:
     image: nginx:stable-alpine3.19-slim
     restart: always
-    container_name: web-metas
+    container_name: web_metas_container
     volumes:
       - ./frontend/dist:/usr/share/nginx/html
       - ./config/nginx.conf:/etc/nginx/nginx.conf
@@ -15,7 +15,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    container_name: api-metas
+    container_name: api_metas_container
     restart: always
     image: api-metas:v2.3
     networks:
