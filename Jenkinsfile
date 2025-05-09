@@ -46,7 +46,7 @@ pipeline {
       stage('delete images'){
         steps{
           script {
-          def images = 'api-metas:v2.1'
+          def images = 'api-metas:v2.2'
             if (sh(script: "docker images -q ${images}", returnStdout: true).trim()) {
               sh "docker rmi ${images}"
             } else {
