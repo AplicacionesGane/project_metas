@@ -19,7 +19,6 @@ export function TableUtilidades({ document }: { document: string }) {
   }, [document])
 
   return (
-
     <Table>
       <TableHeader>
         <TableRow>
@@ -32,7 +31,7 @@ export function TableUtilidades({ document }: { document: string }) {
       <TableBody>
         {
           util.map((item, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} className="dark:text-gray-300">
               <TableCell>{item.FECHA}</TableCell>
               <TableCell>{item.DOCUMENTO}</TableCell>
               <TableCell>{item.CONCEPTO}</TableCell>

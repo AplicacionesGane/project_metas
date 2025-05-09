@@ -1,8 +1,13 @@
-import { ChartVentaHora } from '@/components/chart-venta-hora';
+import { useEffect, useState, Suspense, lazy } from 'react';
+import { Loading } from '@/components/ui/Loading';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { TrendingUp } from 'lucide-react';
 import axios from 'axios';
+
+const LazyCharVentaHora2 = lazy(() => import('@/components/bar-char'));
+const LazyChartVentaHora = lazy(() => import('@/components/chart-venta-hora'));
 
 export interface MetaXhoraData {
   ID: number;
@@ -22,6 +27,7 @@ export default function MetaXhora() {
   const ulrparam = useParams();
   const { producto, sucursal } = ulrparam;
   const [data, setData] = useState<MetaXHoraResponse>({ parsedResults: [], metaNextHour: [], acomulado: 0 });
+  const [changeChart, setChangeChart] = useState(true);
 
   useEffect(() => {
     axios.get<MetaXHoraResponse>(`/metaxhoras`, { params: { producto } })
@@ -34,20 +40,37 @@ export default function MetaXhora() {
 
   }, [producto, sucursal]);
 
+  const handleChartChange = () => {
+    setChangeChart(!changeChart);
+  }
+
   return (
-    <section className='relative'>
-      <h1 className='text-2xl font-semibold text-gray-800 mb-6 text-center uppercase'>Aspiración x Hora - {producto}</h1>
+    <section>
+      <section className='flex gap-2 px-2'>
 
-      <Card className='w-44 absolute top-0 left-2 p-2 py-4'>
-        <h1 className='text-base text-gray-700 col-span-1 text-right font-semibold flex flex-col items-center'>Acomulado:</h1>
-        <p className={`text-xl text-gray-700 col-span-1 text-right font-semibold flex flex-col items-center ${data.acomulado > 0 ? 'text-green-500' : 'text-red-500'}`}>
-          <span>{` $${Intl.NumberFormat('CO').format(data.acomulado).toString()}`}</span>
-        </p>
-      </Card>
+        <div className='flex flex-col gap-2'>
+          <Button onClick={handleChartChange} variant='outline'>
+            <span>Ver {changeChart ? 'Tabla' : 'Gráfico'}</span>
+            <TrendingUp />
+          </Button>
 
-      <section className='px-2'>
-        <ChartVentaHora data={data.parsedResults}/>
+          <Card className=''>
+            <h1 className='text-base text-gray-700 col-span-1 text-right font-semibold flex flex-col items-center'>Acomulado:</h1>
+            <p className={`text-xl text-gray-700 col-span-1 text-right font-semibold flex flex-col items-center ${data.acomulado > 0 ? 'text-green-500' : 'text-red-500'}`}>
+              <span>{` $${Intl.NumberFormat('CO').format(data.acomulado).toString()}`}</span>
+            </p>
+          </Card>
+
+        </div>
+
+        <section className='w-full'>
+        <Suspense fallback={<Loading />}>
+          {changeChart ? <LazyCharVentaHora2 data={data.parsedResults} /> : <LazyChartVentaHora data={data.parsedResults} />}
+        </Suspense>
       </section>
+
+      </section>
+
 
       <div className='bg-gray-50 p-6 rounded-lg shadow-lg'>
         <div className='grid grid-cols-4 gap-6 p-6 border border-gray-200 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 m-4'>

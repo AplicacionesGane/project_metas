@@ -1,6 +1,7 @@
 import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { useTheme } from "@/hooks/useTheme";
 
 const chartConfig = {
   ventas: {
@@ -14,6 +15,8 @@ const chartConfig = {
 
 
 export function PieChartComponent({ porcentaje }: { porcentaje: number }) {
+  const { theme } = useTheme()
+
   const getColorClass = () => {
     if (porcentaje <= 40) return "var(--chart-1)";
     if (porcentaje <= 80) return "var(--chart-4)";
@@ -31,7 +34,7 @@ export function PieChartComponent({ porcentaje }: { porcentaje: number }) {
   ]
 
   return (
-    <Card className="flex flex-col bg-slate-50 dark:bg-slate-900">
+    <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Porcentaje Meta Realizada</CardTitle>
       </CardHeader>
@@ -67,6 +70,7 @@ export function PieChartComponent({ porcentaje }: { porcentaje: number }) {
                         dominantBaseline="middle"
                         fontSize={24}
                         fontWeight="bold"
+                        fill={theme === "dark" ? "white" : "black"}
                       >
                         {porcentaje}%
                       </text>
