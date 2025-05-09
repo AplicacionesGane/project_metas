@@ -22,19 +22,19 @@ export function CardSugerido({ sugerido }: { sugerido: Sugeridos }) {
       </article>
 
       <section className='flex justify-between'>
-        <article className='flex gap-2 items-center text-gray-700'>
+        <article className='flex gap-2 items-center text-gray-700 dark:text-white'>
           <p> Venta Actual:</p>
           <Badge variant='success'>{formatPrice(sugerido.VTA_SUGERIDO)}</Badge>
         </article>
 
-        <article className='flex gap-2 items-center text-gray-700'>
+        <article className='flex gap-2 items-center text-gray-700 dark:text-white'>
           <p> Valor Sugerido:</p>
           <Badge>{formatPrice(sugerido.META_VALOR)}</Badge>
         </article>
       </section>
 
       <article className='flex flex-col gap-4'>
-        <div className='flex gap-2 items-center justify-center text-gray-700'>
+        <div className='flex gap-2 items-center justify-center text-gray-700 dark:text-white'>
           <p>Progreso Actual: </p>
           <Badge variant='default' className='shadow'>{percentage} %</Badge>
         </div>
