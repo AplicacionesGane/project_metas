@@ -25,6 +25,7 @@ pipeline {
       stage('Install Bun') {
         steps {
           sh 'curl -fsSL https://bun.sh/install | bash'
+          sh 'export PATH=$PATH:/home/containers/.bun/bin'
         }
       }
 
