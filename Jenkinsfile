@@ -27,6 +27,8 @@ pipeline {
           sh 'curl -fsSL https://bun.sh/install | bash'
           dir('frontend') {
             sh '''
+                chmod -R u+rwX public
+                chmod -R u+rwX dist || true
                 export BUN_INSTALL="$HOME/.bun"
                 export PATH="$BUN_INSTALL/bin:$PATH"
                 chmod +x $BUN_INSTALL/bin/bun
