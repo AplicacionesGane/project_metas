@@ -25,17 +25,15 @@ pipeline {
       stage('Install Bun') {
         steps {
           sh 'curl -fsSL https://bun.sh/install | bash'
-          sh 'export PATH=$PATH:/home/containers/.bun/bin'
         }
       }
 
-      stage('Install Client Dependencies') {
+      stage('Install Dependencies') {
         steps {
-          script {
-            dir('frontend') {
-              sh 'bun install'
-            }
-          }
+          sh '''
+            export PATH=$PATH:/home/containers/.bun/bin
+            bun install
+          '''
         }
       }
 
