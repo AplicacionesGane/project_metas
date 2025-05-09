@@ -22,13 +22,11 @@ pipeline {
         }
       }
 
-
-      stage('Install Dependencies') {
+      stage('Install Bun') {
         steps {
-          sh 'export PATH=$PATH:/home/containers/.bun/bin && bun install'
+          sh 'curl -fsSL https://bun.sh/install | bash'
         }
       }
-
 
       stage('Install Client Dependencies') {
         steps {
