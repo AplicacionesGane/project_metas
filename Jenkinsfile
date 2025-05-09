@@ -22,29 +22,16 @@ pipeline {
         }
       }
 
-      stage('Install Bun') {
-        steps {
-          sh 'curl -fsSL https://bun.sh/install | bash'
-        }
-      }
-
       stage('Install Dependencies') {
-          steps {
-              sh '''
-                  export BUN_INSTALL="$HOME/.bun"
-                  export PATH="$BUN_INSTALL/bin:$PATH"
-                  chmod +x $BUN_INSTALL/bin/bun
-                  bun install
-              '''
-          }
-      }
-      
-      stage('Build Client') {
         steps {
-          script {
-            dir('frontend') {
-              sh 'bun run build'
-            }
+          dir('frontend') {
+            sh 'curl -fsSL https://bun.sh/install | bash'
+            sh '''
+                export BUN_INSTALL="$HOME/.bun"
+                export PATH="$BUN_INSTALL/bin:$PATH"
+                chmod +x $BUN_INSTALL/bin/bun
+                bun install
+            '''
           }
         }
       }
