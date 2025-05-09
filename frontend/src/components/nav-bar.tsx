@@ -51,7 +51,7 @@ function NavBar() {
   return (
     <ul className='flex flex-col h-screen items-center justify-around'>
       <figure className=''>
-        <img src="logogane.webp" alt="Logo Gane" width={180} height={180} />
+        <img src="logogane.webp" alt="Logo Gane" width={80} height={80} className="xl:w-28 2xl:w-52" />
       </figure>
 
       <li className='flex flex-col gap-4 2xl:gap-6 3xl:gap-8 font-semibold dark:text-white'>

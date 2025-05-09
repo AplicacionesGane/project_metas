@@ -17,10 +17,10 @@ export default function Root() {
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
         <section className='flex'>
-          <nav>
+          <nav className='w-3/12'>
             <NavBar />
           </nav>
-          <main className='flex-1 h-screen overflow-y-auto'>
+          <main className='w-9/12 flex-1 h-screen overflow-y-auto'>
             <HeaderMain />
             <Outlet />
           </main>
