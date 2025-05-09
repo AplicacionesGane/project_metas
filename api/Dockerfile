@@ -23,4 +23,4 @@ RUN echo "export LD_LIBRARY_PATH=/opt/oracle/instantclient_11_2:\$LD_LIBRARY_PAT
 
 EXPOSE 80
 
-CMD ["node", "start"]
+CMD ["node --run ", "start"]
