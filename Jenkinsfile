@@ -29,14 +29,16 @@ pipeline {
       }
 
       stage('Install Dependencies') {
-        steps {
-          sh '''
-            export PATH=$PATH:/home/containers/.bun/bin
-            bun install
-          '''
-        }
+          steps {
+              sh '''
+                  export BUN_INSTALL="$HOME/.bun"
+                  export PATH="$BUN_INSTALL/bin:$PATH"
+                  chmod +x $BUN_INSTALL/bin/bun
+                  bun install
+              '''
+          }
       }
-
+      
       stage('Build Client') {
         steps {
           script {
