@@ -24,13 +24,23 @@ pipeline {
 
       stage('Install Dependencies') {
         steps {
+          sh 'curl -fsSL https://bun.sh/install | bash'
           dir('frontend') {
-            sh 'curl -fsSL https://bun.sh/install | bash'
             sh '''
                 export BUN_INSTALL="$HOME/.bun"
                 export PATH="$BUN_INSTALL/bin:$PATH"
                 chmod +x $BUN_INSTALL/bin/bun
                 bun install
+                bun run build
+            '''
+          }
+          dir('api') {
+            sh '''
+                export BUN_INSTALL="$HOME/.bun"
+                export PATH="$BUN_INSTALL/bin:$PATH"
+                chmod +x $BUN_INSTALL/bin/bun
+                bun install
+                bun run build
             '''
           }
         }
@@ -43,6 +53,7 @@ pipeline {
           }
         }
       }
+
       stage('delete images'){
         steps{
           script {
