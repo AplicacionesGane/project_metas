@@ -1,5 +1,5 @@
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { Card } from "@/components/ui/card";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   type ChartConfig,
@@ -8,7 +8,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import type { MetaXhoraData } from "@/app/meta-hora";
+import type { MetaXhoraData } from "@/types/Metas";
+import { TrendingUp } from "lucide-react";
 
 const chartConfig = {
   desktop: {
@@ -24,6 +25,10 @@ const chartConfig = {
 export default function ChartVentaHora({ data }: { data: MetaXhoraData[] }) {
   return (
     <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">Gráfico de Barras<TrendingUp /></CardTitle>
+        <CardDescription>{new Date().toLocaleDateString()}</CardDescription>
+      </CardHeader>
       <ChartContainer config={chartConfig}>
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
@@ -38,11 +43,18 @@ export default function ChartVentaHora({ data }: { data: MetaXhoraData[] }) {
             cursor={false}
             content={<ChartTooltipContent indicator="dashed" />}
           />
-          <Bar dataKey="VTAH" fill="var(--chart-7)" radius={2} />
-          <Bar dataKey="METAH" fill="var(--chart-8)" radius={2} />
+          <Bar dataKey="VTA_HORA" fill="var(--chart-7)" radius={2} />
+          <Bar dataKey="META_HORA" fill="var(--chart-8)" radius={2} />
         </BarChart>
       </ChartContainer>
 
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="flex items-center gap-2 leading-none text-muted-foreground">
+            Gráficos usados desde la biblioteca Shadcn, usando la librería Recharts - licencia MIT
+          </div>
+        </div>
+      </CardFooter>
     </Card>
   )
 }

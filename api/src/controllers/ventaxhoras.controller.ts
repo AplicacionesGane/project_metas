@@ -37,8 +37,8 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       .map((item: ResultsProcedure, index: number) => ({
         ID: index + 1,
         HORA: `${item.HORA}:00`,
-        VTAH: parseInt(item.VTAH),
-        METAH: parseInt(item.METAH),
+        VTA_HORA: parseInt(item.VTAH),
+        META_HORA: parseInt(item.METAH),
         DIF: parseInt(item.VTAH) - parseInt(item.METAH)
       }));
 
@@ -49,8 +49,8 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
       .map((item: ResultsProcedure, index: number) => ({
         ID: index + 1,
         HORA: `${item.HORA}:00`,
-        VTAH: 0,
-        METAH: parseInt(item.METAH),
+        VTA_HORA: 0,
+        META_HORA: parseInt(item.METAH),
         DIF: 0
       }));
 

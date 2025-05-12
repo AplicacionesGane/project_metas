@@ -1,27 +1,14 @@
 import { useEffect, useState, Suspense, lazy } from 'react';
+import { Card, CardHeader } from '@/components/ui/card';
+import type { MetaXHoraResponse } from '@/types/Metas';
 import { Loading } from '@/components/ui/Loading';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader } from '@/components/ui/card';
 import { useParams } from 'react-router';
 import { TrendingUp } from 'lucide-react';
 import axios from 'axios';
 
 const LazyCharVentaHora2 = lazy(() => import('@/components/bar-char'));
 const LazyChartVentaHora = lazy(() => import('@/components/chart-venta-hora'));
-
-export interface MetaXhoraData {
-  ID: number;
-  HORA: string;
-  VTAH: number;
-  METAH: number;
-  DIF: number;
-}
-
-export interface MetaXHoraResponse {
-  parsedResults: MetaXhoraData[];
-  metaNextHour: MetaXhoraData[];
-  acomulado: number;
-}
 
 export default function MetaXhora() {
   const ulrparam = useParams();
@@ -71,7 +58,6 @@ export default function MetaXhora() {
 
       </section>
 
-
       <Card >
         <CardHeader className='grid grid-cols-4 '>
           <p className='text-base  col-span-1'>
@@ -92,10 +78,10 @@ export default function MetaXhora() {
             <Card key={index} className='grid grid-cols-4'>
               <h2 className='text-xl font-bold text-blue-600 col-span-1'>{item.HORA} - {item.HORA.toString().split(':')[0]}:59</h2>
               <p className='text-base  col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.VTAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.VTA_HORA).toString()}`}
               </p>
               <p className='text-base  col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.METAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold ${item.DIF > 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {` $${Intl.NumberFormat('CO').format(item.DIF).toString()}`}
@@ -111,7 +97,7 @@ export default function MetaXhora() {
                 En ejecución ...
               </p>
               <p className='text-base text-sky-500 col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.METAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold`}>
                 En ejecución ...
