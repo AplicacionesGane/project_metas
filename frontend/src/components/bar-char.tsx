@@ -76,7 +76,7 @@ export default function BarChar({ data }: { data: MetaXhoraData[] }) {
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Gráficos usados desde la biblioteca Shadcn, usando la librería Recharts - licencia MIT
+            Componentes Gráficos de <span className="font-semibold text-gray-800">Shadcn UI</span>, la cual usá en su core la librería Recharts - Licencia MIT
           </div>
         </div>
       </CardFooter>
