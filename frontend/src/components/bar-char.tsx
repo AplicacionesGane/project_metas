@@ -17,7 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import type { MetaXhoraData } from "@/app/meta-hora";
+import type { MetaXhoraData } from "@/types/Metas";
 
 const chartConfig = {
   desktop: {

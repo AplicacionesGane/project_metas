@@ -38,3 +38,17 @@ export interface ComisionesI {
   REFERENCIA: string;
   VERSION: null;
 }
+
+export interface MetaXhoraData {
+  ID: number;
+  HORA: string;
+  VTA_HORA: number;
+  META_HORA: number;
+  DIF: number;
+}
+
+export interface MetaXHoraResponse {
+  parsedResults: MetaXhoraData[];
+  metaNextHour: MetaXhoraData[];
+  acomulado: number;
+}

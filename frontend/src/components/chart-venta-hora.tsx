@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import type { MetaXhoraData } from "@/app/meta-hora";
+import type { MetaXhoraData } from "@/types/Metas";
 import { TrendingUp } from "lucide-react";
 
 const chartConfig = {

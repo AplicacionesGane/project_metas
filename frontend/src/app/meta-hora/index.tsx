@@ -1,27 +1,14 @@
 import { useEffect, useState, Suspense, lazy } from 'react';
+import { Card, CardHeader } from '@/components/ui/card';
+import type { MetaXHoraResponse } from '@/types/Metas';
 import { Loading } from '@/components/ui/Loading';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader } from '@/components/ui/card';
 import { useParams } from 'react-router';
 import { TrendingUp } from 'lucide-react';
 import axios from 'axios';
 
 const LazyCharVentaHora2 = lazy(() => import('@/components/bar-char'));
 const LazyChartVentaHora = lazy(() => import('@/components/chart-venta-hora'));
-
-export interface MetaXhoraData {
-  ID: number;
-  HORA: string;
-  VTA_HORA: number;
-  META_HORA: number;
-  DIF: number;
-}
-
-export interface MetaXHoraResponse {
-  parsedResults: MetaXhoraData[];
-  metaNextHour: MetaXhoraData[];
-  acomulado: number;
-}
 
 export default function MetaXhora() {
   const ulrparam = useParams();
