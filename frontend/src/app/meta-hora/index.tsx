@@ -12,8 +12,8 @@ const LazyChartVentaHora = lazy(() => import('@/components/chart-venta-hora'));
 export interface MetaXhoraData {
   ID: number;
   HORA: string;
-  VTAH: number;
-  METAH: number;
+  VTA_HORA: number;
+  META_HORA: number;
   DIF: number;
 }
 
@@ -71,7 +71,6 @@ export default function MetaXhora() {
 
       </section>
 
-
       <Card >
         <CardHeader className='grid grid-cols-4 '>
           <p className='text-base  col-span-1'>
@@ -92,10 +91,10 @@ export default function MetaXhora() {
             <Card key={index} className='grid grid-cols-4'>
               <h2 className='text-xl font-bold text-blue-600 col-span-1'>{item.HORA} - {item.HORA.toString().split(':')[0]}:59</h2>
               <p className='text-base  col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.VTAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.VTA_HORA).toString()}`}
               </p>
               <p className='text-base  col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.METAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold ${item.DIF > 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {` $${Intl.NumberFormat('CO').format(item.DIF).toString()}`}
@@ -111,7 +110,7 @@ export default function MetaXhora() {
                 En ejecución ...
               </p>
               <p className='text-base text-sky-500 col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.METAH).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold`}>
                 En ejecución ...
