@@ -10,7 +10,7 @@ export interface SucursalInformation {
 	NOMBRE: string
 	DIRECCION: string
 	SUPERVISOR: string
-	CATEGORIA: string
+	CATEGORIA: string | null
 }
 
 export interface DataUserProfile {

@@ -14,7 +14,7 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
       where: { DOCUMENTO: cedula }
     })
     const SucursalInfo = await Sucursal.findOne({
-      attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR'],
+      attributes: ['ZONA', 'CODIGO', 'NOMBRE', 'DIRECCION', 'SUPERVISOR', 'CATEGORIA'],
       where: { CODIGO: sucursal }
     })
 
@@ -34,6 +34,14 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
 
     const state = StateSalida ? StateSalida.BLOQREG === 1 ? false : false : true
 
+    // TODO: 1. Este intenta traer la categoría primero de la vista 
+    // TODO: 2. como segunda opción la table sucursal 
+    // TODO: 3. donde ambos falle retorna null así el front mostrará una imagen x defecto
+    const defineCategoria = CategoriaInfo?.CATEGORIZACION
+      ?? SucursalInfo?.dataValues?.CATEGORIA
+      ?? null;
+
+
     const InfoGeneral = {
       user: Vendedor,
       sucursal: {
@@ -42,9 +50,9 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
         NOMBRE: SucursalInfo.dataValues.NOMBRE,
         DIRECCION: SucursalInfo.dataValues.DIRECCION,
         SUPERVISOR: SucursalInfo.dataValues.SUPERVISOR,
-        CATEGORIA: CategoriaInfo?.CATEGORIZACION
+        CATEGORIA: defineCategoria
       },
-      stateSalida: state 
+      stateSalida: state
     }
 
     return InfoGeneral

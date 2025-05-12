@@ -11,7 +11,7 @@ function ResumenPage() {
   const [data, setData] = useState({ ventaActual: 0, aspiracionDia: 0, cumplimiento: 0 })
 
   const userName = user?.user.NOMBRES!
-  const nameCategoria = `${user?.sucursal.CATEGORIA.toLocaleLowerCase()}.webp`
+  const nameCategoria = user?.sucursal.CATEGORIA === null ? null : `${user?.sucursal.CATEGORIA.toLocaleLowerCase()}.webp`
 
   useEffect(() => {
     axios.post('/metasDia', { codigo: user?.sucursal.CODIGO, zona: user?.sucursal.ZONA })
@@ -43,8 +43,13 @@ function ResumenPage() {
       </section>
 
       <figure className='col-span-2 flex flex-col items-center justify-center  border  rounded-md'>
-        <img className='w-44 2xl:w-72' src={nameCategoria === 'undefined.webp' ? 'imgdefect.webp' : nameCategoria} loading='lazy' alt='logo segun categoria' />
-        {nameCategoria === 'undefined.webp' ? 'Sucursal Sin Categorizar ...' : ''}
+        <img 
+          className='w-44 2xl:w-72' 
+          src={nameCategoria === null ? 'imgdefect.webp' : nameCategoria} 
+          loading='lazy' 
+          alt='logo segun categoria' 
+          />
+        {nameCategoria === null ? 'Sucursal Sin Categorizar ...' : ''}
       </figure>
 
       <section className='col-span-3  boder rounded-md border'>
