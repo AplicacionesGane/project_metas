@@ -38,7 +38,7 @@ export const ventaxhorasController = async (req: Request, res: Response) => {
         ID: index + 1,
         HORA: `${item.HORA}:00`,
         VTA_HORA: parseInt(item.VTAH),
-        META_HORA: parseInt(item.METAH),
+        ASP_HORA: parseInt(item.METAH),
         DIF: parseInt(item.VTAH) - parseInt(item.METAH)
       }));
 
