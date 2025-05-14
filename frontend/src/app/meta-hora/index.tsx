@@ -81,7 +81,7 @@ export default function MetaXhora() {
                 {` $${Intl.NumberFormat('CO').format(item.VTA_HORA).toString()}`}
               </p>
               <p className='text-base  col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.ASP_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold ${item.DIF > 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {` $${Intl.NumberFormat('CO').format(item.DIF).toString()}`}
@@ -97,7 +97,7 @@ export default function MetaXhora() {
                 En ejecución ...
               </p>
               <p className='text-base text-sky-500 col-span-1 text-right font-semibold'>
-                {` $${Intl.NumberFormat('CO').format(item.META_HORA).toString()}`}
+                {` $${Intl.NumberFormat('CO').format(item.ASP_HORA).toString()}`}
               </p>
               <p className={`text-base  col-span-1 text-right font-semibold`}>
                 En ejecución ...
