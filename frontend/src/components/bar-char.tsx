@@ -64,7 +64,7 @@ export default function BarChar({ data }: { data: MetaXhoraData[] }) {
               dot={false}
             />
             <Line
-              dataKey="META_HORA"
+              dataKey="ASP_HORA"
               type="monotone"
               stroke="var(--chart-8)"
               strokeWidth={2}
