@@ -43,7 +43,7 @@ export interface MetaXhoraData {
   ID: number;
   HORA: string;
   VTA_HORA: number;
-  META_HORA: number;
+  ASP_HORA: number;
   DIF: number;
 }
 
