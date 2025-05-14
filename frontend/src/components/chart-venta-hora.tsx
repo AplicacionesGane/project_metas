@@ -44,7 +44,7 @@ export default function ChartVentaHora({ data }: { data: MetaXhoraData[] }) {
             content={<ChartTooltipContent indicator="dashed" />}
           />
           <Bar dataKey="VTA_HORA" fill="var(--chart-7)" radius={2} />
-          <Bar dataKey="META_HORA" fill="var(--chart-8)" radius={2} />
+          <Bar dataKey="ASP_HORA" fill="var(--chart-8)" radius={2} />
         </BarChart>
       </ChartContainer>
 
