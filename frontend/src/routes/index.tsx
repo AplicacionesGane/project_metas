@@ -6,6 +6,7 @@ import NotFound from '@/app/not-found';
 import Root from './Root';
 
 const HistCatPage = lazy(() => import('@/app/his-categorias'));
+const ReportPremio = lazy(() => import('@/app/report-premio'));
 const AspMenAntPage = lazy(() => import('@/app/aps-mes-ant'));
 const SugeridosPage = lazy(() => import('@/app/sugeridos'));
 const AspMesPage = lazy(() => import('@/app/asp-mes-act'));
@@ -70,7 +71,19 @@ export const RouterMain = createBrowserRouter([
       },
       {
         path: '/metaxhora',
-        element: <MetaXhora />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <MetaXhora />
+          </Suspense>
+        ),
+      },
+      {
+        path: '/reportPremio',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ReportPremio />
+          </Suspense>
+        )
       }
     ]
   }
