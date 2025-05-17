@@ -31,7 +31,7 @@ export default function ReportPremio() {
       </CardHeader>
 
       <CardContent>
-        <TableReportPremios />
+        <TableReportPremios reRender={reload} />
       </CardContent>
     </Card>
   )

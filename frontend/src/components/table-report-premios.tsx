@@ -1,17 +1,17 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { type ReportPremios } from "@/types/DataInterface"
 import { useEffect, useState } from "react"
+import { Badge } from "./ui/badge"
 import axios from "axios"
 
-export function TableReportPremios() {
+export function TableReportPremios({ reRender }: { reRender: boolean }) {
   const [data, setData] = useState<ReportPremios[]>([])
 
   useEffect(() => {
     axios.get('/reportPremios')
       .then(res => setData(res.data))
       .catch(err => console.log(err))
-
-  }, [])
+  }, [reRender])
 
   return (
     <Table>
@@ -29,7 +29,11 @@ export function TableReportPremios() {
             <TableCell>{item.FECHA}</TableCell>
             <TableCell>{item.TERCERO}</TableCell>
             <TableCell> {`$ ${Intl.NumberFormat('es-CO').format(item.VALOR)}`} </TableCell>
-            <TableCell>{item.ESTADO}</TableCell>
+            <TableCell>
+              <Badge variant={item.ESTADO === 'APROBADO' ? 'default' : 'success'}>
+                {item.ESTADO}
+              </Badge>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

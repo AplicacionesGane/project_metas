@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 import { useAuth } from '@/hooks/useAuth';
-import { Computer } from 'lucide-react';
+import { Calendar, Computer, User2Icon } from 'lucide-react';
 import { type FormEvent } from 'react';
 import { Input } from './ui/input';
-import { toast } from 'sonner';
 import axios from 'axios';
+import { toast } from 'sonner';
+import { Card } from './ui/card';
 
 
 function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolean) => void, reload: () => void }) {
@@ -17,33 +18,33 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
     e.preventDefault();
 
     const formData = Object.fromEntries(new window.FormData(e.currentTarget));
-    
+
     const { maquina, valor, valorVerificar } = formData;
 
     if (!maquina) {
-      toast.error('Debe seleccionar una Máquina', { description: 'Seleccione una Máquina para continuar'});
+      toast.error('Debe seleccionar una Máquina', { description: 'Seleccione una Máquina para continuar' });
       return;
     }
-    
+
     if (valor !== valorVerificar || !valor || !valorVerificar) {
-      toast.error('Los valores no coinciden o no ingresados', { description: 'Verifique los valores ingresados los cuales deben ser iguales'});
+      toast.error('Los valores no coinciden o no ingresados', { description: 'Verifique los valores ingresados los cuales deben ser iguales' });
       return;
     }
 
     console.log(formData);
 
     axios.post('/reportPremio', { maquinaId: maquina, valor })
-    .then(res => {
-      if (res.status === 201) {
-        toast.success('Reporte creado correctamente');
-        funClose(false);
-        reload();
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      toast.error('Error al crear el reporte');
-    })  
+      .then(res => {
+        if (res.status === 201) {
+          toast.success('Reporte creado correctamente');
+          funClose(false);
+          reload();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error('Error al crear el reporte');
+      })
   }
 
   return (
@@ -54,7 +55,17 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
           Debes diligenciar todos los campos para crear un nuevo reporte.
         </DialogDescription>
       </DialogHeader>
-      <section>
+      <section className='space-y-4'>
+        <Card className="flex flex-col ">
+          <p className='flex gap-2 items-center'>
+            <User2Icon />
+            <span className='font-semibold'>{user?.user.NOMBRES}</span>
+          </p>
+          <p className='flex gap-2 items-center'>
+            <Calendar />
+            <span>{new Date().toLocaleDateString()}</span>
+          </p>
+        </Card>
 
         <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
           <div className='w-full flex flex-col gap-2'>
@@ -88,9 +99,10 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
           </Button>
 
         </form>
+
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancelar</Button>
+            <Button variant="destructive">Cancelar</Button>
           </DialogClose>
         </DialogFooter>
       </section>
