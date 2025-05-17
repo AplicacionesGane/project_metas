@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth"
 import { useEffect, useState } from "react";
 
 import { Navigate } from "react-router";
+import { TableReportPremios } from "@/components/table-report-premios";
 
 export default function ReportPremio() {
   const { user, login } = useAuth();
@@ -30,7 +31,7 @@ export default function ReportPremio() {
       </CardHeader>
 
       <CardContent>
-        Lista Reportes generados día actual
+        <TableReportPremios />
       </CardContent>
     </Card>
   )

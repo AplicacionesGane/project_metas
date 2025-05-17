@@ -21,10 +21,10 @@ export default function Root() {
             <NavBar />
           </nav>
           <section className='w-9/12 flex flex-col'>
-            <header className=''>
+            <header className='grid grid-cols-2 gap-2 p-1'>
               <HeaderMain />
             </header>
-            <main className='overflow-y-auto '>
+            <main className='overflow-y-auto px-1'>
               <Outlet />
             </main>
           </section>
