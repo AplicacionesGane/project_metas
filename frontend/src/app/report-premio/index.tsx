@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DialogUserCreate } from "@/components/create-new-report";
 import { useAuth } from "@/hooks/useAuth"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Navigate } from "react-router";
 
 export default function ReportPremio() {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const [reload, setReload] = useState(false);
 
   if(user?.maquinas === false) {
@@ -16,6 +16,11 @@ export default function ReportPremio() {
   const handleReload = () => {
     setReload(!reload)
   }
+
+  useEffect(() => {
+    // valida el token si no es válido redirige a login
+    login()
+  }, [])
 
   return (
     <Card className="h-[calc(100vh-7rem)]">
