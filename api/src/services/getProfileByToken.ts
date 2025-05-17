@@ -4,6 +4,7 @@ import { Sucursal } from "../models/sucursalespw"
 import { Categoria } from "../models/vCatgSucuPowebi"
 import { User } from "../models/vendedorespw"
 import { BaseError } from "../utils/baseError"
+import { Ubimaquinas } from "../models/ubimaquinas"
 
 export const getProfileByToken = async (sucursal: number, username: string) => {
   try {
@@ -27,6 +28,10 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
       where: { SUCURSAL: sucursal, USERNAME: cedula, FECHA_LOGOUT: fn('CURDATE') }
     })
 
+    const Maquinas = await Ubimaquinas.findAll({
+      where: { SUCURSAL: sucursal.toString() }
+    })
+
 
     if (!Vendedor || !SucursalInfo) {
       throw new BaseError('Usuario no encontrado ó Sucursal no encontrada', 404)
@@ -41,7 +46,9 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
       ?? SucursalInfo?.dataValues?.CATEGORIA
       ?? null;
 
-
+    const existMaquinas = Maquinas.length > 0 ? Maquinas : null;
+    
+    
     const InfoGeneral = {
       user: Vendedor,
       sucursal: {
@@ -50,13 +57,16 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
         NOMBRE: SucursalInfo.dataValues.NOMBRE,
         DIRECCION: SucursalInfo.dataValues.DIRECCION,
         SUPERVISOR: SucursalInfo.dataValues.SUPERVISOR,
-        CATEGORIA: defineCategoria
+        CATEGORIA: defineCategoria,
+        MAQUINAS: existMaquinas
       },
-      stateSalida: state
+      stateSalida: state,
+      maquinas: existMaquinas === null ? false : true
     }
 
     return InfoGeneral
   } catch (error) {
+    console.log(error);
     throw new BaseError("Error al obtener el perfil en services 'get profile'", 500)
   }
 }
