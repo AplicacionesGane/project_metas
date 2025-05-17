@@ -1,4 +1,3 @@
-import { Loading } from '@/components/ui/Loading';
 import { useEffect, useState } from 'react';
 
 const ONE_SECOND_IN_MS = 1000;
@@ -43,5 +42,5 @@ export function SimularReloj({ hora }: { hora: string }) {
     };
   }, [hora]);
 
-  return <div className="">Hora: {time || <Loading />}</div>;
+  return <div className=''>Hora: {time}</div>;
 }

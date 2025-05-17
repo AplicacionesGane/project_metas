@@ -14,7 +14,7 @@ export const DialogUserCreate = ({ reload }: { reload: () => void }) => {
 
   return (
     <Dialog onOpenChange={v => handleOpenChange(v)} open={isOpen}>
-      <DialogTrigger className='cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md flex items-center gap-2'>
+      <DialogTrigger className='cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-2 py-2 rounded-md flex items-center gap-2'>
         <PlusIcon className="size-4" />
         Enviar Nuevo Reporte
       </DialogTrigger>

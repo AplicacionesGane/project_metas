@@ -1,13 +1,17 @@
 import { DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 
+import { useAuth } from '@/hooks/useAuth';
 import { type FormEvent } from 'react';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { Computer } from 'lucide-react';
+
 
 function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolean) => void, reload: () => void }) {
+  const { user } = useAuth();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -33,92 +37,35 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Creación nuevo usuario</DialogTitle>
+        <DialogTitle>Creación Nuevo Reporte Premio</DialogTitle>
         <DialogDescription>
-          Debes diligenciar todos los campos para crear un nuevo usuario.
+          Debes diligenciar todos los campos para crear un nuevo reporte.
         </DialogDescription>
       </DialogHeader>
       <section>
 
-        <form className='grid grid-cols-3 gap-4' onSubmit={handleSubmit}>
-          <Label htmlFor='names_'>Nombres</Label>
-          <Input
-            id='names_'
-            name='names'
-            type='text'
-            className='col-span-2'
-            placeholder='Valeria Daniela'
-          />
-
-          <Label htmlFor='lastNames_'>Apellidos</Label>
-          <Input
-            id='lastNames_'
-            name='lastNames'
-            type='text'
-            className='col-span-2'
-            placeholder='Perez Muños'
-          />
-
-          <Label htmlFor='document_'>N° Documento</Label>
-          <Input
-            id='document_'
-            type='text'
-            name='document'
-            className='col-span-2'
-            placeholder='1118245****'
-          />
-
-          <Label htmlFor='phone_'>N° Telefono</Label>
-          <Input
-            id='phone_'
-            type='text'
-            name='phone'
-            className='col-span-2'
-            placeholder='320 245 67 ** **'
-          />
-
-          <Label htmlFor='email_'>Correo</Label>
-          <Input
-            id='email_'
-            type='text'
-            name='email'
-            className='col-span-2'
-            placeholder='example@gmail.com '
-          />
-
-          <Label htmlFor='company_'>Empresa</Label>
-          <select
-            id='company_'
-            name='company'
-            className='border rounded-md px-2 py-1 cursor-pointer col-span-2'
-          >
-            <option value="">Seleccionar Empresa</option>
-
-          </select>
-
-          <Label htmlFor='process_'>Proceso</Label>
-          <select
-            id='process_'
-            name='process'
-            className='border rounded-md px-2 py-1 cursor-pointer col-span-2'
-          >
-            <option value="">Seleccionar Proceso</option>
-
-
-          </select>
-
-          <Label htmlFor='sub_process_'>Cargo</Label>
-          <select
-            id='sub_process_'
-            name='sub_process'
-            className='border rounded-md px-2 py-1 cursor-pointer col-span-2'
-          >
-            <option value="">Seleccionar Cargo</option>
-
-          </select>
+        <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
+          <div className='w-full flex flex-col gap-2'>
+            <Label className='justify-center gap-2'>
+              <Computer />
+              Seleccione Máquina
+            </Label>
+            <select name="maquina" id="" className='rounded-md border border-gray-300 p-2'>
+              {user?.sucursal?.MAQUINAS?.map((maquina) => (
+                <option key={maquina.MAQUINA} value={maquina.MAQUINA}>
+                  <span>
+                    {maquina.MAQUINA}
+                  </span>
+                  <span>
+                    {maquina.DESCRIPCION.includes('ROJA') ? 'ROJA' : 'SILVER TOUCH'}
+                  </span>
+                </option>
+              ))}
+            </select>
+          </div>
 
           <Button type='submit'>
-            Crear Usuario
+            Enviar Reporte
           </Button>
 
         </form>

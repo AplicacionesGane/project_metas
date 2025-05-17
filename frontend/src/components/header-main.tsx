@@ -28,7 +28,7 @@ function HeaderMain() {
   }, [])
 
   return (
-    <header className=' max-h-28 grid grid-cols-2 w-full lg:text-sm xl:text-base 2xl:text-xl justify-around py-2 px-1 gap-2 dark:text-white'>
+    <>
       <article className='flex items-center justify-center text-center border text-xs 2xl:text-lg py-1 shadow rounded-md font-semibold'>
         <div className=''>Fecha: {fecha.split(',', 1)}</div>
       </article>
@@ -54,7 +54,7 @@ function HeaderMain() {
           }
         </div>
       </article>
-    </header>
+    </>
   )
 }
 
