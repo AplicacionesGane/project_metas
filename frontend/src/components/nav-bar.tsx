@@ -1,4 +1,4 @@
-import { LayoutDashboard, Sun, Calendar, CalendarMinus, ChartLine, CheckCheck } from "lucide-react"
+import { LayoutDashboard, Sun, Calendar, CalendarMinus, ChartLine, CheckCheck, Combine } from "lucide-react"
 import { NavLinkItem } from '@/components/ui/nav-link';
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -42,6 +42,12 @@ const NavLinksItems = [
     routeTo: '/sugeridos',
     IconRender: CheckCheck,
     titleName: 'Sugeridos'
+  },
+  {
+    id: 7,
+    routeTo: '/reportPremio',
+    IconRender: Combine,
+    titleName: 'Report Premio'
   }
 ]
 
