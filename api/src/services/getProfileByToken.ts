@@ -29,6 +29,7 @@ export const getProfileByToken = async (sucursal: number, username: string) => {
     })
 
     const Maquinas = await Ubimaquinas.findAll({
+      attributes: ['MAQUINA', 'DESCRIPCION'],
       where: { SUCURSAL: sucursal.toString() }
     })
 

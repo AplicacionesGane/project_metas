@@ -4,6 +4,11 @@ export interface Vendedora {
 	NOMBRECARGO: string
 }
 
+export interface Maquinas {
+	MAQUINA: string
+	DESCRIPCION: string
+}
+
 export interface SucursalInformation {
 	ZONA: string
 	CODIGO: string
@@ -11,12 +16,14 @@ export interface SucursalInformation {
 	DIRECCION: string
 	SUPERVISOR: string
 	CATEGORIA: string | null
+	MAQUINAS: Maquinas[] | null
 }
 
 export interface DataUserProfile {
 	user: Vendedora
 	sucursal: SucursalInformation
 	stateSalida: boolean
+	maquinas: boolean
 }
 
 export interface AuthContextType {

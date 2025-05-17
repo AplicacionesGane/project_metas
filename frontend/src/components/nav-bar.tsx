@@ -42,12 +42,6 @@ const NavLinksItems = [
     routeTo: '/sugeridos',
     IconRender: CheckCheck,
     titleName: 'Sugeridos'
-  },
-  {
-    id: 7,
-    routeTo: '/reportPremio',
-    IconRender: Combine,
-    titleName: 'Report Premio'
   }
 ]
 
@@ -68,6 +62,16 @@ function NavBar() {
               IconRender={link.IconRender}
               routeTo={link.routeTo}
               titleName={link.titleName}
+            />
+          )
+        }
+        {
+          user?.maquinas !== false && (
+            <NavLinkItem
+              key={7}
+              IconRender={Combine}
+              routeTo='/reportPremio'
+              titleName='Report Premio'
             />
           )
         }
