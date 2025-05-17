@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 import { useAuth } from '@/hooks/useAuth';
+import { Computer } from 'lucide-react';
 import { type FormEvent } from 'react';
+import { Input } from './ui/input';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { Computer } from 'lucide-react';
 
 
 function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolean) => void, reload: () => void }) {
@@ -16,22 +17,33 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
     e.preventDefault();
 
     const formData = Object.fromEntries(new window.FormData(e.currentTarget));
+    
+    const { maquina, valor, valorVerificar } = formData;
 
-    axios.post('/register', formData)
-      .then(res => {
-        console.log(res.data);
-        funClose(false)
-        reload()
-        toast.success('Usuario creado correctamente', { description: 'agregado a lista de usuarios registrados' })
-      })
-      .catch(err => {
-        console.log(err);
-        if (err.response.status === 400) {
-          toast.error(err.response.data.message)
-        } else {
-          toast.error('Error inesperado :O')
-        }
-      })
+    if (!maquina) {
+      toast.error('Debe seleccionar una Máquina', { description: 'Seleccione una Máquina para continuar'});
+      return;
+    }
+    
+    if (valor !== valorVerificar || !valor || !valorVerificar) {
+      toast.error('Los valores no coinciden o no ingresados', { description: 'Verifique los valores ingresados los cuales deben ser iguales'});
+      return;
+    }
+
+    console.log(formData);
+
+    axios.post('/reportPremio', { maquinaId: maquina, valor })
+    .then(res => {
+      if (res.status === 201) {
+        toast.success('Reporte creado correctamente');
+        funClose(false);
+        reload();
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      toast.error('Error al crear el reporte');
+    })  
   }
 
   return (
@@ -51,18 +63,25 @@ function LazyDialogContent({ funClose, reload }: { funClose: (openDialog: boolea
               Seleccione Máquina
             </Label>
             <select name="maquina" id="" className='rounded-md border border-gray-300 p-2'>
+              <option value="">Seleccione una Máquina</option>
               {user?.sucursal?.MAQUINAS?.map((maquina) => (
                 <option key={maquina.MAQUINA} value={maquina.MAQUINA}>
-                  <span>
-                    {maquina.MAQUINA}
-                  </span>
-                  <span>
-                    {maquina.DESCRIPCION.includes('ROJA') ? 'ROJA' : 'SILVER TOUCH'}
-                  </span>
+                  {maquina.MAQUINA} - {maquina.DESCRIPCION.includes('ROJA') ? 'ROJA' : 'SILVER TOUCH'}
                 </option>
               ))}
             </select>
           </div>
+
+          <div className='w-full flex flex-col gap-2'>
+            <Label>Valor</Label>
+            <Input type="number" name="valor" id="" />
+          </div>
+
+          <div className='w-full flex flex-col gap-2'>
+            <Label>Confirmar Valor</Label>
+            <Input type="number" name="valorVerificar" id="" />
+          </div>
+
 
           <Button type='submit'>
             Enviar Reporte
