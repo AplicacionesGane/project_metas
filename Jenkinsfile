@@ -22,33 +22,29 @@ pipeline {
         }
       }
 
-      stage('Install Dependencies') {
+      stage('Install Dependencies client and server') {
         steps {
-          sh 'curl -fsSL https://bun.sh/install | bash'
           dir('frontend') {
-            sh '''
-                chmod -R u+rwX public
-                chmod -R u+rwX dist || true
-                export BUN_INSTALL="$HOME/.bun"
-                export PATH="$BUN_INSTALL/bin:$PATH"
-                chmod +x $BUN_INSTALL/bin/bun
-                bun install
-                bun run build
-            '''
+            sh 'bun install'
+            sh 'bun run build'
           }
           dir('api') {
-            sh '''
-                export BUN_INSTALL="$HOME/.bun"
-                export PATH="$BUN_INSTALL/bin:$PATH"
-                chmod +x $BUN_INSTALL/bin/bun
-                bun install
-                bun run build
-            '''
+            sh 'bun install'
+            sh 'bun run build'
           }
         }
       }
 
-      stage('down docker compose'){
+      stage('copy folder instantClient to API'){
+        steps {
+          script {
+            sh 'cp -r /var/lib/jenkins/instantclient_11_2 ./api'
+          }
+        }
+      }
+
+
+      stage('down docker compose down to api and client'){
         steps {
           script {
             sh 'docker compose down'
@@ -56,7 +52,7 @@ pipeline {
         }
       }
 
-      stage('delete images'){
+      stage('delete images api and client'){
         steps{
           script {
           def images = 'api-metas:v2.3'
@@ -68,14 +64,6 @@ pipeline {
             }
           }
         }
-      }
-
-      stage('copy folder instan client to api'){
-          steps {
-            script {
-              sh 'cp -r /var/lib/jenkins/instantclient_11_2 ./api'
-            }
-          }
       }
 
       stage('run docker compose'){
