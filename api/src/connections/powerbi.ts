@@ -4,8 +4,7 @@ import { Sequelize } from 'sequelize';
 const powerBi = new Sequelize(DB_POWERBI_DATABASE, DB_POWERBI_USER, DB_POWERBI_PASSWORD, {
   host: DB_POWERBI_HOST,
   port: DB_POWERBI_PORT,
-  dialect: 'mysql',
-  timezone: '-05:00'
+  dialect: 'mysql'
 })
 
 export { powerBi }

@@ -63,8 +63,6 @@ export interface ReportPremios {
 	CONCEPTO: string
 	ESTADO: string
 	FECHA: string
-	FECHACREATE: string
-	FECHAUPDATE: string
 	IDTRANSACCION: number
 	LOGINAUTORIZA: string | null
 	LOGINSOLICITUD: string
@@ -73,4 +71,6 @@ export interface ReportPremios {
 	TERCERO: string
 	VALOR: number
 	VERSION: string | null
+	FECHACREATE: string
+	FECHAUPDATE: string
 }

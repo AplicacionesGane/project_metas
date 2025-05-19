@@ -21,6 +21,7 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
           <TableHead>Tercero</TableHead>
           <TableHead>Valor</TableHead>
           <TableHead>Estado</TableHead>
+          <TableHead>Hora Creación</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -30,10 +31,17 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
             <TableCell>{item.TERCERO}</TableCell>
             <TableCell> {`$ ${Intl.NumberFormat('es-CO').format(item.VALOR)}`} </TableCell>
             <TableCell>
-              <Badge variant={item.ESTADO === 'APROBADO' ? 'default' : 'success'}>
+              <Badge variant={
+                item.ESTADO === 'APROBADO'
+                  ? 'default'
+                  : item.ESTADO === 'RECHAZADO'
+                    ? 'destructive'
+                    : 'success'
+              }>
                 {item.ESTADO}
               </Badge>
             </TableCell>
+            <TableCell>{item.FECHACREATE.split('T')[1].split('.')[0]}</TableCell>
           </TableRow>
         ))}
       </TableBody>
