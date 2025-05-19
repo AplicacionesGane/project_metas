@@ -1,4 +1,4 @@
-import { AutorizaTransacciones } from '../models/autorizatransacciones'
+import { AutorizaTransacciones } from '../models/autorizatransacciones';
 import { Request, Response } from "express";
 import { User } from "../types/interfaces";
 import { fn } from "sequelize";
@@ -10,6 +10,7 @@ export const getReportPremios = async (req: Request, res: Response) => {
   if (!sucursal) return res.status(400).json({ error: 'Falta la sucursal o existe un error valida ingreso de nuevo' })
 
   try {
+    await AutorizaTransacciones.sync()
     const results = await AutorizaTransacciones.findAll({
       where: {
         SUCURSAL: sucursal,
@@ -18,7 +19,13 @@ export const getReportPremios = async (req: Request, res: Response) => {
       }
     })
 
-    return res.status(200).json(results)
+    const formattedResultsTime = results.map((result) => ({
+      ...result.dataValues,
+      FECHACREATE: result.dataValues.FECHACREATE?.toLocaleDateString() + ' ' + result.dataValues.FECHACREATE?.toLocaleTimeString(),
+      FECHAUPDATE: result.dataValues.FECHAUPDATE?.toLocaleDateString() + ' ' + result.dataValues.FECHAUPDATE?.toLocaleTimeString()
+    }))
+
+    return res.status(200).json(formattedResultsTime)
   } catch (error) {
     console.log(error)
     return res.status(500).json({ error: 'Error al obtener los reportes de premios' })

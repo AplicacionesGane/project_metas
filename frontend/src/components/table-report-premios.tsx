@@ -1,8 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { type ReportPremios } from "@/types/DataInterface"
-import { useEffect, useState } from "react"
-import { Badge } from "./ui/badge"
-import axios from "axios"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { type ReportPremios } from "@/types/DataInterface";
+import { useEffect, useState } from "react";
+import { Badge } from "./ui/badge";
+import axios from "axios";
 
 export function TableReportPremios({ reRender }: { reRender: boolean }) {
   const [data, setData] = useState<ReportPremios[]>([])
@@ -17,17 +17,16 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Fecha</TableHead>
+          <TableHead>Fecha | Hora</TableHead>
           <TableHead>Tercero</TableHead>
           <TableHead>Valor</TableHead>
           <TableHead>Estado</TableHead>
-          <TableHead>Hora Creación</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((item, index) => (
           <TableRow key={index} className="text-center">
-            <TableCell>{item.FECHA}</TableCell>
+            <TableCell>{item.FECHACREATE}</TableCell>
             <TableCell>{item.TERCERO}</TableCell>
             <TableCell> {`$ ${Intl.NumberFormat('es-CO').format(item.VALOR)}`} </TableCell>
             <TableCell>
@@ -41,7 +40,6 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
                 {item.ESTADO}
               </Badge>
             </TableCell>
-            <TableCell>{item.FECHACREATE.split('T')[1].split('.')[0]}</TableCell>
           </TableRow>
         ))}
       </TableBody>
