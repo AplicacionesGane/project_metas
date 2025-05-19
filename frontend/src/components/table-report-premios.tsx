@@ -21,6 +21,7 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
           <TableHead>Tercero</TableHead>
           <TableHead>Valor</TableHead>
           <TableHead>Estado</TableHead>
+          <TableHead>Nota</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -40,6 +41,7 @@ export function TableReportPremios({ reRender }: { reRender: boolean }) {
                 {item.ESTADO}
               </Badge>
             </TableCell>
+            <TableCell title={item.NOTA || ''} className="ellipsis">{item.NOTA || ''}</TableCell>
           </TableRow>
         ))}
       </TableBody>
