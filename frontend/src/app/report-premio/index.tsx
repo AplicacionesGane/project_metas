@@ -1,10 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TableReportPremios } from "@/components/table-report-premios";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { DialogUserCreate } from "@/components/create-new-report";
-import { useAuth } from "@/hooks/useAuth"
 import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth"
 
 import { Navigate } from "react-router";
-import { TableReportPremios } from "@/components/table-report-premios";
 
 export default function ReportPremio() {
   const { user, login } = useAuth();

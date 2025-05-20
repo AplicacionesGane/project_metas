@@ -43,7 +43,7 @@ export function TableReportPremios({ reRender, handleReload }: { reRender: boole
     <>
       <CardHeader className="flex justify-between pb-4">
         <h2>Ultima actualización información: {lastUpdate}</h2>
-        <Button onClick={handleReload}>
+        <Button variant='outline' onClick={handleClickReload}>
           Recargar <RefreshCw className="ml-2 h-4 w-4" />
         </Button>
       </CardHeader>
