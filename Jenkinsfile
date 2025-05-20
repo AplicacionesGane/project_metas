@@ -1,5 +1,7 @@
 pipeline {
   agent any
+
+  tools { nodejs 'node-v22' }
     
   environment {
     ENV_API_METAS = credentials('ENV_API_METAS')
