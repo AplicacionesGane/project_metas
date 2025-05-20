@@ -16,14 +16,18 @@ export default function Root() {
   if (isAuthenticated) return (
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
-        <section className='flex'>
-          <nav className='w-3/12'>
+        <section className='h-screen flex'>
+          <nav className='w-3/12 '>
             <NavBar />
           </nav>
-          <main className='w-9/12 flex-1 h-screen overflow-y-auto'>
-            <HeaderMain />
-            <Outlet />
-          </main>
+          <section className='w-9/12 flex flex-col'>
+            <header className='grid grid-cols-2 gap-2 p-1'>
+              <HeaderMain />
+            </header>
+            <main className='overflow-y-auto px-1'>
+              <Outlet />
+            </main>
+          </section>
         </section>
         <Toaster richColors position='top-right' />
       </ThemeProvider>
