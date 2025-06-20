@@ -7,7 +7,7 @@ interface VentasDiaResumenProps {
 
 export function VentasDiaResumen({ venta, aspiracion }: VentasDiaResumenProps) {
   return (
-    <Card>
+    <Card className="flex flex-col items-center justify-center gap-2 p-4">
       <p className='text-xs gap-2 w-full flex justify-between px-4 '>
         <span className='font-bold text-xs 2xl:text-lg'>VENTA ACTUAL:</span>
         <span className='font-semibold text-xs 2xl:text-lg'>

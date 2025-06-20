@@ -17,9 +17,7 @@ export default function Root() {
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
         <section className='md:flex'>
-          <nav className='hidden md:block md:w-3/12'>
-            <NavBar />
-          </nav>
+          <NavBar />
           <section className='md:w-9/12'>
             <header className='grid gap-1 px-1 pt-1 md:gap-2 md:grid-cols-2'>
               <HeaderMain />
