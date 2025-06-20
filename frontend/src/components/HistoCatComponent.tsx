@@ -5,7 +5,7 @@ export function HistComponent({ data }: { data: CategoriasI[] }) {
   const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
   return (
-    <article className='grid grid-cols-3'>
+    <article className='grid xl:grid-cols-3'>
       {
         data.map(hist => (
           <ul key={hist.MES} className='flex flex-col w-full items-center gap-2 pt-2'>
