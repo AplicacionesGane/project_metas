@@ -24,7 +24,7 @@ const chartConfig = {
 
 export default function ChartVentaHora({ data }: { data: MetaXhoraData[] }) {
   return (
-    <Card>
+    <Card className="p-1 xl:p-4">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">Gráfico de Barras<TrendingUp /></CardTitle>
         <CardDescription>{new Date().toLocaleDateString()}</CardDescription>
@@ -48,7 +48,7 @@ export default function ChartVentaHora({ data }: { data: MetaXhoraData[] }) {
         </BarChart>
       </ChartContainer>
 
-      <CardFooter>
+      <CardFooter className="hidden sm:flex">
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="flex items-center gap-2 leading-none text-muted-foreground">
             Componentes gráficos de 

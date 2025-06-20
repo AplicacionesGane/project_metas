@@ -24,7 +24,7 @@ function AspMesPage() {
   return (
     <section className='relative'>
       <HeaderComponent setIsAscending={setIsAscending} isAscending={isAscending} isLoading={loading} text='Mes Actual' />
-      <article className='grid grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
+      <article className='grid xl:grid-cols-2 gap-2 px-1 2xl:grid-cols-3 3xl:grid-cols-4'>
         {data && (
           sortedData.map(meta => (
             <BarraProgressProduct

@@ -13,7 +13,7 @@
         "mysql2": "^3.14.1",
         "oracledb": "^6.8.0",
         "sequelize": "^6.37.7",
-        "zod": "^3.25.3",
+        "zod": "^3.25.7",
       },
       "devDependencies": {
         "@types/cookie-parser": "^1.4.8",

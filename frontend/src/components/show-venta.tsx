@@ -1,3 +1,5 @@
+import { Card } from "./ui/card"
+
 interface VentasDiaResumenProps {
   venta: number
   aspiracion: number
@@ -5,7 +7,7 @@ interface VentasDiaResumenProps {
 
 export function VentasDiaResumen({ venta, aspiracion }: VentasDiaResumenProps) {
   return (
-    <article className='gap-4 py-3 flex flex-col rounded-md justify-around dark:text-white border 2xl:py-6'>
+    <Card className="flex flex-col items-center justify-center gap-2 p-4">
       <p className='text-xs gap-2 w-full flex justify-between px-4 '>
         <span className='font-bold text-xs 2xl:text-lg'>VENTA ACTUAL:</span>
         <span className='font-semibold text-xs 2xl:text-lg'>
@@ -18,6 +20,6 @@ export function VentasDiaResumen({ venta, aspiracion }: VentasDiaResumenProps) {
           {(aspiracion || 0).toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}
         </span>
       </p>
-    </article>
+    </Card>
   )
 }

@@ -16,15 +16,13 @@ export default function Root() {
   if (isAuthenticated) return (
     <Suspense fallback={<Loading />}>
       <ThemeProvider>
-        <section className='h-screen flex'>
-          <nav className='w-3/12 '>
-            <NavBar />
-          </nav>
-          <section className='w-9/12 flex flex-col'>
-            <header className='grid grid-cols-2 gap-2 p-1'>
+        <section className='md:flex'>
+          <NavBar />
+          <section className='md:w-9/12'>
+            <header className='grid gap-1 px-1 pt-1 md:gap-2 md:grid-cols-2'>
               <HeaderMain />
             </header>
-            <main className='overflow-y-auto px-1'>
+            <main className='px-1'>
               <Outlet />
             </main>
           </section>
