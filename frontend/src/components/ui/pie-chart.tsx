@@ -34,11 +34,11 @@ export function PieChartComponent({ porcentaje }: { porcentaje: number }) {
   ]
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+    <Card className="">
+      <CardHeader className="">
         <CardTitle>Porcentaje Meta Realizada</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
